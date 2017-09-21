@@ -12,6 +12,10 @@ public class Response {
 		ordres.add(ordre);
 	}
 	
+	public  List<Ordre> getOrdres(){
+		return this.ordres;
+	}
+	
 	
 	public String toString(){
 		

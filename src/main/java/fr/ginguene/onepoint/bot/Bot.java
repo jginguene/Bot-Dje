@@ -10,7 +10,6 @@ public class Bot {
 		
 		Response response = new Response();
 		
-		List<Ordre> ordres= new ArrayList<Ordre>();
 		
 		System.out.println("Nombre de planete:" + carte.getPlanetes().size());
 		
@@ -27,7 +26,7 @@ public class Bot {
 			
 		}
 		
-		for (Ordre ordre: ordres){
+		for (Ordre ordre: response.getOrdres()){
 			for (Planete planete: carte.getPlanetes() ){
 				if (planete.getProprietaire() != 1){
 					ordre.setDestination(planete);					
