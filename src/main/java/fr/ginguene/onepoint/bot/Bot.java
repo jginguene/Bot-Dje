@@ -22,19 +22,20 @@ public class Bot {
 			if (planete.getProprietaire() == 1 && planete.getPopulation()>10){	
 				while (planete.getPopulation()>10){
 				
-				System.out.println("==>Cible: Planete " + planete.getId());
+				
 				Ordre ordre = new Ordre();
 				ordre.setOrigine(planete);
 				
 				Planete destination = selectPlanete(carte,planete);
 				
-				if (destination != null){
-					planetesInterdite.add(destination);				
-					int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
-					ordre.setPopulation(populationCible);
-					planete.remPopulation(populationCible );	
-					response.addOrdre(ordre);	
-				}
+					if (destination != null){
+						System.out.println("==>Cible: " + destination);
+						planetesInterdite.add(destination);				
+						int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
+						ordre.setPopulation(populationCible);
+						planete.remPopulation(populationCible );	
+						response.addOrdre(ordre);	
+					}
 				
 				}
 			}				
