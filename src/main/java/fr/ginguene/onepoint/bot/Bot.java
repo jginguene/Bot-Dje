@@ -27,14 +27,14 @@ public class Bot {
 				ordre.setOrigine(planete);
 				
 				Planete destination = selectPlanete(carte,planete);
-				planetesInterdite.add(destination);
 				
-				int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
-				ordre.setPopulation(populationCible);
-				planete.remPopulation(populationCible );
-			
-				
-				response.addOrdre(ordre);		
+				if (destination != null){
+					planetesInterdite.add(destination);				
+					int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
+					ordre.setPopulation(populationCible);
+					planete.remPopulation(populationCible );	
+					response.addOrdre(ordre);	
+				}
 				
 				}
 			}				
@@ -51,9 +51,14 @@ public class Bot {
 		Planete selectedPlanete = null;
 		float distance = 0;
 		for (Planete aPlanete: carte.getPlanetes() ){
+			
 			if (aPlanete.getProprietaire() != 1 && ! planetesInterdite.contains(aPlanete)){
 				
 				float aDistance = planete.calcDistance(aPlanete);
+				System.out.println("aDistance:" + aDistance);
+				System.out.println("selectedPlanete:" + selectedPlanete);
+				System.out.println("distance:" + distance);
+				
 				if (selectedPlanete == null || aDistance<distance){
 					selectedPlanete=aPlanete;
 					distance = aDistance;

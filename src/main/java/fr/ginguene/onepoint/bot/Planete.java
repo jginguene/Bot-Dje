@@ -25,9 +25,9 @@ public class Planete {
 	 */
 	public Planete (String [] attributes){	
 		
-		for (int i = 0 ; i < attributes.length;i++){
+	/*	for (int i = 0 ; i < attributes.length;i++){
 			System.out.println("Planete: attr " + i+ " = " + attributes[i]);
-		}
+		}*/
 		
 		 
 		this.id=Integer.parseInt(attributes[1]);
@@ -107,6 +107,10 @@ public class Planete {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	
+	public String toString(){
+		return "Planete " + this.id;
 	}
 
 
