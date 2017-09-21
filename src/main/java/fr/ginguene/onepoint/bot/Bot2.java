@@ -37,7 +37,7 @@ public class Bot2 implements IBot {
 
 				for (Planete aPlanete : carte.getPlanetesOrderByDistance(planete)) {
 
-					if (carte.getMesFlottes(aPlanete) < 5) {
+					if (carte.getMesFlottes(aPlanete) < 5 && aPlanete.getProprietaire() != Constantes.MOI) {
 
 						if (planete.getPopulation() > aPlanete.getPopulation() + 1 && !exclues.contains(aPlanete)) {
 							EnvoiFlotte ordre = new EnvoiFlotte();
