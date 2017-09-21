@@ -27,6 +27,9 @@ public class Ordre {
 	}
 	
 	public String toString(){
+		
+		
+		
 		//<PlanèteSource:int> <PlanèteCible:int> <NombreUnités:int>
 		try{
 			return origine.getId() +" " + destination.getId() + " " + this.population;
@@ -35,6 +38,8 @@ public class Ordre {
 			return "";
 		}
 	}
+	
+
 	
 	
 

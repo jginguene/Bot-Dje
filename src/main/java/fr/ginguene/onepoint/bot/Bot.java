@@ -16,7 +16,7 @@ public class Bot {
 		for (Planete planete: carte.getPlanetes() ){			
 			
 			System.out.println("==>Planete " + planete.getId() + "; population:" + planete.getPopulation());
-			if (planete.getProprietaire() == 1 && planete.getPopulation()>1){	
+			if (planete.getProprietaire() == 1 && planete.getPopulation()>10){	
 				System.out.println("==>Cible: Planete " + planete.getId());
 				Ordre ordre = new Ordre();
 				ordre.setOrigine(planete);
