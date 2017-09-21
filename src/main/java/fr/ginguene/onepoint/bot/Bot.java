@@ -12,7 +12,11 @@ public class Bot {
 		
 		List<Ordre> ordres= new ArrayList<Ordre>();
 		
+		System.out.println("Nombre de planete:" + carte.getPlanetes().size());
+		
 		for (Planete planete: carte.getPlanetes() ){			
+			
+			System.out.println("==>Planete " + planete.getId() + "; population:" + planete.getPopulation());
 			if (planete.getProprietaire() == 1 && planete.getPopulation()>1){	
 				System.out.println("==>Cible: Planete " + planete.getId());
 				Ordre ordre = new Ordre();

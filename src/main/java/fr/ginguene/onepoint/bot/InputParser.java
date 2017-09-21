@@ -17,9 +17,6 @@ public class InputParser {
 					Planete planete = new Planete (attributes);
 					map.addPlanete(planete);
 					break;				
-				
-			
-			
 			
 			}
 			
