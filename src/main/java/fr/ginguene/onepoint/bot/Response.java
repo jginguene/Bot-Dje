@@ -14,11 +14,12 @@ public class Response {
 	
 	
 	public String toString(){
+		
+		System.out.println("Nb Ordres:" +  ordres.size());
 		 StringJoiner joiner = new StringJoiner("\n");
 		 for (Ordre ordre: ordres){
 			 joiner.add(ordre.toString());
 		 }
-	
 		 
 		return joiner.toString();
 	}
