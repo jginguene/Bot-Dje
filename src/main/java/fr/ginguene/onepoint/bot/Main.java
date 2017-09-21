@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Main {
 
 	private InputParser parser = new InputParser();
-	private IBot bot = new Bot();
+	private IBot bot = new Bot2();
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);

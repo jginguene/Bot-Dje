@@ -129,4 +129,22 @@ public class Carte {
 
 	}
 
+	public Planete getEnnemiLaPlusProche(Planete planete, List<Planete> exclues) {
+
+		float distance = -1;
+		Planete ret = null;
+
+		for (Planete aPlanete : this.planetes) {
+			if (aPlanete.getProprietaire() != Constantes.MOI && !exclues.contains(aPlanete)) {
+				float aDistance = planete.calcDistance(aPlanete);
+				if (ret == null || aDistance < distance) {
+					ret = aPlanete;
+					distance = aDistance;
+				}
+			}
+		}
+		return ret;
+
+	}
+
 }
