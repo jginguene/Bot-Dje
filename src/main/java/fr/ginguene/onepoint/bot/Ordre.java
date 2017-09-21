@@ -27,6 +27,9 @@ public class Ordre {
 	}
 	
 	public String toString(){
+		if (population<=3){
+			return "";
+		}
 		
 		
 		
