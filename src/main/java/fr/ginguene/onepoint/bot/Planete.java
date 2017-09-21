@@ -16,8 +16,11 @@ public class Planete {
 	 * P <Identifiant:int> <X:float> <Y:float> <Propriétaire:int> <Population:int> <PopulationMaximum:int> <TauxDeCroissance:int> <SystemeDeClassification:char> <Terraformation:int>
 	 * 
 	 */
-	public Planete (String [] attributes){
+	public Planete (String [] attributes){	
 		
+		for (int i = 0 ; i < attributes.length;i++){
+			System.out.println("Planete: attr " + i+ " = " + attributes[i]);
+		}
 		
 		 
 		this.id=Integer.parseInt(attributes[1]);
@@ -26,12 +29,9 @@ public class Planete {
 		this.proprietaire= Integer.parseInt(attributes[4]);
 		this.population= Integer.parseInt(attributes[5]);
 		this.populationMax= Integer.parseInt(attributes[6]);
-		this.tauxCroissance= Integer.parseInt(attributes[7]);
-		
-		this.systemeClassification= attributes[8].charAt(0);
-		
-		this.terraformation= Integer.parseInt(attributes[9]);
-		
+		this.tauxCroissance= Integer.parseInt(attributes[7]);		
+		this.systemeClassification= attributes[8].charAt(0);		
+		this.terraformation= Integer.parseInt(attributes[9]);		
 	
 		
 	}
