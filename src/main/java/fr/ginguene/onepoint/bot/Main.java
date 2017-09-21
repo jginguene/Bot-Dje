@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,19 +38,11 @@ public class Main {
   }
 
   @RequestMapping(method = RequestMethod.POST)
-  String bot (HttpServletRequest request) {
+  public String bot (@RequestBody String input) {
 	  String response ="Victory";
 	  
-	  		System.err.println("Hello, logs!");
-		    Map<String, String[]> parameters = request.getParameterMap();
-
-		    for(String key : parameters.keySet()) {
-		        System.out.println(key);
-		        String[] vals = parameters.get(key);
-		        for(String val : vals)
-		            System.out.println(" -> " + val);
-		    }
-		    
+	   System.out.println("input:"  + input);
+		   
 		    
 		    System.out.println("Response:"  + response);	    
 		    return response;
