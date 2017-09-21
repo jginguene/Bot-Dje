@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Bot {
 	
+	List<Planete> planetesInterdite = new ArrayList<Planete>();
+
+	
 	
 	public Response getResponse(Carte carte){
 		
@@ -17,25 +20,48 @@ public class Bot {
 			
 			System.out.println("==>Planete " + planete.getId() + "; population:" + planete.getPopulation());
 			if (planete.getProprietaire() == 1 && planete.getPopulation()>10){	
+				while (planete.getPopulation()>10){
+				
 				System.out.println("==>Cible: Planete " + planete.getId());
 				Ordre ordre = new Ordre();
 				ordre.setOrigine(planete);
-				ordre.setPopulation(planete.getPopulation() - 1);	
-				response.addOrdre(ordre);	
-			}	
+				
+				Planete destination = selectPlanete(carte,planete);
+				planetesInterdite.add(destination);
+				
+				int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
+				ordre.setPopulation(populationCible);
+				planete.remPopulation(populationCible );
 			
+				
+				response.addOrdre(ordre);		
+				
+				}
+			}				
 		}
 		
-		for (Ordre ordre: response.getOrdres()){
-			for (Planete planete: carte.getPlanetes() ){
-				if (planete.getProprietaire() != 1){
-					ordre.setDestination(planete);					
-				}	
-			}	
-		}
 		
 		
 		return response;
+		
+	}
+	
+	public Planete selectPlanete (Carte carte, Planete planete){
+		
+		Planete selectedPlanete = null;
+		float distance = 0;
+		for (Planete aPlanete: carte.getPlanetes() ){
+			if (aPlanete.getProprietaire() != 1 && ! planetesInterdite.contains(aPlanete)){
+				
+				float aDistance = planete.calcDistance(aPlanete);
+				if (selectedPlanete == null || aDistance<distance){
+					selectedPlanete=aPlanete;
+					distance = aDistance;
+				}								
+			}	
+		}	
+		return selectedPlanete;
+		
 		
 	}
 

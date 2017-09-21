@@ -6,6 +6,13 @@ public class Planete {
 	private float y=-1;
 	private int proprietaire=-1;
 	private int population=-1;
+	
+	
+	
+	public void remPopulation(int population) {
+		this.population -= population;
+	}
+
 	private int populationMax=-1;
 	private int tauxCroissance=-1;
 	private char systemeClassification;
@@ -74,6 +81,32 @@ public class Planete {
 
 	public int getTerraformation() {
 		return terraformation;
+	}
+	
+	public float calcDistance (Planete planete){
+		return (float) Math.sqrt(Math.pow(x-planete.getX(),2) + Math.pow(y-planete.getY(),2));
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Planete other = (Planete) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 
