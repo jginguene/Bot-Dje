@@ -110,6 +110,26 @@ public class Carte {
 
 	}
 
+	public List<Planete> getPlanetesOrderByDistance(Planete planete) {
+		Map<Float, Planete> map = new HashMap<>();
+
+		for (Planete aPlanete : this.planetes) {
+			if (aPlanete.getId() != planete.getId()) {
+				map.put(planete.calcDistance(aPlanete), aPlanete);
+			}
+		}
+
+		List<Float> distances = new ArrayList<>(map.keySet());
+		Collections.sort(distances);
+		List<Planete> ret = new ArrayList<>();
+
+		for (int i = 0; i < planetes.size(); i++) {
+			ret.add(map.get(distances.get(i)));
+		}
+		return ret;
+
+	}
+
 	public Planete getEnnemiLaPlusProche(Planete planete) {
 
 		float distance = -1;
