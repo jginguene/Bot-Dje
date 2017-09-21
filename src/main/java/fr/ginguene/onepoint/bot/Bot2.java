@@ -30,30 +30,34 @@ public class Bot2 implements IBot {
 				response.addOrdre(terraformation);
 				System.out.println(planete + ": lancement de la terraformation");
 			} else {
+				while (planete.getPopulation() > 5) {
 
-				Planete destination = null;
-				List<Planete> exclues = new ArrayList<Planete>();
-				while (destination == null) {
+					Planete destination = null;
+					List<Planete> exclues = new ArrayList<Planete>();
+					while (destination == null) {
 
-					Planete ennemie = carte.getEnnemiLaPlusProche(planete, exclues);
-					if (carte.getMesFlottes(ennemie) > ennemie.getPopulation()) {
-						exclues.add(ennemie);
-					} else {
-						destination = ennemie;
+						Planete ennemie = carte.getEnnemiLaPlusProche(planete, exclues);
+
+						if (carte.getMesFlottes(ennemie) > ennemie.getPopulation()) {
+							exclues.add(ennemie);
+						} else {
+							destination = ennemie;
+						}
 					}
+
+					EnvoiFlotte ordre = new EnvoiFlotte();
+					ordre.setOrigine(planete);
+					ordre.setDestination(destination);
+
+					int nbVaisseaux = this.getNbVaisseauxAEnvoyer(planete, destination);
+
+					ordre.setPopulation(nbVaisseaux);
+					planete.remPopulation(nbVaisseaux);
+
+					response.addOrdre(ordre);
+					System.out.println(planete + ": Envoi de " + nbVaisseaux + "  vers la planete " + destination);
+
 				}
-
-				EnvoiFlotte ordre = new EnvoiFlotte();
-				ordre.setOrigine(planete);
-				ordre.setDestination(destination);
-				int nbVaisseaux = Math.max(3, planete.getPopulation());
-
-				ordre.setPopulation(nbVaisseaux);
-				planete.remPopulation(nbVaisseaux);
-
-				response.addOrdre(ordre);
-				System.out.println(planete + ": Envoi de " + nbVaisseaux + "  vers la planete " + destination);
-
 			}
 
 		}
