@@ -11,7 +11,7 @@ public class Carte {
 	
 	
 	public void addPlanete(Planete planete){
-		System.out.println("Ajout planete:" + planete.getId());
+	//	System.out.println("Ajout planete:" + planete.getId());
 		this.planetes.add(planete);
 	}
 	
