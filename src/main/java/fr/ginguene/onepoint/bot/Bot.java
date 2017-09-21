@@ -48,8 +48,13 @@ public class Bot {
 
 								System.out.println("==>Cible: " + destination);
 								planetesInterdite.add(destination);
+
 								int populationCible = Math.min(planete.getPopulation() - 10,
 										destination.getPopulation());
+
+								if (planete.getPopulation() > 100) {
+									populationCible = 80;
+								}
 
 								ordre.setPopulation(populationCible);
 								ordre.setDestination(destination);
