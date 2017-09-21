@@ -18,6 +18,8 @@ public class Bot2 implements IBot {
 
 		for (Planete planete : mesPlanetes) {
 
+			System.out.println("Analyse :" + planete);
+
 			if (planete.getTerraformation() > 0) {
 				System.out.println(planete + ": en cours de terraformation");
 				continue;
@@ -31,7 +33,9 @@ public class Bot2 implements IBot {
 				System.out.println(planete + ": lancement de la terraformation");
 			} else {
 
-				while (planete.getPopulation() > 10) {
+				System.out.println("planete.getPopulation() :" + planete.getPopulation());
+
+				while (planete.getPopulation() > 5) {
 
 					Planete destination = null;
 					List<Planete> exclues = new ArrayList<Planete>();
@@ -39,6 +43,10 @@ public class Bot2 implements IBot {
 					while (destination == null) {
 
 						Planete ennemie = carte.getEnnemiLaPlusProche(planete, exclues);
+
+						System.out.println("ennemie:" + ennemie);
+
+						System.out.println(" ennemie.getPopulation():" + ennemie.getPopulation());
 
 						if (carte.getMesFlottes(ennemie) > ennemie.getPopulation()) {
 							exclues.add(ennemie);
@@ -55,6 +63,7 @@ public class Bot2 implements IBot {
 
 					ordre.setPopulation(nbVaisseaux);
 					planete.remPopulation(nbVaisseaux);
+					exclues.add(destination);
 
 					response.addOrdre(ordre);
 					System.out.println(planete + ": Envoi de " + nbVaisseaux + "  vers la planete " + destination);
@@ -69,12 +78,11 @@ public class Bot2 implements IBot {
 	}
 
 	private int getNbVaisseauxAEnvoyer(Planete source, Planete destination) {
-
-		if (source.getPopulation() > 5) {
-			return Math.min(source.getPopulation() - 5, destination.getPopulation());
-		} else {
+		if (source.getPopulation() < 3) {
 			return 0;
 		}
+
+		return Math.min(source.getPopulation(), destination.getPopulation());
 
 	}
 

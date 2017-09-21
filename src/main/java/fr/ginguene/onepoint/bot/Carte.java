@@ -68,7 +68,6 @@ public class Carte {
 			if (flotte.getPlaneteDestination() == destination.getId()) {
 				ret += flotte.getVaisseaux();
 			}
-			;
 		}
 		return ret;
 	}
