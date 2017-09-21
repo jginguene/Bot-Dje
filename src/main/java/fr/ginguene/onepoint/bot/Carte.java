@@ -104,7 +104,7 @@ public class Carte {
 		Collections.sort(distances);
 		List<Planete> ret = new ArrayList<>();
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 3; i++) {
 			ret.add(map.get(distances.get(i)));
 		}
 		return ret;

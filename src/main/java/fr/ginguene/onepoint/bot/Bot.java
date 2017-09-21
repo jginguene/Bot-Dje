@@ -68,6 +68,15 @@ public class Bot implements IBot {
 					if (amie != null) {
 						EnvoiFlotte ordre = new EnvoiFlotte();
 						ordre.setOrigine(planete);
+
+						float distanceAmiEnnemi = amie.calcDistance(ennemie);
+						float distancePlaneteEnnemi = planete.calcDistance(ennemie);
+						if (distanceAmiEnnemi > distancePlaneteEnnemi) {
+							ordre.setDestination(amie);
+						} else {
+							ordre.setDestination(ennemie);
+						}
+
 						ordre.setDestination(amie);
 						int nbVaisseaux = Math.max(3, planete.getPopulation());
 						ordre.setPopulation(nbVaisseaux);
