@@ -16,10 +16,6 @@
 
 package fr.ginguene.onepoint.bot;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @SpringBootApplication
 public class Main {
+	
+	private InputParser parser  = new InputParser();
+	private Bot bot = new Bot();
 
 
 
@@ -39,14 +38,16 @@ public class Main {
 
   @RequestMapping(method = RequestMethod.POST)
   public String bot (@RequestBody String input) {
-	  String response ="Victory";
 	  
-	   System.out.println("input:"  + input);
-		   
-		    
-		    System.out.println("Response:"  + response);	    
-		    return response;
+	  	  
+	   System.out.println("input:"  + input);	   
+	   Carte carte =  parser.parse(input);	   
+	   Response response = bot.getResponse(carte);
+	   System.out.println("Response:"  + response.toString());	    
+	   return response.toString();
   }
+  
+
   
 
 
