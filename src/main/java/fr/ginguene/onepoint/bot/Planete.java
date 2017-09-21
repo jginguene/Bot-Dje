@@ -2,6 +2,10 @@ package fr.ginguene.onepoint.bot;
 
 public class Planete {
 
+	public void setTerraformation(int terraformation) {
+		this.terraformation = terraformation;
+	}
+
 	private int id = 0;
 	private float y = -1;
 	private int proprietaire = -1;
@@ -114,6 +118,10 @@ public class Planete {
 
 	public String toString() {
 		return "Planete " + this.id;
+	}
+
+	public void terraforme() {
+		this.terraformation = 20 + (this.tauxCroissance * 2);
 	}
 
 }

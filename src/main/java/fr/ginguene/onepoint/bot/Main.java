@@ -26,30 +26,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @SpringBootApplication
 public class Main {
-	
-	private InputParser parser  = new InputParser();
-	private Bot bot = new Bot();
 
+	private InputParser parser = new InputParser();
+	private IBot bot = new Bot();
 
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(Main.class, args);
+	}
 
-  public static void main(String[] args) throws Exception {
-    SpringApplication.run(Main.class, args);
-  }
+	@RequestMapping(method = RequestMethod.POST)
+	public String bot(@RequestBody String input) {
 
-  @RequestMapping(method = RequestMethod.POST)
-  public String bot (@RequestBody String input) {
-	  
-	  	  
-	   System.out.println("input:"  + input);	   
-	   Carte carte =  parser.parse(input);	   
-	   
-	   Response response = bot.getResponse(carte);
-	   System.out.println("Response:"  + response.toString());	    
-	   return response.toString();
-  }
-  
+		System.out.println("input:" + input);
+		Carte carte = parser.parse(input);
 
-  
-
+		Response response = bot.getResponse(carte);
+		System.out.println("Response:" + response.toString());
+		return response.toString();
+	}
 
 }

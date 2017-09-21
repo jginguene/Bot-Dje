@@ -6,7 +6,7 @@ import java.util.List;
 import fr.ginguene.onepoint.bot.ordre.EnvoiTroupe;
 import fr.ginguene.onepoint.bot.ordre.Terraformation;
 
-public class Bot {
+public class Bot implements IBot {
 
 	List<Planete> planetesInterdite = new ArrayList<Planete>();
 
@@ -14,65 +14,70 @@ public class Bot {
 
 		Response response = new Response();
 
-		planetesInterdite.clear();
-
 		System.out.println("Nombre de planete:" + carte.getPlanetes().size());
 
-		for (Planete planete : carte.getPlanetes()) {
+		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
 
-			System.out.println("==>Planete " + planete.getId() + "; population:" + planete.getPopulation());
+		for (Planete planete : mesPlanetes) {
+			planetesInterdite.clear();
 
-			if (planete.getProprietaire() == 1) {
+			if (planete.getTerraformation() > 0) {
+				continue;
+			}
 
-				if (planete.getTerraformation() > 0) {
-					// On ne fait rien car terraformation en cours
+			if (hasToBeTerraformed(carte, planete)) {
+				planete.terraforme();
+				Terraformation terraformation = new Terraformation();
+				terraformation.setPlanete(planete);
+				response.addOrdre(terraformation);
+			} else {
 
-				} else {
+				while (planete.getPopulation() > 10) {
 
-					if (planete.getPopulation() <= 10 && planete.isTerraformable()) {
+					EnvoiTroupe ordre = new EnvoiTroupe();
+					ordre.setOrigine(planete);
 
-						Terraformation terraformation = new Terraformation();
-						terraformation.setPlanete(planete);
-						response.addOrdre(terraformation);
+					Planete destination = selectPlanete(carte, planete);
 
-					} else {
+					if (destination != null) {
+						planetesInterdite.add(destination);
 
-						while (planete.getPopulation() > 10) {
+						System.out.println("==>Cible: " + destination + ";planete.getPopulation():"
+								+ planete.getPopulation() + ";" + destination.getPopulation());
 
-							EnvoiTroupe ordre = new EnvoiTroupe();
-							ordre.setOrigine(planete);
+						int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
 
-							Planete destination = selectPlanete(carte, planete);
-
-							if (destination != null) {
-
-								System.out.println("==>Cible: " + destination);
-								planetesInterdite.add(destination);
-
-								int populationCible = Math.min(planete.getPopulation() - 10,
-										destination.getPopulation());
-
-								if (planete.getPopulation() > 100) {
-									populationCible = 80;
-								}
-
-								ordre.setPopulation(populationCible);
-								ordre.setDestination(destination);
-								planete.remPopulation(populationCible);
-								response.addOrdre(ordre);
-							} else {
-								System.out.println("Aucune cible trouvée");
-								break;
-							}
-
+						if (planete.getPopulation() > 100) {
+							populationCible = 80;
 						}
+
+						System.out.println("==>Cible: " + destination + ";planete.getPopulation():"
+								+ planete.getPopulation() + ";destination.getPopulation():"
+								+ destination.getPopulation() + ";populationCible:" + populationCible);
+
+						ordre.setPopulation(populationCible);
+						ordre.setDestination(destination);
+						planete.remPopulation(populationCible);
+						response.addOrdre(ordre);
+					} else {
+						System.out.println("Aucune cible trouvée");
+						break;
 					}
+
 				}
+
 			}
 		}
 
 		return response;
 
+	}
+
+	public boolean hasToBeTerraformed(Carte carte, Planete planete) {
+		List<Planete> mesTerraformation = carte.getMesTerraformations();
+		List<Planete> mesPlanetes = carte.getMesPlanetes();
+
+		return mesPlanetes.size() > 5 && mesTerraformation.size() == 0 && planete.isTerraformable();
 	}
 
 	public Planete selectPlanete(Carte carte, Planete planete) {
