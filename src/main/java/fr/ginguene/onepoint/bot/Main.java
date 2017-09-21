@@ -37,6 +37,9 @@ public class Main {
 
   @RequestMapping("/")
   String bot (HttpServletRequest request) {
+	  String response ="Victory";
+	  
+	  		System.err.println("Hello, logs!");
 		    Map<String, String[]> parameters = request.getParameterMap();
 
 		    for(String key : parameters.keySet()) {
@@ -46,7 +49,9 @@ public class Main {
 		            System.out.println(" -> " + val);
 		    }
 		    
-		    return "Victory 2";
+		    
+		    System.out.println("Response:"  + response);	    
+		    return response;
   }
   
 
