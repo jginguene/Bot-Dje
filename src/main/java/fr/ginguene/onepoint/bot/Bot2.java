@@ -30,10 +30,12 @@ public class Bot2 implements IBot {
 				response.addOrdre(terraformation);
 				System.out.println(planete + ": lancement de la terraformation");
 			} else {
-				while (planete.getPopulation() > 5) {
+
+				while (planete.getPopulation() > 10) {
 
 					Planete destination = null;
 					List<Planete> exclues = new ArrayList<Planete>();
+
 					while (destination == null) {
 
 						Planete ennemie = carte.getEnnemiLaPlusProche(planete, exclues);
@@ -69,9 +71,7 @@ public class Bot2 implements IBot {
 	private int getNbVaisseauxAEnvoyer(Planete source, Planete destination) {
 
 		if (source.getPopulation() > 5) {
-
 			return Math.min(source.getPopulation() - 5, destination.getPopulation());
-
 		} else {
 			return 0;
 		}
