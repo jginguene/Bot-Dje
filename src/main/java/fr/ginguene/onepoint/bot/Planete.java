@@ -2,15 +2,15 @@ package fr.ginguene.onepoint.bot;
 
 public class Planete {
 	
-	private int id;
-	private float y;
-	private int proprietaire;
-	private int population;
-	private int populationMax;
-	private int tauxCroissance;
+	private int id=0;
+	private float y=-1;
+	private int proprietaire=-1;
+	private int population=-1;
+	private int populationMax=-1;
+	private int tauxCroissance=-1;
 	private char systemeClassification;
-	private int terraformation;
-	private float x;
+	private int terraformation=-1;
+	private float x=-1;
 	
 	/**
 	 * P <Identifiant:int> <X:float> <Y:float> <Propriétaire:int> <Population:int> <PopulationMaximum:int> <TauxDeCroissance:int> <SystemeDeClassification:char> <Terraformation:int>
@@ -28,7 +28,12 @@ public class Planete {
 		this.y= Float.parseFloat(attributes[3]);
 		this.proprietaire= Integer.parseInt(attributes[4]);
 		this.population= Integer.parseInt(attributes[5]);
-		this.populationMax= Integer.parseInt(attributes[6]);
+		
+		if (! attributes[6].isEmpty()){
+			this.populationMax= Integer.parseInt(attributes[6]);
+		}
+		
+		
 		this.tauxCroissance= Integer.parseInt(attributes[7]);		
 		this.systemeClassification= attributes[8].charAt(0);		
 		this.terraformation= Integer.parseInt(attributes[9]);		
