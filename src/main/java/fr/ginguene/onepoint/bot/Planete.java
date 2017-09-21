@@ -29,15 +29,13 @@ public class Planete {
 		this.proprietaire= Integer.parseInt(attributes[4]);
 		this.population= Integer.parseInt(attributes[5]);
 		
-		if (! attributes[6].isEmpty()){
-			this.populationMax= Integer.parseInt(attributes[6]);
-		}
-		
-		
+		this.populationMax= Integer.parseInt(attributes[6]);
 		this.tauxCroissance= Integer.parseInt(attributes[7]);		
-		this.systemeClassification= attributes[8].charAt(0);		
-		this.terraformation= Integer.parseInt(attributes[9]);		
-	
+		this.systemeClassification= attributes[8].charAt(0);	
+		
+		if (attributes.length==10){
+			this.terraformation= Integer.parseInt(attributes[9]);	
+		}
 		
 	}
 	

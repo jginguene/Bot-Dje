@@ -7,6 +7,7 @@ public class InputParser {
 		Carte map = new Carte();
 		String [] lines = input.split("\n");
 		for (String line : lines ){
+			line = line.replaceAll(" *", " ");
 			String[] attributes = line.split(" ");
 			
 			String type = attributes[0];
