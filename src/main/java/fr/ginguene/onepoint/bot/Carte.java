@@ -94,8 +94,6 @@ public class Carte {
 	public List<Planete> getVoisines(Planete planete) {
 		Map<Float, Planete> map = new HashMap<>();
 
-		System.out.println("==>getVoisines " + planete);
-
 		for (Planete aPlanete : this.planetes) {
 			if (aPlanete.getId() != planete.getId()) {
 				map.put(planete.calcDistance(aPlanete), aPlanete);
@@ -109,7 +107,6 @@ public class Carte {
 		for (int i = 0; i < 3; i++) {
 			ret.add(map.get(distances.get(i)));
 		}
-		System.out.println("==> " + ret);
 		return ret;
 
 	}

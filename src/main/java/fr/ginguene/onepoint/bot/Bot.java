@@ -30,9 +30,12 @@ public class Bot implements IBot {
 				System.out.println(planete + ": lancement de la terraformation");
 			} else {
 
+				List<Planete> voisines = carte.getVoisines(planete);
+
 				// On procède d'abords aux planète enemies
-				for (Planete aPlanete : carte.getVoisines(planete)) {
-					if (planete.getProprietaire() != Constantes.MOI) {
+				for (Planete aPlanete : voisines) {
+					if (aPlanete.getProprietaire() != Constantes.MOI) {
+
 						int nbVaisseaux = getNbVaisseauxAEnvoyer(planete, aPlanete);
 
 						EnvoiFlotte ordre = new EnvoiFlotte();
@@ -51,7 +54,7 @@ public class Bot implements IBot {
 					Planete ennemie = carte.getEnnemiLaPlusProche(planete);
 					Planete amie = null;
 					float distance = -1;
-					for (Planete aPlanete : carte.getVoisines(planete)) {
+					for (Planete aPlanete : voisines) {
 						if (aPlanete.getProprietaire() == Constantes.MOI) {
 							float aDistance = aPlanete.calcDistance(ennemie);
 							if (amie == null || aDistance > distance) {
