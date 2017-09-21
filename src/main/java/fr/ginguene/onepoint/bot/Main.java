@@ -42,6 +42,7 @@ public class Main {
 	  	  
 	   System.out.println("input:"  + input);	   
 	   Carte carte =  parser.parse(input);	   
+	   
 	   Response response = bot.getResponse(carte);
 	   System.out.println("Response:"  + response.toString());	    
 	   return response.toString();

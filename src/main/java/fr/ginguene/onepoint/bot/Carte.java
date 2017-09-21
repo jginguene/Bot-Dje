@@ -10,8 +10,9 @@ public class Carte {
 	
 	
 	
-	public void addPlanete(Planete planet){
-		this.planetes.add(planet);
+	public void addPlanete(Planete planete){
+		System.out.println("Ajout planete:" + planete.getId());
+		this.planetes.add(planete);
 	}
 	
 	public  List<Planete> getPlanetes(){

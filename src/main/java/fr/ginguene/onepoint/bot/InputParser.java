@@ -4,10 +4,12 @@ public class InputParser {
 	
 	public Carte parse(String input){
 		
-		Carte map = new Carte();
+		Carte carte = new Carte();
+		
 		String [] lines = input.split("\n");
 		for (String line : lines ){
-			line = line.replaceAll(" *", " ");
+			
+			line = line.replaceAll("  ", " ");
 			String[] attributes = line.split(" ");
 			
 			String type = attributes[0];
@@ -15,14 +17,15 @@ public class InputParser {
 			switch(type){
 				case "P":
 					Planete planete = new Planete (attributes);
-					map.addPlanete(planete);
+				
+					carte.addPlanete(planete);
 					break;				
 			
 			}
 			
 		}
 			
-		return map;
+		return carte;
 		
 		
 		/*
