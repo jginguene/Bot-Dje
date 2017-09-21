@@ -37,12 +37,12 @@ public class Bot2 implements IBot {
 
 				for (Planete aPlanete : carte.getPlanetesOrderByDistance(planete)) {
 
-					if (planete.getPopulation() > aPlanete.getPopulation() && !exclues.contains(aPlanete)) {
+					if (planete.getPopulation() > aPlanete.getPopulation() + 1 && !exclues.contains(aPlanete)) {
 						EnvoiFlotte ordre = new EnvoiFlotte();
 						ordre.setOrigine(planete);
 						ordre.setDestination(aPlanete);
-						ordre.setPopulation(aPlanete.getPopulation());
-						planete.remPopulation(aPlanete.getPopulation());
+						ordre.setPopulation(aPlanete.getPopulation() + 1);
+						planete.remPopulation(aPlanete.getPopulation() + 1);
 						response.addOrdre(ordre);
 						exclues.add(aPlanete);
 					}
