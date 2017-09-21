@@ -1,14 +1,11 @@
 package fr.ginguene.onepoint.bot;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import fr.ginguene.onepoint.bot.ordre.EnvoiTroupe;
+import fr.ginguene.onepoint.bot.ordre.EnvoiFlotte;
 import fr.ginguene.onepoint.bot.ordre.Terraformation;
 
 public class Bot implements IBot {
-
-	List<Planete> planetesInterdite = new ArrayList<Planete>();
 
 	public Response getResponse(Carte carte) {
 
@@ -19,7 +16,6 @@ public class Bot implements IBot {
 		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
 
 		for (Planete planete : mesPlanetes) {
-			planetesInterdite.clear();
 
 			if (planete.getTerraformation() > 0) {
 				continue;
@@ -34,13 +30,12 @@ public class Bot implements IBot {
 
 				while (planete.getPopulation() > 10) {
 
-					EnvoiTroupe ordre = new EnvoiTroupe();
+					EnvoiFlotte ordre = new EnvoiFlotte();
 					ordre.setOrigine(planete);
 
 					Planete destination = selectPlanete(carte, planete);
 
 					if (destination != null) {
-						planetesInterdite.add(destination);
 
 						System.out.println("==>Cible: " + destination + ";planete.getPopulation():"
 								+ planete.getPopulation() + ";" + destination.getPopulation());
@@ -89,20 +84,34 @@ public class Bot implements IBot {
 			System.out.println("Analyse cible:" + aPlanete);
 			// System.out.println("planetesInterdite:" + planetesInterdite);
 
-			if (aPlanete.getProprietaire() != 1 && !planetesInterdite.contains(aPlanete)) {
+			if (aPlanete.getProprietaire() != 1) {
 
 				float aDistance = planete.calcDistance(aPlanete);
 				System.out.println("aDistance:" + aDistance);
 				System.out.println("selectedPlanete:" + selectedPlanete);
 				System.out.println("distance:" + distance);
 
-				if (selectedPlanete == null || aDistance < distance) {
+				if ((selectedPlanete == null || aDistance < distance) && notFlotteSuffisante(carte, selectedPlanete)) {
 					selectedPlanete = aPlanete;
 					distance = aDistance;
 				}
 			}
 		}
 		return selectedPlanete;
+
+	}
+
+	private boolean notFlotteSuffisante(Carte carte, Planete planete) {
+		if (planete == null) {
+			return false;
+		}
+
+		int flotteCount = carte.getMesFlottes(planete);
+		if (flotteCount > planete.getPopulation() + 5) {
+			return true;
+		}
+
+		return false;
 
 	}
 

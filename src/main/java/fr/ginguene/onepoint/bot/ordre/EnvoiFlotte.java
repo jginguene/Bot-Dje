@@ -2,7 +2,7 @@ package fr.ginguene.onepoint.bot.ordre;
 
 import fr.ginguene.onepoint.bot.Planete;
 
-public class EnvoiTroupe implements Ordre {
+public class EnvoiFlotte implements Ordre {
 	
 	private Planete origine;
 	private Planete destination;	
