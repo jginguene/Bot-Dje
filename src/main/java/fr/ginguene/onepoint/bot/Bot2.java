@@ -67,13 +67,15 @@ public class Bot2 implements IBot {
 	}
 
 	private int getNbVaisseauxAEnvoyer(Planete source, Planete destination) {
-		int res = 0;
 
-		res = Math.max(source.getPopulation(), destination.getPopulation());
+		if (source.getPopulation() > 5) {
 
-		res = Math.min(source.getPopulation(), res);
+			return Math.min(source.getPopulation() - 5, destination.getPopulation());
 
-		return res;
+		} else {
+			return 0;
+		}
+
 	}
 
 	public boolean hasToBeTerraformed(Carte carte, Planete planete) {
