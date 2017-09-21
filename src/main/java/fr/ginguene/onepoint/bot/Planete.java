@@ -1,55 +1,54 @@
 package fr.ginguene.onepoint.bot;
 
 public class Planete {
-	
-	private int id=0;
-	private float y=-1;
-	private int proprietaire=-1;
-	private int population=-1;
-	
-	
-	
+
+	private int id = 0;
+	private float y = -1;
+	private int proprietaire = -1;
+	private int population = -1;
+
 	public void remPopulation(int population) {
 		this.population -= population;
 	}
 
-	private int populationMax=-1;
-	private int tauxCroissance=-1;
+	private int populationMax = -1;
+	private int tauxCroissance = -1;
 	private char systemeClassification;
-	private int terraformation=-1;
-	private float x=-1;
-	
+	private int terraformation = -1;
+	private float x = -1;
+
 	/**
-	 * P <Identifiant:int> <X:float> <Y:float> <Propriétaire:int> <Population:int> <PopulationMaximum:int> <TauxDeCroissance:int> <SystemeDeClassification:char> <Terraformation:int>
+	 * P <Identifiant:int> <X:float> <Y:float> <Propriétaire:int>
+	 * <Population:int> <PopulationMaximum:int> <TauxDeCroissance:int>
+	 * <SystemeDeClassification:char> <Terraformation:int>
 	 * 
 	 */
-	public Planete (String [] attributes){	
-		
-	/*	for (int i = 0 ; i < attributes.length;i++){
-			System.out.println("Planete: attr " + i+ " = " + attributes[i]);
-		}*/
-		
-		 
-		this.id=Integer.parseInt(attributes[1]);
-		this.x= Float.parseFloat(attributes[2]);
-		this.y= Float.parseFloat(attributes[3]);
-		this.proprietaire= Integer.parseInt(attributes[4]);
-		this.population= Integer.parseInt(attributes[5]);
-		
-		this.populationMax= Integer.parseInt(attributes[6]);
-		this.tauxCroissance= Integer.parseInt(attributes[7]);		
-		this.systemeClassification= attributes[8].charAt(0);	
-		
-		if (attributes.length==10){
-			this.terraformation= Integer.parseInt(attributes[9]);	
+	public Planete(String[] attributes) {
+
+		/*
+		 * for (int i = 0 ; i < attributes.length;i++){
+		 * System.out.println("Planete: attr " + i+ " = " + attributes[i]); }
+		 */
+
+		this.id = Integer.parseInt(attributes[1]);
+		this.x = Float.parseFloat(attributes[2]);
+		this.y = Float.parseFloat(attributes[3]);
+		this.proprietaire = Integer.parseInt(attributes[4]);
+		this.population = Integer.parseInt(attributes[5]);
+
+		this.populationMax = Integer.parseInt(attributes[6]);
+		this.tauxCroissance = Integer.parseInt(attributes[7]);
+		this.systemeClassification = attributes[8].charAt(0);
+
+		if (attributes.length == 10) {
+			this.terraformation = Integer.parseInt(attributes[9]);
 		}
-		
+
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-
 
 	public float getX() {
 		return x;
@@ -79,12 +78,16 @@ public class Planete {
 		return systemeClassification;
 	}
 
+	public boolean isTerraformable() {
+		return terraformation == 'H' || terraformation == 'K' || terraformation == 'L';
+	}
+
 	public int getTerraformation() {
 		return terraformation;
 	}
-	
-	public float calcDistance (Planete planete){
-		return (float) Math.sqrt(Math.pow(x-planete.getX(),2) + Math.pow(y-planete.getY(),2));
+
+	public float calcDistance(Planete planete) {
+		return (float) Math.sqrt(Math.pow(x - planete.getX(), 2) + Math.pow(y - planete.getY(), 2));
 	}
 
 	@Override
@@ -108,10 +111,9 @@ public class Planete {
 			return false;
 		return true;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return "Planete " + this.id;
 	}
-
 
 }

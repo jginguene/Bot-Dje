@@ -29,7 +29,7 @@ public class Bot {
 
 				} else {
 
-					if (planete.getPopulation() <= 10 && planete.getSystemeClassification() != 'M') {
+					if (planete.getPopulation() <= 10 && planete.isTerraformable()) {
 
 						Terraformation terraformation = new Terraformation();
 						terraformation.setPlanete(planete);
