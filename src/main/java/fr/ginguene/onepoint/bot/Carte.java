@@ -123,8 +123,8 @@ public class Carte {
 		Collections.sort(distances);
 		List<Planete> ret = new ArrayList<>();
 
-		for (int i = 0; i < planetes.size(); i++) {
-			ret.add(map.get(distances.get(i)));
+		for (float distance : distances) {
+			ret.add(map.get(distance));
 		}
 		return ret;
 
