@@ -10,6 +10,8 @@ public class Bot {
 	public Response getResponse(Carte carte) {
 
 		Response response = new Response();
+		
+		planetesInterdite.clear();
 
 		System.out.println("Nombre de planete:" + carte.getPlanetes().size());
 
@@ -50,6 +52,9 @@ public class Bot {
 		Planete selectedPlanete = null;
 		float distance = 0;
 		for (Planete aPlanete : carte.getPlanetes()) {
+			
+			System.out.println("Analyse cible:" + aPlanete);
+		    System.out.println("planetesInterdite:" + planetesInterdite);
 
 			if (aPlanete.getProprietaire() != 1 && !planetesInterdite.contains(aPlanete)) {
 
