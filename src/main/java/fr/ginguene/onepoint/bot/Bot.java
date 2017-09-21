@@ -30,7 +30,9 @@ public class Bot {
 					if (destination != null) {
 						System.out.println("==>Cible: " + destination);
 						planetesInterdite.add(destination);
-						int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
+						int populationCible = Math.min(planete.getPopulation() - 10, 20);
+						
+						
 						ordre.setPopulation(populationCible);
 						ordre.setDestination(destination);
 						planete.remPopulation(populationCible);
