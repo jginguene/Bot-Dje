@@ -16,24 +16,14 @@
 
 package fr.ginguene.onepoint.bot;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Map;
 
 @RestController
 @SpringBootApplication
@@ -46,8 +36,17 @@ public class Main {
   }
 
   @RequestMapping("/")
-  String bot() {
-    return "victory!!!";
+  String bot (HttpServletRequest request) {
+		    Map<String, String[]> parameters = request.getParameterMap();
+
+		    for(String key : parameters.keySet()) {
+		        System.out.println(key);
+		        String[] vals = parameters.get(key);
+		        for(String val : vals)
+		            System.out.println(" -> " + val);
+		    }
+		    
+		    return "Victory 2";
   }
   
 
