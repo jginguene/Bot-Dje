@@ -28,7 +28,12 @@ public class Ordre {
 	
 	public String toString(){
 		//<PlanèteSource:int> <PlanèteCible:int> <NombreUnités:int>
-		return origine.getId() +" " + destination.getId() + " " + this.population;
+		try{
+			return origine.getId() +" " + destination.getId() + " " + this.population;
+		}catch(Exception e){
+			System.err.println("Failed to serialize order:" + origine+"-"+destination + "-"+population);
+			return "";
+		}
 	}
 	
 	
