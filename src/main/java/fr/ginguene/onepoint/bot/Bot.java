@@ -3,6 +3,9 @@ package fr.ginguene.onepoint.bot;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ginguene.onepoint.bot.ordre.EnvoiTroupe;
+import fr.ginguene.onepoint.bot.ordre.Terraformation;
+
 public class Bot {
 
 	List<Planete> planetesInterdite = new ArrayList<Planete>();
@@ -10,7 +13,7 @@ public class Bot {
 	public Response getResponse(Carte carte) {
 
 		Response response = new Response();
-		
+
 		planetesInterdite.clear();
 
 		System.out.println("Nombre de planete:" + carte.getPlanetes().size());
@@ -18,30 +21,47 @@ public class Bot {
 		for (Planete planete : carte.getPlanetes()) {
 
 			System.out.println("==>Planete " + planete.getId() + "; population:" + planete.getPopulation());
-			
-			if (planete.getProprietaire() == 1 ) {
-				while (planete.getPopulation() > 10) {
 
-					Ordre ordre = new Ordre();
-					ordre.setOrigine(planete);					
+			if (planete.getProprietaire() == 1) {
 
-					Planete destination = selectPlanete(carte, planete);
-					
-					if (destination != null) {
-						System.out.println("==>Cible: " + destination);
-						planetesInterdite.add(destination);
-						int populationCible = Math.min(planete.getPopulation() - 10, 20);
-						
-						
-						ordre.setPopulation(populationCible);
-						ordre.setDestination(destination);
-						planete.remPopulation(populationCible);
-						response.addOrdre(ordre);
-					}else{
-						System.out.println("Aucune cible trouvée");
-						break;
+				if (planete.getTerraformation() > 0) {
+					// On ne fait rien car terraformation en cours
+
+				} else {
+
+					if (planete.getPopulation() <= 10) {
+
+						Terraformation terraformation = new Terraformation();
+						terraformation.setPlanete(planete);
+						response.addOrdre(terraformation);
+
+					} else {
+
+						while (planete.getPopulation() > 10) {
+
+							EnvoiTroupe ordre = new EnvoiTroupe();
+							ordre.setOrigine(planete);
+
+							Planete destination = selectPlanete(carte, planete);
+
+							if (destination != null) {
+
+								System.out.println("==>Cible: " + destination);
+								planetesInterdite.add(destination);
+								int populationCible = Math.min(planete.getPopulation() - 10,
+										destination.getPopulation());
+
+								ordre.setPopulation(populationCible);
+								ordre.setDestination(destination);
+								planete.remPopulation(populationCible);
+								response.addOrdre(ordre);
+							} else {
+								System.out.println("Aucune cible trouvée");
+								break;
+							}
+
+						}
 					}
-
 				}
 			}
 		}
@@ -55,9 +75,9 @@ public class Bot {
 		Planete selectedPlanete = null;
 		float distance = 0;
 		for (Planete aPlanete : carte.getPlanetes()) {
-			
+
 			System.out.println("Analyse cible:" + aPlanete);
-		  //  System.out.println("planetesInterdite:" + planetesInterdite);
+			// System.out.println("planetesInterdite:" + planetesInterdite);
 
 			if (aPlanete.getProprietaire() != 1 && !planetesInterdite.contains(aPlanete)) {
 

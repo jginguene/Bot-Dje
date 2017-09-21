@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
+import fr.ginguene.onepoint.bot.ordre.Ordre;
+
 public class Response {
 	
 	private List<Ordre> ordres = new ArrayList<Ordre>();

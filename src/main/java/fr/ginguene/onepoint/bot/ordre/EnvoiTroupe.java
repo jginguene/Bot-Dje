@@ -1,6 +1,8 @@
-package fr.ginguene.onepoint.bot;
+package fr.ginguene.onepoint.bot.ordre;
 
-public class Ordre {
+import fr.ginguene.onepoint.bot.Planete;
+
+public class EnvoiTroupe implements Ordre {
 	
 	private Planete origine;
 	private Planete destination;	
@@ -26,11 +28,11 @@ public class Ordre {
 		this.population = population;
 	}
 	
-	public String toString(){
+	@Override
+	public String asString(){
 		if (population<=3){
 			return "";
-		}
-		
+		}		
 		
 		
 		//<PlanèteSource:int> <PlanèteCible:int> <NombreUnités:int>
@@ -41,7 +43,8 @@ public class Ordre {
 			return "";
 		}
 	}
-	
+
+
 
 	
 	
