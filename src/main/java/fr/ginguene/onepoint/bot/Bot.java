@@ -18,6 +18,7 @@ public class Bot implements IBot {
 		for (Planete planete : mesPlanetes) {
 
 			if (planete.getTerraformation() > 0) {
+				System.out.println(planete + ": en cours de terraformation");
 				continue;
 			}
 
@@ -26,46 +27,70 @@ public class Bot implements IBot {
 				Terraformation terraformation = new Terraformation();
 				terraformation.setPlanete(planete);
 				response.addOrdre(terraformation);
+				System.out.println(planete + ": lancement de la terraformation");
 			} else {
 
-				while (planete.getPopulation() > 10) {
+				// On procède d'abords aux planète enemies
+				for (Planete aPlanete : carte.getVoisines(planete)) {
+					if (planete.getProprietaire() != Constantes.MOI) {
+						int nbVaisseaux = getNbVaisseauxAEnvoyer(planete, aPlanete);
 
-					EnvoiFlotte ordre = new EnvoiFlotte();
-					ordre.setOrigine(planete);
-
-					Planete destination = selectPlanete(carte, planete);
-
-					if (destination != null) {
-
-						System.out.println("==>Cible: " + destination + ";planete.getPopulation():"
-								+ planete.getPopulation() + ";" + destination.getPopulation());
-
-						int populationCible = Math.min(planete.getPopulation() - 10, destination.getPopulation());
-
-						if (planete.getPopulation() > 100) {
-							populationCible = 80;
-						}
-
-						System.out.println("==>Cible: " + destination + ";planete.getPopulation():"
-								+ planete.getPopulation() + ";destination.getPopulation():"
-								+ destination.getPopulation() + ";populationCible:" + populationCible);
-
-						ordre.setPopulation(populationCible);
-						ordre.setDestination(destination);
-						planete.remPopulation(populationCible);
+						EnvoiFlotte ordre = new EnvoiFlotte();
+						ordre.setOrigine(planete);
+						ordre.setDestination(aPlanete);
+						ordre.setPopulation(nbVaisseaux);
+						planete.remPopulation(nbVaisseaux);
 						response.addOrdre(ordre);
-					} else {
-						System.out.println("Aucune cible trouvée");
-						break;
+						System.out.println(planete + ": envoi de " + nbVaisseaux + "  vers la planete " + aPlanete);
+					}
+				}
+
+				// On envoi les renforts à la planete amis ayant l'ennemi le
+				// plus proche
+				if (planete.getPopulation() > 10) {
+					Planete ennemie = carte.getEnnemiLaPlusProche(planete);
+					Planete amie = null;
+					float distance = -1;
+					for (Planete aPlanete : carte.getVoisines(planete)) {
+						if (aPlanete.getProprietaire() == Constantes.MOI) {
+							float aDistance = aPlanete.calcDistance(ennemie);
+							if (amie == null || aDistance > distance) {
+								distance = aDistance;
+								amie = aPlanete;
+							}
+
+						}
 					}
 
+					if (amie != null) {
+						EnvoiFlotte ordre = new EnvoiFlotte();
+						ordre.setOrigine(planete);
+						ordre.setDestination(amie);
+						int nbVaisseaux = Math.max(3, planete.getPopulation());
+						ordre.setPopulation(nbVaisseaux);
+						planete.remPopulation(nbVaisseaux);
+						response.addOrdre(ordre);
+						System.out.println(planete + ": renfort de " + nbVaisseaux + "  vers la planete " + amie);
+
+					}
 				}
 
 			}
+
 		}
 
 		return response;
 
+	}
+
+	private int getNbVaisseauxAEnvoyer(Planete source, Planete destination) {
+		int res = 0;
+
+		res = Math.max(source.getPopulation(), destination.getPopulation());
+
+		res = Math.min(source.getPopulation(), res);
+
+		return res;
 	}
 
 	public boolean hasToBeTerraformed(Carte carte, Planete planete) {
@@ -73,46 +98,6 @@ public class Bot implements IBot {
 		List<Planete> mesPlanetes = carte.getMesPlanetes();
 
 		return mesPlanetes.size() > 5 && mesTerraformation.size() == 0 && planete.isTerraformable();
-	}
-
-	public Planete selectPlanete(Carte carte, Planete planete) {
-
-		Planete selectedPlanete = null;
-		float distance = 0;
-		for (Planete aPlanete : carte.getPlanetes()) {
-
-			System.out.println("Analyse cible:" + aPlanete);
-			// System.out.println("planetesInterdite:" + planetesInterdite);
-
-			if (aPlanete.getProprietaire() != 1) {
-
-				float aDistance = planete.calcDistance(aPlanete);
-				System.out.println("aDistance:" + aDistance);
-				System.out.println("selectedPlanete:" + selectedPlanete);
-				System.out.println("distance:" + distance);
-
-				if ((selectedPlanete == null || aDistance < distance) && notFlotteSuffisante(carte, selectedPlanete)) {
-					selectedPlanete = aPlanete;
-					distance = aDistance;
-				}
-			}
-		}
-		return selectedPlanete;
-
-	}
-
-	private boolean notFlotteSuffisante(Carte carte, Planete planete) {
-		if (planete == null) {
-			return false;
-		}
-
-		int flotteCount = carte.getMesFlottes(planete);
-		if (flotteCount > planete.getPopulation() + 5) {
-			return true;
-		}
-
-		return false;
-
 	}
 
 }

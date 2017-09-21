@@ -1,6 +1,7 @@
 package fr.ginguene.onepoint.bot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +89,45 @@ public class Carte {
 			}
 		}
 		return ret;
+	}
+
+	public List<Planete> getVoisines(Planete planete) {
+		Map<Float, Planete> map = new HashMap<>();
+
+		for (Planete aPlanete : this.planetes) {
+			if (aPlanete.getId() != planete.getId()) {
+				map.put(planete.calcDistance(aPlanete), aPlanete);
+			}
+		}
+
+		List<Float> distances = new ArrayList<>(map.keySet());
+		Collections.sort(distances);
+		List<Planete> ret = new ArrayList<>();
+
+		for (int i = 0; i < 3; i++) {
+			ret.add(map.get(distances.get(i)));
+
+		}
+		return ret;
+
+	}
+
+	public Planete getEnnemiLaPlusProche(Planete planete) {
+
+		float distance = -1;
+		Planete ret = null;
+
+		for (Planete aPlanete : this.planetes) {
+			if (aPlanete.getProprietaire() != Constantes.MOI) {
+				float aDistance = planete.calcDistance(aPlanete);
+				if (ret == null || aDistance < distance) {
+					ret = aPlanete;
+					distance = aDistance;
+				}
+			}
+		}
+		return ret;
+
 	}
 
 }
