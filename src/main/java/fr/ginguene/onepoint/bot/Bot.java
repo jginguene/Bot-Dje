@@ -55,7 +55,7 @@ public class Bot {
 		for (Planete aPlanete : carte.getPlanetes()) {
 			
 			System.out.println("Analyse cible:" + aPlanete);
-		    System.out.println("planetesInterdite:" + planetesInterdite);
+		  //  System.out.println("planetesInterdite:" + planetesInterdite);
 
 			if (aPlanete.getProprietaire() != 1 && !planetesInterdite.contains(aPlanete)) {
 
