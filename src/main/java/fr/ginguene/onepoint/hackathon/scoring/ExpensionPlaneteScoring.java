@@ -7,9 +7,9 @@ import fr.ginguene.onepoint.hackathon.Planete;
 
 public class ExpensionPlaneteScoring implements IPlaneteScoring {
 
-	private int nbTourRatio = 200;
+	private int nbTourRatio = -200;
 	private int tauxCroissanceRatio = 20;
-	private int populationRatio = 150;
+	private int populationRatio = -150;
 
 	private int[] ennemiFlotteRatio = new int[] { 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 };
 	private int[] amiFlotteRatio = new int[] { -512, -256, -128, -64, -32, -16, -8, -4, -2, -1 };
