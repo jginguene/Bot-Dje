@@ -5,7 +5,7 @@ import fr.ginguene.onepoint.hackathon.Planete;
 
 public class StarterPlaneteScoring implements IPlaneteScoring {
 
-	private int distanceRatio = 200;
+	private int distanceRatio = -200;
 	private int tauxCroissanceRatio = 20;
 	private int populationRatio = 150;
 
