@@ -113,6 +113,17 @@ public class Carte {
 		}
 	}
 
+	public int getFlotte(int proprietaire, int destination) {
+		List<Flotte> flottes = this.getFlotte(proprietaire);
+		int ret = 0;
+		for (Flotte flotte : flottes) {
+			if (flotte.getPlaneteDestination() == destination) {
+				ret += flotte.getVaisseaux();
+			}
+		}
+		return ret;
+	}
+
 	public List<Flotte> getFlotte(int proprietaire) {
 
 		if (mapFlotte.containsKey(proprietaire)) {

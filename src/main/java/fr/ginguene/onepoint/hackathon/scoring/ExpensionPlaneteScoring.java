@@ -10,8 +10,13 @@ public class ExpensionPlaneteScoring implements IPlaneteScoring {
 	private int tauxCroissanceRatio = 20;
 	private int populationRatio = -150;
 
-	private int[] ennemiFlotteRatio = new int[] { 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 };
-	private int[] amiFlotteRatio = new int[] { -512, -256, -128, -64, -32, -16, -8, -4, -2, -1 };
+	private int ennemiFlotteRatio = -50;
+	private int amiFlotteRatio = -50;
+
+	// private int[] ennemiFlotteRatio = new int[] { 512, 512, 512, 512, 32, 16,
+	// 8, 4, 2, 1 };
+	// private int[] amiFlotteRatio = new int[] { -512, -256, -128, -64, -32,
+	// -16, -8, -4, -2, -1 };
 
 	public int getScore(Carte carte, Planete source, Planete destination) {
 
@@ -22,6 +27,9 @@ public class ExpensionPlaneteScoring implements IPlaneteScoring {
 		} else {
 			score += populationRatio * destination.getPopulation();
 		}
+
+		score += amiFlotteRatio * carte.getFlotte(Constantes.MOI, destination.getId());
+		score += ennemiFlotteRatio * carte.getFlotte(Constantes.Ennemi, destination.getId());
 
 		/*
 		 * for (Flotte flotte : carte.getFlotte(Constantes.MOI)) { if
