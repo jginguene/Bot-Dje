@@ -22,8 +22,10 @@ public class Bot3 implements IBot {
 
 		IPlaneteScoring scoring;
 		if (carte.getConfiguration().getTour() == 1) {
+			System.out.println("==>starterScroring");
 			scoring = starterScroring;
 		} else {
+			System.out.println("==>expensionScroring");
 			scoring = expensionScroring;
 		}
 
@@ -40,18 +42,22 @@ public class Bot3 implements IBot {
 			Planete destination = null;
 
 			for (Planete aPlanete : carte.getPlanetes()) {
+				System.out.println("==>analyse planete: " + aPlanete);
 				if (aPlanete.getId() != source.getId()) {
 
 					int aScore = scoring.getScore(carte, source, aPlanete);
+					System.out.println("==>aScore: " + aScore);
 					if (destination == null || aScore > maxScore) {
 						maxScore = aScore;
 						destination = aPlanete;
+						System.out.println("==>new best: " + destination);
 					}
 
 				}
 
 			}
 
+			System.out.println("==>Choose : " + destination);
 			int nbVaisseau = getNbVaisseauxAEnvoyer(source, destination);
 			Flotte flotte = new Flotte();
 			flotte.setPlaneteDestination(destination.getId());
