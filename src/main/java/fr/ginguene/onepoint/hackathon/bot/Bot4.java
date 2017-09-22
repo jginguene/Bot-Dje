@@ -12,24 +12,15 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class Bot4 implements IBot {
 
-	public Response getResponse(Carte carte) {
-
-		Response response = new Response();
-
-		// System.out.println("Nombre de planete:" +
-		// carte.getPlanetes().size());
-
-		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
-
+	private Planete getDestination(Carte carte, int population) {
 		Planete defaultDesination = null;
 		int minDist = -1;
-
 		for (Planete aPlanete : carte.getPlanetes()) {
 
 			int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
 			int nbOtherVaisseau = carte.getFlotte(Constantes.Ennemi, aPlanete.getId());
 
-			if (aPlanete.getProprietaire() != Constantes.MOI) {
+			if (aPlanete.getProprietaire() != Constantes.MOI && aPlanete.getPopulation() < 40) {
 				int dist = 0;
 				for (Planete myPlanete : carte.getMesPlanetes()) {
 					dist += aPlanete.calcDistance(myPlanete);
@@ -44,6 +35,25 @@ public class Bot4 implements IBot {
 
 			}
 
+		}
+		return defaultDesination;
+	}
+
+	public Response getResponse(Carte carte) {
+
+		Response response = new Response();
+
+		// System.out.println("Nombre de planete:" +
+		// carte.getPlanetes().size());
+
+		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
+
+		Planete defaultDestination = null;
+		int pop = 10;
+
+		while (defaultDestination == null) {
+			defaultDestination = getDestination(carte, pop);
+			pop += 20;
 		}
 
 		for (Planete source : mesPlanetes) {
@@ -88,7 +98,7 @@ public class Bot4 implements IBot {
 			if (source.getPopulation() > 5) {
 				int nbVaisseau = source.getPopulation() - 1;
 				Flotte flotte = new Flotte();
-				flotte.setPlaneteDestination(defaultDesination.getId());
+				flotte.setPlaneteDestination(defaultDestination.getId());
 
 				flotte.setVaisseaux(nbVaisseau);
 				flotte.setPlaneteSource(source.getId());
