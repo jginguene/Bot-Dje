@@ -13,6 +13,7 @@ public class EnvoiFlotte implements Ordre {
 
 	@Override
 	public String asString() {
+
 		if (flotte.getVaisseaux() <= 3) {
 			return "";
 		}

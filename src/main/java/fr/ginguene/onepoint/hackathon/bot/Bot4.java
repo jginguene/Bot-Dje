@@ -58,6 +58,11 @@ public class Bot4 implements IBot {
 							&& aPlanete.getPopulation() < source.getPopulation() + nbSentVaisseau + 1) {
 
 						int nbVaisseau = 1 + aPlanete.getPopulation() - nbSentVaisseau;
+
+						if (nbVaisseau >= source.getPopulation()) {
+							nbVaisseau = source.getPopulation() - 1;
+						}
+
 						Flotte flotte = new Flotte();
 						flotte.setPlaneteDestination(aPlanete.getId());
 
