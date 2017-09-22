@@ -17,6 +17,11 @@ public class StarterPlaneteScoring implements IPlaneteScoring {
 		score += source.calcDistance(destination) * distanceRatio;
 		score += destination.getPopulation() * populationRatio;
 
+		if (carte.getMesFlottes(destination) > 0) {
+			score -= 1000;
+
+		}
+
 		return score;
 
 	}

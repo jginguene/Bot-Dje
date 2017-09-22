@@ -125,9 +125,13 @@ public class Carte {
 	}
 
 	public int getMesFlottes(Planete destination) {
+		return getMesFlottes(destination.getId());
+	}
+
+	public int getMesFlottes(int destination) {
 		int ret = 0;
 		for (Flotte flotte : getMesFlottes()) {
-			if (flotte.getPlaneteDestination() == destination.getId()) {
+			if (flotte.getPlaneteDestination() == destination) {
 				ret += flotte.getVaisseaux();
 			}
 		}
