@@ -1,4 +1,4 @@
-package fr.ginguene.onepoint.bot;
+package fr.ginguene.onepoint.hackathon;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +11,8 @@ public class Carte {
 	private static final Map<String, Integer> MAP_TRAJET = new HashMap<>();
 
 	private List<Planete> planetes = new ArrayList<Planete>();
+
+	private float defaultRatio = -1;
 
 	// key: id proprietaire
 	private Map<Integer, List<Planete>> mapPlanete = new HashMap<Integer, List<Planete>>();
@@ -44,10 +46,13 @@ public class Carte {
 		if (!MAP_TRAJET.containsKey(key)) {
 			MAP_TRAJET.put(key, flotte.getToursTotals());
 
-			float distance = getPlanete(flotte.getPlaneteSource())
-					.calcDistance(getPlanete(flotte.getPlaneteDestination()));
-			System.out.println(flotte.getPlaneteSource() + "<=>" + flotte.getPlaneteDestination()
-					+ flotte.getToursTotals() + "=>" + distance);
+			if (defaultRatio == -1.0) {
+
+				float distance = getPlanete(flotte.getPlaneteSource())
+						.calcDistance(getPlanete(flotte.getPlaneteDestination()));
+
+				this.defaultRatio = distance / flotte.getToursTotals();
+			}
 
 		}
 
@@ -72,7 +77,10 @@ public class Carte {
 
 		// temps de trajet inconnu
 		// Ajouter l'extrapolation
-		return -1;
+
+		float distance = source.calcDistance(destination);
+
+		return (int) (distance / defaultRatio);
 
 	}
 

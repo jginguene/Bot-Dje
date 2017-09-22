@@ -1,4 +1,4 @@
-package fr.ginguene.onepoint.bot;
+package fr.ginguene.onepoint.hackathon;
 
 public interface IBot {
 

@@ -1,6 +1,6 @@
-package fr.ginguene.onepoint.bot.ordre;
+package fr.ginguene.onepoint.hackathon.ordre;
 
-import fr.ginguene.onepoint.bot.Planete;
+import fr.ginguene.onepoint.hackathon.Planete;
 
 public class Terraformation implements Ordre{
 	

@@ -1,4 +1,4 @@
-package fr.ginguene.onepoint.bot;
+package fr.ginguene.onepoint.hackathon;
 
 public class Flotte {
 
@@ -6,11 +6,40 @@ public class Flotte {
 	// <ToursTotal:int> <ToursRestants:int>
 
 	private int proprietaire;
+
+	public void setProprietaire(int proprietaire) {
+		this.proprietaire = proprietaire;
+	}
+
+	public void setVaisseaux(int vaisseaux) {
+		this.vaisseaux = vaisseaux;
+	}
+
+	public void setPlaneteSource(int planeteSource) {
+		this.planeteSource = planeteSource;
+	}
+
+	public void setPlaneteDestination(int planeteDestination) {
+		this.planeteDestination = planeteDestination;
+	}
+
+	public void setToursTotals(int toursTotals) {
+		this.toursTotals = toursTotals;
+	}
+
+	public void setToursRestants(int toursRestants) {
+		this.toursRestants = toursRestants;
+	}
+
 	private int vaisseaux;
 	private int planeteSource;
 	private int planeteDestination;
 	private int toursTotals;
 	private int toursRestants;
+
+	public Flotte() {
+
+	}
 
 	public Flotte(String[] attributes) {
 

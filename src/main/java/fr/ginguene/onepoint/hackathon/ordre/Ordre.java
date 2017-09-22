@@ -1,4 +1,4 @@
-package fr.ginguene.onepoint.bot.ordre;
+package fr.ginguene.onepoint.hackathon.ordre;
 
 public interface Ordre {
 	

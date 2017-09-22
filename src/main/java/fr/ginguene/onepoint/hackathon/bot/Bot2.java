@@ -1,10 +1,16 @@
-package fr.ginguene.onepoint.bot;
+package fr.ginguene.onepoint.hackathon.bot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.ginguene.onepoint.bot.ordre.EnvoiFlotte;
-import fr.ginguene.onepoint.bot.ordre.Terraformation;
+import fr.ginguene.onepoint.hackathon.Carte;
+import fr.ginguene.onepoint.hackathon.Constantes;
+import fr.ginguene.onepoint.hackathon.Flotte;
+import fr.ginguene.onepoint.hackathon.IBot;
+import fr.ginguene.onepoint.hackathon.Planete;
+import fr.ginguene.onepoint.hackathon.Response;
+import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
+import fr.ginguene.onepoint.hackathon.ordre.Terraformation;
 
 public class Bot2 implements IBot {
 
@@ -42,10 +48,13 @@ public class Bot2 implements IBot {
 					if (carte.getMesFlottes(aPlanete) < 5 && aPlanete.getProprietaire() != Constantes.MOI) {
 
 						if (planete.getPopulation() > aPlanete.getPopulation() + 1 && !exclues.contains(aPlanete)) {
-							EnvoiFlotte ordre = new EnvoiFlotte();
-							ordre.setOrigine(planete);
-							ordre.setDestination(aPlanete);
-							ordre.setPopulation(aPlanete.getPopulation() + 1);
+
+							Flotte flotte = new Flotte();
+							EnvoiFlotte ordre = new EnvoiFlotte(flotte);
+
+							flotte.setPlaneteSource(planete.getId());
+							flotte.setPlaneteDestination(aPlanete.getId());
+							flotte.setVaisseaux(aPlanete.getPopulation() + 1);
 							planete.remPopulation(aPlanete.getPopulation() + 1);
 							response.addOrdre(ordre);
 							exclues.add(aPlanete);

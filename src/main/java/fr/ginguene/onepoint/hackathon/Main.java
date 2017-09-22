@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.ginguene.onepoint.bot;
+package fr.ginguene.onepoint.hackathon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.ginguene.onepoint.hackathon.bot.Bot3;
+
 @RestController
 @SpringBootApplication
 public class Main {
 
 	private InputParser parser = new InputParser();
-	private IBot bot = new Bot2();
+	private IBot bot = new Bot3();
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);
