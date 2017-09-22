@@ -20,7 +20,7 @@ public class Bot4 implements IBot {
 			int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
 			int nbOtherVaisseau = carte.getFlotte(Constantes.Ennemi, aPlanete.getId());
 
-			if (aPlanete.getProprietaire() != Constantes.MOI && aPlanete.getPopulation() < 40) {
+			if (aPlanete.getProprietaire() != Constantes.MOI && aPlanete.getPopulation() < population) {
 				int dist = 0;
 				for (Planete myPlanete : carte.getMesPlanetes()) {
 					dist += aPlanete.calcDistance(myPlanete);
