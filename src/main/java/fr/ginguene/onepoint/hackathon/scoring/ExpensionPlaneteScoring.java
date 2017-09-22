@@ -25,13 +25,13 @@ public class ExpensionPlaneteScoring implements IPlaneteScoring {
 		}
 
 		for (Flotte flotte : carte.getFlotte(Constantes.MOI)) {
-			if (amiFlotteRatio.length < flotte.getToursRestants() + 1) {
+			if (flotte.getToursRestants() - 1 < amiFlotteRatio.length) {
 				score += amiFlotteRatio[flotte.getToursRestants() - 1] * flotte.getVaisseaux();
 			}
 		}
 
 		for (Flotte flotte : carte.getFlotte(Constantes.Ennemi)) {
-			if (ennemiFlotteRatio.length < flotte.getToursRestants() + 1) {
+			if (flotte.getToursRestants() - 1 < ennemiFlotteRatio.length) {
 				score += ennemiFlotteRatio[flotte.getToursRestants() - 1] * flotte.getVaisseaux();
 			}
 		}
