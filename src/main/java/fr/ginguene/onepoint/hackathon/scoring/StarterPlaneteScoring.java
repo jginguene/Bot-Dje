@@ -21,6 +21,8 @@ public class StarterPlaneteScoring implements IPlaneteScoring {
 			score -= 1000000000;
 		}
 
+		System.out.println("StarterPlaneteScoring " + source.getId() + " to " + destination.getId() + " => " + score);
+
 		return score;
 
 	}
