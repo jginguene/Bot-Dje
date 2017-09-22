@@ -37,9 +37,11 @@ public class Bot4 implements IBot {
 
 						flotte.setVaisseaux(nbVaisseau);
 						flotte.setPlaneteSource(source.getId());
-						int nbTour = carte.getTrajetNbTour(source, destination);
-						flotte.setToursTotals(nbTour);
-						flotte.setToursRestants(nbTour);
+
+						// int nbTour = carte.getTrajetNbTour(source,
+						// destination);
+						// flotte.setToursTotals(nbTour);
+						// flotte.setToursRestants(nbTour);
 
 						EnvoiFlotte ordre = new EnvoiFlotte(flotte);
 						source.remPopulation(nbVaisseau);
@@ -59,9 +61,10 @@ public class Bot4 implements IBot {
 
 						flotte.setVaisseaux(nbVaisseau);
 						flotte.setPlaneteSource(source.getId());
-						int nbTour = carte.getTrajetNbTour(source, destination);
-						flotte.setToursTotals(nbTour);
-						flotte.setToursRestants(nbTour);
+						// int nbTour = carte.getTrajetNbTour(source,
+						// destination);
+						// flotte.setToursTotals(nbTour);
+						// flotte.setToursRestants(nbTour);
 
 						EnvoiFlotte ordre = new EnvoiFlotte(flotte);
 						source.remPopulation(nbVaisseau);
