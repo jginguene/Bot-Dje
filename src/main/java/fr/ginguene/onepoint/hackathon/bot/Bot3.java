@@ -84,7 +84,7 @@ public class Bot3 implements IBot {
 			return 0;
 		}
 
-		return Math.min(source.getPopulation(), destination.getPopulation());
+		return Math.min(source.getPopulation() - 1, destination.getPopulation() + 1);
 
 	}
 
