@@ -8,32 +8,86 @@ import java.util.Map;
 
 public class Carte {
 
+	private static final Map<String, Integer> MAP_TRAJET = new HashMap<>();
+
 	private List<Planete> planetes = new ArrayList<Planete>();
-	private Map<Integer, List<Planete>> hashPlanete = new HashMap<Integer, List<Planete>>();
+
+	// key: id proprietaire
+	private Map<Integer, List<Planete>> mapPlanete = new HashMap<Integer, List<Planete>>();
 
 	private List<Flotte> flottes = new ArrayList<Flotte>();
-	private Map<Integer, List<Flotte>> hashFlotte = new HashMap<Integer, List<Flotte>>();
+
+	private Map<Integer, List<Flotte>> mapFlotte = new HashMap<Integer, List<Flotte>>();
 
 	public void addPlanete(Planete planete) {
 		// System.out.println("Ajout planete:" + planete.getId());
 		this.planetes.add(planete);
 
-		if (!hashPlanete.containsKey(planete.getProprietaire())) {
-			hashPlanete.put(planete.getProprietaire(), new ArrayList<>());
+		if (!mapPlanete.containsKey(planete.getProprietaire())) {
+			mapPlanete.put(planete.getProprietaire(), new ArrayList<>());
 		}
 
-		hashPlanete.get(planete.getProprietaire()).add(planete);
+		mapPlanete.get(planete.getProprietaire()).add(planete);
 	}
 
 	public void addFlotte(Flotte flotte) {
 		// System.out.println("Ajout planete:" + planete.getId());
 		this.flottes.add(flotte);
 
-		if (!hashFlotte.containsKey(flotte.getProprietaire())) {
-			hashFlotte.put(flotte.getProprietaire(), new ArrayList<>());
+		if (!mapFlotte.containsKey(flotte.getProprietaire())) {
+			mapFlotte.put(flotte.getProprietaire(), new ArrayList<>());
 		}
 
-		hashFlotte.get(flotte.getProprietaire()).add(flotte);
+		mapFlotte.get(flotte.getProprietaire()).add(flotte);
+
+		String key = this.getTrajetKey(flotte.getPlaneteSource(), flotte.getPlaneteDestination());
+		if (!MAP_TRAJET.containsKey(key)) {
+			MAP_TRAJET.put(key, flotte.getToursTotals());
+
+			float distance = getPlanete(flotte.getPlaneteSource())
+					.calcDistance(getPlanete(flotte.getPlaneteDestination()));
+			System.out.println(flotte.getPlaneteSource() + "<=>" + flotte.getPlaneteDestination()
+					+ flotte.getToursTotals() + "=>" + distance);
+
+		}
+
+	}
+
+	public Planete getPlanete(int id) {
+		for (Planete planete : planetes) {
+			if (planete.getId() == id) {
+				return planete;
+			}
+		}
+
+		return null;
+	}
+
+	public int getTrajetNbTour(Planete source, Planete destination) {
+
+		String key = getTrajetKey(source, destination);
+		if (MAP_TRAJET.containsKey(key)) {
+			return MAP_TRAJET.get(key);
+		}
+
+		// temps de trajet inconnu
+		// Ajouter l'extrapolation
+		return -1;
+
+	}
+
+	private String getTrajetKey(int source, int destination) {
+		if (source < destination) {
+			return source + "#" + destination;
+		} else {
+			return destination + "#" + source;
+		}
+
+	}
+
+	private String getTrajetKey(Planete source, Planete destination) {
+		return getTrajetKey(source.getId(), destination.getId());
+
 	}
 
 	public List<Planete> getPlanetes() {
@@ -42,8 +96,8 @@ public class Carte {
 
 	public List<Planete> getPlanetes(int proprietaire) {
 
-		if (hashPlanete.containsKey(proprietaire)) {
-			return hashPlanete.get(proprietaire);
+		if (mapPlanete.containsKey(proprietaire)) {
+			return mapPlanete.get(proprietaire);
 		} else {
 			return new ArrayList<>();
 		}
@@ -51,8 +105,8 @@ public class Carte {
 
 	public List<Flotte> getFlotte(int proprietaire) {
 
-		if (hashFlotte.containsKey(proprietaire)) {
-			return hashFlotte.get(proprietaire);
+		if (mapFlotte.containsKey(proprietaire)) {
+			return mapFlotte.get(proprietaire);
 		} else {
 			return new ArrayList<>();
 		}

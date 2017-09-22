@@ -11,14 +11,15 @@ public class Bot implements IBot {
 
 		Response response = new Response();
 
-		System.out.println("Nombre de planete:" + carte.getPlanetes().size());
+		// System.out.println("Nombre de planete:" +
+		// carte.getPlanetes().size());
 
 		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
 
 		for (Planete planete : mesPlanetes) {
 
 			if (planete.getTerraformation() > 0) {
-				System.out.println(planete + ": en cours de terraformation");
+				// System.out.println(planete + ": en cours de terraformation");
 				continue;
 			}
 
@@ -27,7 +28,8 @@ public class Bot implements IBot {
 				Terraformation terraformation = new Terraformation();
 				terraformation.setPlanete(planete);
 				response.addOrdre(terraformation);
-				System.out.println(planete + ": lancement de la terraformation");
+				// System.out.println(planete + ": lancement de la
+				// terraformation");
 			} else {
 
 				List<Planete> voisines = carte.getVoisines(planete);
@@ -44,7 +46,8 @@ public class Bot implements IBot {
 						ordre.setPopulation(nbVaisseaux);
 						planete.remPopulation(nbVaisseaux);
 						response.addOrdre(ordre);
-						System.out.println(planete + ": envoi de " + nbVaisseaux + "  vers la planete " + aPlanete);
+						// System.out.println(planete + ": envoi de " +
+						// nbVaisseaux + " vers la planete " + aPlanete);
 					}
 				}
 
@@ -82,7 +85,8 @@ public class Bot implements IBot {
 						ordre.setPopulation(nbVaisseaux);
 						planete.remPopulation(nbVaisseaux);
 						response.addOrdre(ordre);
-						System.out.println(planete + ": renfort de " + nbVaisseaux + "  vers la planete " + amie);
+						// System.out.println(planete + ": renfort de " +
+						// nbVaisseaux + " vers la planete " + amie);
 
 					}
 				}
