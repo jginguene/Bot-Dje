@@ -21,6 +21,25 @@ public class Bot4 implements IBot {
 
 		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
 
+		Planete defaultDesination = null;
+		int minDist = -1;
+
+		for (Planete aPlanete : carte.getPlanetes()) {
+
+			if (aPlanete.getProprietaire() != Constantes.MOI) {
+				int dist = 0;
+				for (Planete myPlanete : carte.getMesPlanetes()) {
+					dist += aPlanete.calcDistance(myPlanete);
+				}
+				if (defaultDesination == null || minDist > dist) {
+					minDist = dist;
+					defaultDesination = aPlanete;
+				}
+
+			}
+
+		}
+
 		for (Planete source : mesPlanetes) {
 
 			int i = 0;
@@ -56,26 +75,22 @@ public class Bot4 implements IBot {
 			}
 
 			if (source.getPopulation() > 5) {
-				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-					if (aPlanete.getProprietaire() != Constantes.MOI) {
-						int nbVaisseau = source.getPopulation() - 1;
-						Flotte flotte = new Flotte();
-						flotte.setPlaneteDestination(aPlanete.getId());
+				int nbVaisseau = source.getPopulation() - 1;
+				Flotte flotte = new Flotte();
+				flotte.setPlaneteDestination(defaultDesination.getId());
 
-						flotte.setVaisseaux(nbVaisseau);
-						flotte.setPlaneteSource(source.getId());
-						// int nbTour = carte.getTrajetNbTour(source,
-						// destination);
-						// flotte.setToursTotals(nbTour);
-						// flotte.setToursRestants(nbTour);
+				flotte.setVaisseaux(nbVaisseau);
+				flotte.setPlaneteSource(source.getId());
+				// int nbTour = carte.getTrajetNbTour(source,
+				// destination);
+				// flotte.setToursTotals(nbTour);
+				// flotte.setToursRestants(nbTour);
 
-						EnvoiFlotte ordre = new EnvoiFlotte(flotte);
-						source.remPopulation(nbVaisseau);
-						response.addOrdre(ordre);
-						carte.addFlotte(flotte);
-						break;
-					}
-				}
+				EnvoiFlotte ordre = new EnvoiFlotte(flotte);
+				source.remPopulation(nbVaisseau);
+				response.addOrdre(ordre);
+				carte.addFlotte(flotte);
+
 			}
 
 		}
