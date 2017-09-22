@@ -25,6 +25,11 @@ public class InputParser {
 				carte.addFlotte(flotte);
 				break;
 
+			case "C":
+				Configuration conf = new Configuration(attributes);
+				carte.setConfiguration(conf);
+				break;
+
 			}
 
 		}

@@ -21,7 +21,7 @@ public class Bot3 implements IBot {
 	public Response getResponse(Carte carte) {
 
 		IPlaneteScoring scoring;
-		if (carte.getMesFlottes().size() == 0) {
+		if (carte.getConfiguration().getTour() == 1) {
 			scoring = starterScroring;
 		} else {
 			scoring = expensionScroring;

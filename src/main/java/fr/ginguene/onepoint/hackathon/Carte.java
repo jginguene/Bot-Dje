@@ -10,6 +10,8 @@ public class Carte {
 
 	private static final Map<String, Integer> MAP_TRAJET = new HashMap<>();
 
+	private Configuration configuration;
+
 	private List<Planete> planetes = new ArrayList<Planete>();
 
 	private float defaultRatio = -1;
@@ -230,6 +232,15 @@ public class Carte {
 		}
 		return ret;
 
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+
+	}
+
+	public Configuration getConfiguration() {
+		return configuration;
 	}
 
 }
