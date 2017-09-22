@@ -36,14 +36,14 @@ public class Bot3 implements IBot {
 
 		for (Planete source : mesPlanetes) {
 
-			int maxScore = -1;
+			int maxScore = -100000000;
 			Planete destination = null;
 
 			for (Planete aPlanete : carte.getPlanetes()) {
 				if (aPlanete.getId() != source.getId()) {
 
 					int aScore = scoring.getScore(carte, source, aPlanete);
-					if (aScore > maxScore) {
+					if (destination == null || aScore > maxScore) {
 						maxScore = aScore;
 						destination = aPlanete;
 					}
