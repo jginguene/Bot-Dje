@@ -21,7 +21,7 @@ public class Bot3 implements IBot {
 	public Response getResponse(Carte carte) {
 
 		IPlaneteScoring scoring;
-		if (carte.getMesPlanetes().size() == 1) {
+		if (carte.getMesFlottes().size() == 0) {
 			scoring = starterScroring;
 		} else {
 			scoring = expensionScroring;
