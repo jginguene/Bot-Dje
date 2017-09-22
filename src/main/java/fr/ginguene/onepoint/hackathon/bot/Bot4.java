@@ -26,12 +26,18 @@ public class Bot4 implements IBot {
 
 		for (Planete aPlanete : carte.getPlanetes()) {
 
+			int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
+			int nbOtherVaisseau = carte.getFlotte(Constantes.Ennemi, aPlanete.getId());
+
 			if (aPlanete.getProprietaire() != Constantes.MOI) {
 				int dist = 0;
 				for (Planete myPlanete : carte.getMesPlanetes()) {
 					dist += aPlanete.calcDistance(myPlanete);
 				}
-				if (defaultDesination == null || minDist > dist) {
+				if ((defaultDesination == null || minDist > dist)
+						&& nbSentVaisseau < aPlanete.getPopulation() + nbOtherVaisseau)
+
+				{
 					minDist = dist;
 					defaultDesination = aPlanete;
 				}
