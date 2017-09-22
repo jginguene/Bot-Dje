@@ -23,8 +23,10 @@ public class Bot4 implements IBot {
 
 		for (Planete source : mesPlanetes) {
 
+			int i = 0;
+
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-				if (aPlanete.getProprietaire() != Constantes.MOI) {
+				if (aPlanete.getProprietaire() != Constantes.MOI && i < 5) {
 					int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
 
 					if (aPlanete.getPopulation() > nbSentVaisseau
@@ -47,6 +49,8 @@ public class Bot4 implements IBot {
 						response.addOrdre(ordre);
 						carte.addFlotte(flotte);
 					}
+
+					i++;
 				}
 
 			}
