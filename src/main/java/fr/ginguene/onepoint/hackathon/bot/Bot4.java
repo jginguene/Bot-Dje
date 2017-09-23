@@ -58,39 +58,39 @@ public class Bot4 implements IBot {
 
 		for (Planete source : mesPlanetes) {
 
+			if (carte.getFlotte(Constantes.Ennemi, source.getId()) > 0) {
+				break;
+			}
+
 			int i = 0;
+			if (carte.getConfiguration().getTour() < 20) {
+				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+					if (aPlanete.getProprietaire() != Constantes.MOI && i < 5) {
+						int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
 
-			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-				if (aPlanete.getProprietaire() != Constantes.MOI && i < 5) {
-					int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
+						if (aPlanete.getPopulation() > nbSentVaisseau
+								&& aPlanete.getPopulation() < source.getPopulation() + nbSentVaisseau + 1) {
 
-					if (aPlanete.getPopulation() > nbSentVaisseau
-							&& aPlanete.getPopulation() < source.getPopulation() + nbSentVaisseau + 1) {
+							int nbVaisseau = 1 + aPlanete.getPopulation() - nbSentVaisseau;
 
-						int nbVaisseau = 1 + aPlanete.getPopulation() - nbSentVaisseau;
+							if (nbVaisseau >= source.getPopulation()) {
+								nbVaisseau = source.getPopulation() - 1;
+							}
 
-						if (nbVaisseau >= source.getPopulation()) {
-							nbVaisseau = source.getPopulation() - 1;
+							Flotte flotte = new Flotte();
+							flotte.setPlaneteDestination(aPlanete.getId());
+
+							flotte.setVaisseaux(nbVaisseau);
+							flotte.setPlaneteSource(source.getId());
+
+							EnvoiFlotte ordre = new EnvoiFlotte(flotte);
+							source.remPopulation(nbVaisseau);
+							response.addOrdre(ordre);
+							carte.addFlotte(flotte);
 						}
 
-						Flotte flotte = new Flotte();
-						flotte.setPlaneteDestination(aPlanete.getId());
-
-						flotte.setVaisseaux(nbVaisseau);
-						flotte.setPlaneteSource(source.getId());
-
-						// int nbTour = carte.getTrajetNbTour(source,
-						// destination);
-						// flotte.setToursTotals(nbTour);
-						// flotte.setToursRestants(nbTour);
-
-						EnvoiFlotte ordre = new EnvoiFlotte(flotte);
-						source.remPopulation(nbVaisseau);
-						response.addOrdre(ordre);
-						carte.addFlotte(flotte);
+						i++;
 					}
-
-					i++;
 				}
 
 			}
