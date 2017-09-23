@@ -76,6 +76,7 @@ public class Bot4 implements IBot {
 			 */
 
 			int i = 0;
+
 			// Démarrage
 			if (carte.getConfiguration().getTour() < 20) {
 				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
@@ -105,6 +106,8 @@ public class Bot4 implements IBot {
 
 						i++;
 					}
+					break;
+
 				}
 
 			}
@@ -112,6 +115,20 @@ public class Bot4 implements IBot {
 			if (source.getPopulation() > 5) {
 				Planete destination = defaultDestination;
 
+				// Mode territoire ennemi
+				// On ne fait rien dans ce cas là
+				int voisineEnnemie = 0;
+				for (Planete voisine : carte.getVoisines(source, 3)) {
+					if (voisine.getProprietaire() > Constantes.MOI) {
+						voisineEnnemie++;
+					}
+					if (voisineEnnemie > 2) {
+						break;
+					}
+
+				}
+
+				// Mode Bombe
 				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
 				int nbVaisseau = source.getPopulation() - 1;
 				if (nbVaisseauEnnemi > 0) {
@@ -120,6 +137,7 @@ public class Bot4 implements IBot {
 						nbVaisseau = source.getPopulation() / 2;
 						destination = getDestinationForBomb(carte, source, nbVaisseau);
 					}
+
 				}
 
 				Flotte flotte = new Flotte();

@@ -169,7 +169,7 @@ public class Carte {
 		return ret;
 	}
 
-	public List<Planete> getVoisines(Planete planete) {
+	public List<Planete> getVoisines(Planete planete, int nbVoisine) {
 		Map<Float, Planete> map = new HashMap<>();
 
 		for (Planete aPlanete : this.planetes) {
@@ -182,7 +182,7 @@ public class Carte {
 		Collections.sort(distances);
 		List<Planete> ret = new ArrayList<>();
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < nbVoisine; i++) {
 			ret.add(map.get(distances.get(i)));
 		}
 		return ret;
