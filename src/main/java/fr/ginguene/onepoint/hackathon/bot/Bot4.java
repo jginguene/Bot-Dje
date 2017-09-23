@@ -58,11 +58,15 @@ public class Bot4 implements IBot {
 
 		for (Planete source : mesPlanetes) {
 
-			if (carte.getFlotte(Constantes.Ennemi, source.getId()) > 0) {
-				break;
-			}
+			/*
+			 * if (carte.getFlotte(Constantes.Ennemi, source.getId()) > 0) {
+			 * 
+			 * 
+			 * break; }
+			 */
 
 			int i = 0;
+			// Démarrage
 			if (carte.getConfiguration().getTour() < 20) {
 				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 					if (aPlanete.getProprietaire() != Constantes.MOI && i < 5) {
@@ -96,16 +100,21 @@ public class Bot4 implements IBot {
 			}
 
 			if (source.getPopulation() > 5) {
+
+				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
 				int nbVaisseau = source.getPopulation() - 1;
+				if (nbVaisseauEnnemi > 0) {
+					nbVaisseau = 0;
+					if (source.getPopulation() > 100) {
+						nbVaisseau = 50;
+					}
+				}
+
 				Flotte flotte = new Flotte();
 				flotte.setPlaneteDestination(defaultDestination.getId());
 
 				flotte.setVaisseaux(nbVaisseau);
 				flotte.setPlaneteSource(source.getId());
-				// int nbTour = carte.getTrajetNbTour(source,
-				// destination);
-				// flotte.setToursTotals(nbTour);
-				// flotte.setToursRestants(nbTour);
 
 				EnvoiFlotte ordre = new EnvoiFlotte(flotte);
 				source.remPopulation(nbVaisseau);
