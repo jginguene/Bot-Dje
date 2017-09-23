@@ -39,6 +39,16 @@ public class Bot4 implements IBot {
 		return defaultDesination;
 	}
 
+	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
+		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+			if (aPlanete.getProprietaire() != Constantes.MOI && aPlanete.getPopulation() < bombSize) {
+				return aPlanete;
+			}
+		}
+		return null;
+
+	}
+
 	public Response getResponse(Carte carte) {
 
 		Response response = new Response();
@@ -100,18 +110,20 @@ public class Bot4 implements IBot {
 			}
 
 			if (source.getPopulation() > 5) {
+				Planete destination = defaultDestination;
 
 				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
 				int nbVaisseau = source.getPopulation() - 1;
 				if (nbVaisseauEnnemi > 0) {
 					nbVaisseau = 0;
-					if (source.getPopulation() > 100) {
-						nbVaisseau = 50;
+					if (source.getPopulation() > 140) {
+						nbVaisseau = source.getPopulation() / 2;
+						destination = getDestinationForBomb(carte, source, nbVaisseau);
 					}
 				}
 
 				Flotte flotte = new Flotte();
-				flotte.setPlaneteDestination(defaultDestination.getId());
+				flotte.setPlaneteDestination(destination.getId());
 
 				flotte.setVaisseaux(nbVaisseau);
 				flotte.setPlaneteSource(source.getId());
