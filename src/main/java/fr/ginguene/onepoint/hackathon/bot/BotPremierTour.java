@@ -18,12 +18,8 @@ public class BotPremierTour implements IBot {
 		Planete source = carte.getMesPlanetes().get(0);
 
 		int nbPopRestante = source.getPopulation() - 1;
-		System.out.println("nbPopRestante: " + nbPopRestante);
 
 		for (Planete destination : carte.getVoisines(source, NB_VOISINE_TO_EXPLORE)) {
-
-			System.out.println("destination: " + destination);
-			System.out.println("destination.getPopulation() + 1: " + destination.getPopulation() + 1);
 
 			if (destination.getPopulation() + 1 < nbPopRestante) {
 
@@ -32,7 +28,6 @@ public class BotPremierTour implements IBot {
 				response.addOrdre(envoiFlotte);
 				nbPopRestante -= nbVaisseaux;
 				source.remPopulation(nbVaisseaux);
-				System.out.println("nbVaisseaux: " + nbVaisseaux);
 			}
 
 		}

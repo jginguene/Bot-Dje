@@ -80,8 +80,8 @@ public class Bot4 implements IBot {
 					int aScore = carte.getTrajetNbTour(source, aPlanete) * 3 + aPlanete.getPopulation()
 							- carte.getMesFlottes(aPlanete.getId());
 
-					System.out.println("Score  " + aScore + "=" + carte.getTrajetNbTour(source, aPlanete) + "+"
-							+ aPlanete.getPopulation() + "-" + carte.getMesFlottes(aPlanete.getId()));
+					System.out.println(aPlanete + ": Score  " + aScore + "=" + carte.getTrajetNbTour(source, aPlanete)
+							+ "+" + aPlanete.getPopulation() + "-" + carte.getMesFlottes(aPlanete.getId()));
 
 					if (aScore < minScore || destination == null) {
 						destination = aPlanete;
@@ -89,6 +89,8 @@ public class Bot4 implements IBot {
 					}
 
 				}
+
+				System.out.println("cible: " + destination);
 
 				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 				source.remPopulation(nbVaisseau);
