@@ -14,6 +14,7 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 public class Bot4 implements IBot {
 
 	private BotPremierTour botPremierTour = new BotPremierTour();
+	private BotSecondTour botSecondTour = new BotSecondTour();
 
 	private Planete lastDefaultDestination = null;
 
@@ -74,6 +75,10 @@ public class Bot4 implements IBot {
 
 		if (carte.getConfiguration().getTour() == 1) {
 			return botPremierTour.getResponse(carte);
+		}
+
+		if (carte.getConfiguration().getTour() == 2) {
+			return botSecondTour.getResponse(carte);
 		}
 
 		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
