@@ -42,20 +42,21 @@ public class Bot4 implements IBot {
 
 			if (source.getPopulation() > 5) {
 
+				if (source.getPopulation() > 140) {
+					int nbVaisseau = source.getPopulation() / 2;
+					Planete destination = getDestinationForBomb(carte, source, nbVaisseau);
+					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+					break;
+				}
+
 				// Mode Bombe
 				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
 				int nbVaisseau = source.getPopulation() - 1;
 				if (nbVaisseauEnnemi > 0) {
-					nbVaisseau = 0;
-					if (source.getPopulation() > 140) {
-						nbVaisseau = source.getPopulation() / 2;
-						Planete destination = getDestinationForBomb(carte, source, nbVaisseau);
-						EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
-						source.remPopulation(nbVaisseau);
-						response.addOrdre(ordre);
-						carte.addFlotte(ordre.getFlotte());
-						break;
-					}
+					break;
 
 				}
 
