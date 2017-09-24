@@ -27,6 +27,7 @@ public class BotSecondTour implements IBot {
 				EnvoiFlotte envoiFlotte = new EnvoiFlotte(source, destination, nbVaisseaux);
 				response.addOrdre(envoiFlotte);
 				nbPopRestante -= nbVaisseaux;
+				source.remPopulation(nbVaisseaux);
 			}
 
 		}
