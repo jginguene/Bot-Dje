@@ -55,6 +55,9 @@ public class Carte {
 						.calcDistance(getPlanete(flotte.getPlaneteDestination()));
 
 				this.defaultRatio = distance / flotte.getToursTotals();
+
+				System.out.println("distance:" + distance + "; tour:" + flotte.getToursTotals() + "=> defaultRatio:"
+						+ defaultRatio);
 			}
 
 		}
