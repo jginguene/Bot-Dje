@@ -96,11 +96,12 @@ public class Bot5 implements IBot {
 				if (!mapCible.containsKey(source)) {
 					for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 						if (!mapCible.containsKey(aPlanete)) {
+
+							System.out.println("Select " + aPlanete + " for source " + aPlanete);
+							System.out.println(mapCible);
 							mapCible.put(source, aPlanete);
 						}
 					}
-					carte.getVoisines(source, 1).get(0);
-
 				}
 
 				Planete destination = mapCible.get(source);
