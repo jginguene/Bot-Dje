@@ -77,15 +77,18 @@ public class Bot4 implements IBot {
 				int minScore = 0;
 				for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
 
-					int aScore = carte.getTrajetNbTour(source, aPlanete) * 3 + aPlanete.getPopulation()
-							- carte.getMesFlottes(aPlanete.getId());
+					if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -20) {
 
-					System.out.println(aPlanete + ": Score  " + aScore + "=" + carte.getTrajetNbTour(source, aPlanete)
-							+ "+" + aPlanete.getPopulation() + "-" + carte.getMesFlottes(aPlanete.getId()));
+						int aScore = carte.getTrajetNbTour(source, aPlanete) * 2 + aPlanete.getPopulation();
 
-					if (aScore < minScore || destination == null) {
-						destination = aPlanete;
-						minScore = aScore;
+						System.out
+								.println(aPlanete + ": Score  " + aScore + "=" + carte.getTrajetNbTour(source, aPlanete)
+										+ "+" + aPlanete.getPopulation() + "-" + carte.getMesFlottes(aPlanete.getId()));
+
+						if (aScore < minScore || destination == null) {
+							destination = aPlanete;
+							minScore = aScore;
+						}
 					}
 
 				}
