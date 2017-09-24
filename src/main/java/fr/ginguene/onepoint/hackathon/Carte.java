@@ -15,7 +15,7 @@ public class Carte {
 
 	private List<Planete> planetes = new ArrayList<Planete>();
 
-	private float defaultRatio = -1;
+	private static float defaultRatio = -1;
 
 	// key: id proprietaire
 	private Map<Integer, List<Planete>> mapPlanete = new HashMap<Integer, List<Planete>>();
