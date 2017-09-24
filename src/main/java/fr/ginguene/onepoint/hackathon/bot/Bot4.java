@@ -47,10 +47,10 @@ public class Bot4 implements IBot {
 		System.out.println("==>carte:" + carte);
 		System.out.println("==>carte.getPlanetesEtrangere():" + carte.getPlanetesEtrangere());
 		for (Planete aPlanete : carte.getPlanetesEtrangere()) {
-			int score = aPlanete.getPopulation() + planeteDistance.get(aPlanete)
+			int score = aPlanete.getPopulation() + planeteDistance.get(aPlanete) / carte.getMesPlanetes().size()
 					+ carte.getFlottesEnnemies(aPlanete.getId());
 
-			System.out.println("==>" + planeteDistance.get(aPlanete) + "#" + aPlanete.getPopulation()
+			System.out.println(aPlanete + "==>" + planeteDistance.get(aPlanete) + "#" + aPlanete.getPopulation() + "#"
 					+ carte.getFlottesEnnemies(aPlanete.getId()));
 
 			if (score < minScore || lastDefaultDestination == null) {
