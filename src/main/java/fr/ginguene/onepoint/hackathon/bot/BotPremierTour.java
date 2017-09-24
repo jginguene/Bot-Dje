@@ -27,7 +27,7 @@ public class BotPremierTour implements IBot {
 
 			if (destination.getPopulation() + 1 < nbPopRestante) {
 
-				int nbVaisseaux = destination.getPopulation();
+				int nbVaisseaux = destination.getPopulation() + 1;
 				EnvoiFlotte envoiFlotte = new EnvoiFlotte(source, destination, nbVaisseaux);
 				response.addOrdre(envoiFlotte);
 				nbPopRestante -= nbVaisseaux;

@@ -30,7 +30,7 @@ import fr.ginguene.onepoint.hackathon.bot.Bot4;
 public class Main {
 
 	private InputParser parser = new InputParser();
-	private IBot bot = new Bot4();
+	private static final IBot bot = new Bot4();
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);
