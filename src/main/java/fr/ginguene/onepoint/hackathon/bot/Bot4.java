@@ -42,9 +42,10 @@ public class Bot4 implements IBot {
 		}
 
 		lastDefaultDestination = null;
-		int minScore = 0;
-		for (Planete aPlanete : carte.getPlanetesEtrangere()) {
 
+		int minScore = 0;
+
+		for (Planete aPlanete : carte.getPlanetesEtrangere()) {
 			int score = aPlanete.getPopulation() + planeteDistance.get(aPlanete)
 					+ carte.getFlottesEnnemies(aPlanete.getId());
 
@@ -79,15 +80,9 @@ public class Bot4 implements IBot {
 
 		System.out.println("Tour " + carte.getConfiguration().getTour());
 
-		/*
-		 * if (carte.getConfiguration().getTour() == 0) {
-		 * System.out.println("1er tour"); return
-		 * botPremierTour.getResponse(carte); }
-		 */
-
 		if (carte.getConfiguration().getTour() == 0) {
-			System.out.println("1eme tour");
-			return botSecondTour.getResponse(carte);
+			System.out.println("1er tour");
+			return botPremierTour.getResponse(carte);
 		}
 
 		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
