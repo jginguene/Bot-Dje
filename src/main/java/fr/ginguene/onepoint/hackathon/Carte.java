@@ -158,6 +158,16 @@ public class Carte {
 		return ret;
 	}
 
+	public int getFlottesEnnemiesFrom(int source) {
+		int ret = 0;
+		for (Flotte flotte : getFlotteEnnemies()) {
+			if (flotte.getPlaneteSource() == source) {
+				ret += flotte.getVaisseaux();
+			}
+		}
+		return ret;
+	}
+
 	public List<Flotte> getMesFlottes() {
 		return this.getFlotte(Constantes.MOI);
 	}

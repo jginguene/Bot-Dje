@@ -68,7 +68,9 @@ public class Bot4 implements IBot {
 
 						if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -20) {
 
-							int aScore = carte.getTrajetNbTour(source, aPlanete) * 4;
+							int aScore = carte.getTrajetNbTour(source, aPlanete) + aPlanete.getPopulation()
+									+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
+							;
 
 							if (aScore < minScore || destination == null) {
 								destination = aPlanete;
