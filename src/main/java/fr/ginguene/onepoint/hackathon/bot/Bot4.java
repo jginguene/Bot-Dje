@@ -1,10 +1,11 @@
 package fr.ginguene.onepoint.hackathon.bot;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Constantes;
-import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.IBot;
 import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.Response;
@@ -12,34 +13,52 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class Bot4 implements IBot {
 
-	private Planete getDestination(Carte carte, int population) {
-		Planete defaultDesination = null;
-		int minDist = -1;
-		for (Planete aPlanete : carte.getPlanetes()) {
+	private BotPremierTour botPremierTour = new BotPremierTour();
 
-			int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
-			int nbOtherVaisseau = carte.getFlotte(Constantes.Ennemi, aPlanete.getId());
+	private Planete lastDefaultDestination = null;
 
-			if (aPlanete.getProprietaire() != Constantes.MOI && aPlanete.getPopulation() < population) {
-				int dist = 0;
-				for (Planete myPlanete : carte.getMesPlanetes()) {
-					dist += aPlanete.calcDistance(myPlanete);
-				}
-				if ((defaultDesination == null || minDist > dist)
-						&& nbSentVaisseau < aPlanete.getPopulation() + nbOtherVaisseau)
+	private Planete getDefaultDestination(Carte carte) {
 
-				{
-					minDist = dist;
-					defaultDesination = aPlanete;
-				}
-
+		if (lastDefaultDestination != null) {
+			if (lastDefaultDestination.getPopulation() + carte.getFlottesEnnemies(lastDefaultDestination.getId())
+					- carte.getMesFlottes(lastDefaultDestination.getId()) < -50) {
+				return lastDefaultDestination;
 			}
 
 		}
-		return defaultDesination;
+
+		// 1er tri par ditance;
+		Map<Planete, Integer> planeteDistance = new HashMap<>();
+		for (Planete aPlanete : carte.getPlanetesEtrangere()) {
+			for (Planete myPlanete : carte.getMesPlanetes()) {
+				if (!planeteDistance.containsKey(aPlanete)) {
+					planeteDistance.put(aPlanete, 0);
+				}
+				planeteDistance.put(aPlanete,
+						planeteDistance.get(aPlanete) + carte.getTrajetNbTour(myPlanete, aPlanete));
+
+			}
+		}
+
+		lastDefaultDestination = null;
+		int minScore = 0;
+		for (Planete aPlanete : carte.getPlanetesEtrangere()) {
+			int score = aPlanete.getPopulation() + planeteDistance.get(aPlanete)
+					+ carte.getFlottesEnnemies(aPlanete.getId());
+
+			if (score < minScore || lastDefaultDestination == null) {
+				lastDefaultDestination = aPlanete;
+				minScore = score;
+			}
+
+		}
+
+		return lastDefaultDestination;
+
 	}
 
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
+
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getProprietaire() != Constantes.MOI && aPlanete.getPopulation() < bombSize) {
 				return aPlanete;
@@ -53,64 +72,50 @@ public class Bot4 implements IBot {
 
 		Response response = new Response();
 
-		// System.out.println("Nombre de planete:" +
-		// carte.getPlanetes().size());
+		if (carte.getConfiguration().getTour() == 1) {
+			return botPremierTour.getResponse(carte);
+		}
 
 		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
 
-		Planete defaultDestination = null;
-		int pop = 10;
-
-		while (defaultDestination == null) {
-			defaultDestination = getDestination(carte, pop);
-			pop += 20;
-		}
+		Planete defaultDestination = this.getDefaultDestination(carte);
 
 		for (Planete source : mesPlanetes) {
-
-			/*
-			 * if (carte.getFlotte(Constantes.Ennemi, source.getId()) > 0) {
-			 * 
-			 * 
-			 * break; }
-			 */
 
 			int i = 0;
 
 			// Démarrage
-			if (carte.getConfiguration().getTour() < 20) {
-				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-					if (aPlanete.getProprietaire() != Constantes.MOI && i < 5) {
-						int nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
-
-						if (aPlanete.getPopulation() > nbSentVaisseau
-								&& aPlanete.getPopulation() < source.getPopulation() + nbSentVaisseau + 1) {
-
-							int nbVaisseau = 1 + aPlanete.getPopulation() - nbSentVaisseau;
-
-							if (nbVaisseau >= source.getPopulation()) {
-								nbVaisseau = source.getPopulation() - 1;
-							}
-
-							Flotte flotte = new Flotte();
-							flotte.setPlaneteDestination(aPlanete.getId());
-
-							flotte.setVaisseaux(nbVaisseau);
-							flotte.setPlaneteSource(source.getId());
-
-							EnvoiFlotte ordre = new EnvoiFlotte(flotte);
-							source.remPopulation(nbVaisseau);
-							response.addOrdre(ordre);
-							carte.addFlotte(flotte);
-						}
-
-						i++;
-					}
-					break;
-
-				}
-
-			}
+			/*
+			 * if (carte.getConfiguration().getTour() < 20) { for (Planete
+			 * aPlanete : carte.getPlanetesOrderByDistance(source)) { if
+			 * (aPlanete.getProprietaire() != Constantes.MOI && i < 5) { int
+			 * nbSentVaisseau = carte.getMesFlottes(aPlanete.getId());
+			 * 
+			 * if (aPlanete.getPopulation() > nbSentVaisseau &&
+			 * aPlanete.getPopulation() < source.getPopulation() +
+			 * nbSentVaisseau + 1) {
+			 * 
+			 * int nbVaisseau = 1 + aPlanete.getPopulation() - nbSentVaisseau;
+			 * 
+			 * if (nbVaisseau >= source.getPopulation()) { nbVaisseau =
+			 * source.getPopulation() - 1; }
+			 * 
+			 * Flotte flotte = new Flotte();
+			 * flotte.setPlaneteDestination(aPlanete.getId());
+			 * 
+			 * flotte.setVaisseaux(nbVaisseau);
+			 * flotte.setPlaneteSource(source.getId());
+			 * 
+			 * EnvoiFlotte ordre = new EnvoiFlotte(flotte);
+			 * source.remPopulation(nbVaisseau); response.addOrdre(ordre);
+			 * carte.addFlotte(flotte); }
+			 * 
+			 * i++; } break;
+			 * 
+			 * }
+			 * 
+			 * }
+			 */
 
 			if (source.getPopulation() > 5) {
 				Planete destination = defaultDestination;
@@ -140,31 +145,16 @@ public class Bot4 implements IBot {
 
 				}
 
-				Flotte flotte = new Flotte();
-				flotte.setPlaneteDestination(destination.getId());
-
-				flotte.setVaisseaux(nbVaisseau);
-				flotte.setPlaneteSource(source.getId());
-
-				EnvoiFlotte ordre = new EnvoiFlotte(flotte);
+				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
-				carte.addFlotte(flotte);
+				carte.addFlotte(ordre.getFlotte());
 
 			}
 
 		}
 
 		return response;
-
-	}
-
-	private int getNbVaisseauxAEnvoyer(Planete source, Planete destination) {
-		if (source.getPopulation() < 3) {
-			return 0;
-		}
-
-		return Math.min(source.getPopulation() - 1, destination.getPopulation() + 1);
 
 	}
 
