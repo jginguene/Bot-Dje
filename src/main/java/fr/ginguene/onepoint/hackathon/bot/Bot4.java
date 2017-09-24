@@ -44,7 +44,8 @@ public class Bot4 implements IBot {
 		lastDefaultDestination = null;
 
 		int minScore = 0;
-
+		System.out.println("==>carte:" + carte);
+		System.out.println("==>carte.getPlanetesEtrangere():" + carte.getPlanetesEtrangere());
 		for (Planete aPlanete : carte.getPlanetesEtrangere()) {
 			int score = aPlanete.getPopulation() + planeteDistance.get(aPlanete)
 					+ carte.getFlottesEnnemies(aPlanete.getId());
