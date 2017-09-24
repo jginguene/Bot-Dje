@@ -1,6 +1,8 @@
 package fr.ginguene.onepoint.hackathon.bot;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Constantes;
@@ -13,6 +15,8 @@ public class Bot5 implements IBot {
 
 	private BotPremierTour botPremierTour = new BotPremierTour();
 	private BotSecondTour botSecondTour = new BotSecondTour();
+
+	private Map<Planete, Planete> mapCible = new HashMap<Planete, Planete>();
 
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
 
@@ -89,8 +93,17 @@ public class Bot5 implements IBot {
 				 * nbVaisseau); source.remPopulation(nbVaisseau);
 				 * response.addOrdre(ordre); carte.addFlotte(ordre.getFlotte());
 				 */
+				if (!mapCible.containsKey(source)) {
+					for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+						if (!mapCible.containsKey(aPlanete)) {
+							mapCible.put(source, aPlanete);
+						}
+					}
+					carte.getVoisines(source, 1).get(0);
 
-				Planete destination = carte.getVoisines(source, 1).get(0);
+				}
+
+				Planete destination = mapCible.get(source);
 				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
