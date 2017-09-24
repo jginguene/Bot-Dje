@@ -229,6 +229,7 @@ public class Carte {
 		List<Planete> ret = new ArrayList<>();
 
 		for (float distance : distances) {
+			System.out.println("from" + planete + " to " + map.get(distance) + ":" + distance);
 			ret.add(map.get(distance));
 		}
 		return ret;
