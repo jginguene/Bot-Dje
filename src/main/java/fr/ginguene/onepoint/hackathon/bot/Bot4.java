@@ -42,19 +42,6 @@ public class Bot4 implements IBot {
 
 			if (source.getPopulation() > 5) {
 
-				// Mode territoire ennemi
-				// On ne fait rien dans ce cas là
-				int voisineEnnemie = 0;
-				for (Planete voisine : carte.getVoisines(source, 3)) {
-					if (voisine.getProprietaire() > Constantes.MOI) {
-						voisineEnnemie++;
-					}
-					if (voisineEnnemie > 2) {
-						break;
-					}
-
-				}
-
 				// Mode Bombe
 				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
 				int nbVaisseau = source.getPopulation() - 1;
@@ -72,29 +59,32 @@ public class Bot4 implements IBot {
 
 				}
 
-				// Cas standards;
-				Planete destination = null;
-				int minScore = 0;
-				for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
+				if (source.getPopulation() < 30) {
 
-					if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -20) {
+					// Cas standards;
+					Planete destination = null;
+					int minScore = 0;
+					for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
 
-						int aScore = carte.getTrajetNbTour(source, aPlanete) * 4;
+						if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -20) {
 
-						if (aScore < minScore || destination == null) {
-							destination = aPlanete;
-							minScore = aScore;
+							int aScore = carte.getTrajetNbTour(source, aPlanete) * 4;
+
+							if (aScore < minScore || destination == null) {
+								destination = aPlanete;
+								minScore = aScore;
+							}
 						}
+
 					}
 
+					System.out.println("cible: " + destination);
+
+					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
 				}
-
-				System.out.println("cible: " + destination);
-
-				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
-				source.remPopulation(nbVaisseau);
-				response.addOrdre(ordre);
-				carte.addFlotte(ordre.getFlotte());
 
 			}
 
