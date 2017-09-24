@@ -2,6 +2,7 @@ package fr.ginguene.onepoint.hackathon;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -226,6 +227,14 @@ public class Carte {
 
 		List<Float> distances = new ArrayList<>(map.keySet());
 		Collections.sort(distances);
+
+		Collections.sort(distances, new Comparator<Float>() {
+			@Override
+			public int compare(Float o1, Float o2) {
+				return Float.compare(o1.floatValue(), o2.floatValue());
+			}
+		});
+
 		List<Planete> ret = new ArrayList<>();
 
 		for (float distance : distances) {
