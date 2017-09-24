@@ -8,7 +8,7 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class BotSecondTour implements IBot {
 
-	private final static int NB_VOISINE_TO_EXPLORE = 10;
+	private final static int NB_VOISINE_TO_EXPLORE = 5;
 
 	@Override
 	public Response getResponse(Carte carte) {

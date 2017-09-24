@@ -39,7 +39,7 @@ public class Main {
 	@RequestMapping(method = RequestMethod.POST)
 	public String bot(@RequestBody String input) {
 
-		System.out.println("input:" + input);
+		// System.out.println("input:" + input);
 		Carte carte = parser.parse(input);
 
 		Response response = bot.getResponse(carte);

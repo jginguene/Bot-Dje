@@ -18,7 +18,7 @@ public class BotPremierTour implements IBot {
 		Planete source = carte.getMesPlanetes().get(0);
 
 		for (Planete destination : carte.getVoisines(source, NB_VOISINE_TO_EXPLORE)) {
-			EnvoiFlotte envoiFlotte = new EnvoiFlotte(source, destination, 3);
+			EnvoiFlotte envoiFlotte = new EnvoiFlotte(source, destination, 5);
 			response.addOrdre(envoiFlotte);
 		}
 
