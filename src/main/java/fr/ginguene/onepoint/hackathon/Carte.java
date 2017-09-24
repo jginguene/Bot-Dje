@@ -104,14 +104,6 @@ public class Carte {
 		return planetes;
 	}
 
-	public List<Planete> getPlanetesEtrangere() {
-		List<Planete> ret = new ArrayList<>();
-		ret.addAll(this.getPlanetes());
-		ret.removeAll(this.getMesPlanetes());
-		return ret;
-
-	}
-
 	public List<Planete> getPlanetes(int proprietaire) {
 
 		if (mapPlanete.containsKey(proprietaire)) {
@@ -186,7 +178,11 @@ public class Carte {
 	}
 
 	public List<Planete> getPlanetesEtrangeres() {
-		return this.getPlanetes(Constantes.MOI);
+		List<Planete> ret = new ArrayList<>();
+		ret.addAll(this.getPlanetes());
+		ret.removeAll(this.getMesPlanetes());
+		return ret;
+
 	}
 
 	public List<Planete> getMesTerraformations() {
