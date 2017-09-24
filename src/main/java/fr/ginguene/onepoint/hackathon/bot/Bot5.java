@@ -93,7 +93,13 @@ public class Bot5 implements IBot {
 				 * nbVaisseau); source.remPopulation(nbVaisseau);
 				 * response.addOrdre(ordre); carte.addFlotte(ordre.getFlotte());
 				 */
+
+				if (getMapLength(source) > 3) {
+					mapCible.remove(source);
+				}
+
 				if (!mapCible.containsKey(source)) {
+
 					for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 						if (!mapCible.containsKey(aPlanete)) {
 
@@ -116,6 +122,15 @@ public class Bot5 implements IBot {
 		}
 
 		return response;
+
+	}
+
+	private int getMapLength(Planete planete) {
+		if (mapCible.containsKey(planete)) {
+			return 1 + getMapLength(mapCible.get(planete));
+		} else {
+			return 0;
+		}
 
 	}
 
