@@ -73,11 +73,15 @@ public class Bot4 implements IBot {
 
 		Response response = new Response();
 
+		System.out.println("Tour " + carte.getConfiguration().getTour());
+
 		if (carte.getConfiguration().getTour() == 1) {
+			System.out.println("1er tour");
 			return botPremierTour.getResponse(carte);
 		}
 
 		if (carte.getConfiguration().getTour() == 2) {
+			System.out.println("1eme tour");
 			return botSecondTour.getResponse(carte);
 		}
 
