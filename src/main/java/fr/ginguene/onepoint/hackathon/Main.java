@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ginguene.onepoint.hackathon.bot.Bot4;
+import fr.ginguene.onepoint.hackathon.bot.Bot5;
 
 @RestController
 @SpringBootApplication
 public class Main {
 
 	private InputParser parser = new InputParser();
-	private static final IBot bot = new Bot4();
+	private static final IBot bot = new Bot5();
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);
