@@ -8,7 +8,7 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class BotPremierTour implements IBot {
 
-	private final static int NB_VOISINE_TO_EXPLORE = 10;
+	private final static int NB_VOISINE_TO_EXPLORE = 1;
 
 	@Override
 	public Response getResponse(Carte carte) {
@@ -17,7 +17,7 @@ public class BotPremierTour implements IBot {
 
 		Planete source = carte.getMesPlanetes().get(0);
 
-		for (Planete destination : carte.getVoisines(source, NB_VOISINE_TO_EXPLORE)) {
+		for (Planete destination : carte.getVoisines(source, 1)) {
 			EnvoiFlotte envoiFlotte = new EnvoiFlotte(source, destination, 5);
 			response.addOrdre(envoiFlotte);
 		}
