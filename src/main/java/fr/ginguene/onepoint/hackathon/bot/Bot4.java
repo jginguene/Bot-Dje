@@ -55,7 +55,16 @@ public class Bot4 implements IBot {
 				if (!scoreOptimisation) {
 					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
 					int nbVaisseau = source.getPopulation() - 1;
-					if (nbVaisseauEnnemi > 0 && source.getPopulation() < Math.min(160, source.getPopulationMax())) {
+					List<Planete> voisines = carte.getVoisines(source, 7);
+					int nbVoisinesEtrangeres = 0;
+					for (Planete aPlanete : voisines) {
+						if (aPlanete.getProprietaire() != Constantes.MOI) {
+							nbVoisinesEtrangeres++;
+						}
+					}
+
+					if ((nbVaisseauEnnemi > 0 || nbVoisinesEtrangeres == 0)
+							&& source.getPopulation() < Math.min(160, source.getPopulationMax())) {
 						System.out.println("Mode bombe: " + source);
 						continue;
 					}
