@@ -64,7 +64,7 @@ public class Bot4 implements IBot {
 					int nbVaisseauEnnemiDuVoisin = carte.getFlotteEnnemie(voisine.getId());
 					if (nbVaisseauEnnemiDuVoisin > 0) {
 						System.out.println("Mode protection: " + source);
-						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, 4);
 						source.remPopulation(nbVaisseau);
 						response.addOrdre(ordre);
 						carte.addFlotte(ordre.getFlotte());
