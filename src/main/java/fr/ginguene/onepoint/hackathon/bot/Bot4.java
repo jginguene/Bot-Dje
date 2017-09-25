@@ -61,7 +61,7 @@ public class Bot4 implements IBot {
 							continue;
 						} else if (!scoreOptimisation) {
 							System.out.println("Lancement de la Megabombe: " + source);
-							int nbVaisseau = source.getPopulation() - 40;
+							int nbVaisseau = source.getPopulation() - 60;
 							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
 							source.remPopulation(nbVaisseau);
 							response.addOrdre(ordre);
