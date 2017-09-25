@@ -45,6 +45,7 @@ public class Bot4 implements IBot {
 				Planete voisine = carte.getVoisines(source, 1).get(0);
 
 				if (source.getTerraformation() > 0) {
+					System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
 					break;
 				}
 
@@ -59,6 +60,7 @@ public class Bot4 implements IBot {
 						Terraformation terraformation = new Terraformation();
 						terraformation.setPlanete(source);
 						response.addOrdre(terraformation);
+						System.out.println("Lancement de la terraformation de " + source);
 						break;
 
 					}
@@ -66,17 +68,22 @@ public class Bot4 implements IBot {
 
 				// Soi la planete la plus proche est ennemie, on prépare une
 				// megabombe
-				if (voisine.getProprietaire() > Constantes.MOI)
-					if (source.getPopulation() < source.getPopulationMax() - 10) {
+				if (voisine.getProprietaire() > Constantes.MOI) {
 
+					if (source.getPopulation() < source.getPopulationMax() - 10) {
+						System.out.println("Megabombe en cours " + source);
 						break;
 					} else {
-						int nbVaisseau = source.getPopulation() / 3;
+						System.out.println("Lancement de la Megabombe: " + source);
+
+						int nbVaisseau = source.getPopulation() / 2;
 						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
 						source.remPopulation(nbVaisseau);
 						response.addOrdre(ordre);
 						carte.addFlotte(ordre.getFlotte());
+						break;
 					}
+				}
 
 				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
 					int nbVaisseau = source.getPopulation() / 2;
@@ -93,7 +100,6 @@ public class Bot4 implements IBot {
 				int nbVaisseau = source.getPopulation() - 1;
 				if (nbVaisseauEnnemi > 0) {
 					break;
-
 				}
 
 				// Cas standards;
