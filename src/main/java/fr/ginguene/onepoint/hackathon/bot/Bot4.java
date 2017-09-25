@@ -44,10 +44,10 @@ public class Bot4 implements IBot {
 
 			if (source.getPopulation() > 5) {
 
-				boolean scoreOptimisation = (carte.getPlanetesEnnemies().size() == 4
+				boolean scoreOptimisation = (carte.getPlanetesEnnemies().size() <= 4
 						&& carte.getConfiguration().getTour() > 100);
 
-				System.out.println(scoreOptimisation + "=> " + scoreOptimisation);
+				System.out.println("scoreOptimisation=> " + scoreOptimisation);
 
 				Planete voisine = carte.getVoisines(source, 1).get(0);
 
