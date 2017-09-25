@@ -53,6 +53,26 @@ public class Bot4 implements IBot {
 
 				if (!scoreOptimisation) {
 
+					if (source.isTerraformable()) {
+
+						int nbEnnemie = 0;
+						for (Planete aPlanete : carte.getVoisines(source, 6)) {
+							if (aPlanete.getProprietaire() > Constantes.MOI) {
+								nbEnnemie++;
+							}
+						}
+
+						if (nbEnnemie == 0) {
+							Terraformation terraformation = new Terraformation();
+							terraformation.setPlanete(source);
+							response.addOrdre(terraformation);
+							System.out.println("Lancement de la terraformation de " + source);
+							continue;
+						} else {
+							System.out.println(source + " terraformable => " + nbEnnemie + " ennemies");
+						}
+					}
+
 					// Si la planete la plus proche est ennemie, on prépare une
 					// megabombe
 					if (voisine.getProprietaire() > Constantes.MOI) {
@@ -87,39 +107,9 @@ public class Bot4 implements IBot {
 						continue;
 					}
 
-					// Mode protection
-					/*
-					 * int nbVaisseauEnnemiDuVoisin =
-					 * carte.getFlotteEnnemie(voisine.getId()); if
-					 * (nbVaisseauEnnemiDuVoisin > 0) {
-					 * System.out.println("Mode protection: " + source);
-					 * EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, 4);
-					 * source.remPopulation(nbVaisseau);
-					 * response.addOrdre(ordre);
-					 * carte.addFlotte(ordre.getFlotte()); continue;
-					 * 
-					 * }
-					 */
-
 					if (source.getTerraformation() > 0) {
 						System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
 						continue;
-					}
-
-					if (source.isTerraformable()) {
-						int nbEnnemie = 0;
-						for (Planete aPlanete : carte.getVoisines(source, 6)) {
-							if (aPlanete.getProprietaire() > Constantes.MOI) {
-								nbEnnemie++;
-							}
-						}
-						if (nbEnnemie == 0) {
-							Terraformation terraformation = new Terraformation();
-							terraformation.setPlanete(source);
-							response.addOrdre(terraformation);
-							System.out.println("Lancement de la terraformation de " + source);
-							continue;
-						}
 					}
 
 				}
