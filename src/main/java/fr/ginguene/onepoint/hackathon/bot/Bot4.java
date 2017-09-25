@@ -49,7 +49,7 @@ public class Bot4 implements IBot {
 				// Mode Bombe
 				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
 				int nbVaisseau = source.getPopulation() - 1;
-				if (nbVaisseauEnnemi > 0) {
+				if (nbVaisseauEnnemi > 0 && source.getPopulation() < Math.min(160, source.getPopulationMax())) {
 					System.out.println("Mode bombe: " + source);
 					continue;
 				}
@@ -57,6 +57,8 @@ public class Bot4 implements IBot {
 				// Mode protection
 				int nbVaisseauEnnemiDuVoisin = carte.getFlotte(Constantes.Ennemi, voisine.getId());
 				if (nbVaisseauEnnemiDuVoisin > 0) {
+
+					System.out.println("Mode protection: " + source);
 					EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
