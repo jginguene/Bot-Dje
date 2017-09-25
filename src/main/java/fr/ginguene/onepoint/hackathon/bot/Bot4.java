@@ -32,7 +32,6 @@ public class Bot4 implements IBot {
 		System.out.println("Tour " + carte.getConfiguration().getTour());
 
 		if (carte.getConfiguration().getTour() == 0) {
-			System.out.println("1er tour");
 			return botPremierTour.getResponse(carte);
 		}
 
@@ -41,6 +40,23 @@ public class Bot4 implements IBot {
 		for (Planete source : mesPlanetes) {
 
 			if (source.getPopulation() > 5) {
+
+				Planete voisine = carte.getVoisines(source, 1).get(0);
+
+				// Soi la planete la plus proche est ennemie, on prépare une
+				// megabombe
+
+				if (voisine.getProprietaire() > Constantes.MOI)
+					if (source.getPopulation() < source.getPopulationMax() - 10) {
+
+						break;
+					} else {
+						int nbVaisseau = source.getPopulation() / 3;
+						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+						source.remPopulation(nbVaisseau);
+						response.addOrdre(ordre);
+						carte.addFlotte(ordre.getFlotte());
+					}
 
 				if (source.getPopulation() > 140) {
 					int nbVaisseau = source.getPopulation() / 2;
@@ -60,34 +76,29 @@ public class Bot4 implements IBot {
 
 				}
 
-				if (source.getPopulation() < 30) {
+				// Cas standards;
+				Planete destination = null;
+				int minScore = 0;
+				for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
 
-					// Cas standards;
-					Planete destination = null;
-					int minScore = 0;
-					for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
+					if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -20) {
 
-						if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -20) {
+						int aScore = carte.getTrajetNbTour(source, aPlanete) * 4 + aPlanete.getPopulation()
+								+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
+						;
 
-							int aScore = carte.getTrajetNbTour(source, aPlanete) * 4 + aPlanete.getPopulation()
-									+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
-							;
-
-							if (aScore < minScore || destination == null) {
-								destination = aPlanete;
-								minScore = aScore;
-							}
+						if (aScore < minScore || destination == null) {
+							destination = aPlanete;
+							minScore = aScore;
 						}
-
 					}
 
-					System.out.println("cible: " + destination);
-
-					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
-					source.remPopulation(nbVaisseau);
-					response.addOrdre(ordre);
-					carte.addFlotte(ordre.getFlotte());
 				}
+
+				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+				source.remPopulation(nbVaisseau);
+				response.addOrdre(ordre);
+				carte.addFlotte(ordre.getFlotte());
 
 			}
 
