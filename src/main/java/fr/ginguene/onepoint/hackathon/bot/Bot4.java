@@ -18,7 +18,8 @@ public class Bot4 implements IBot {
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getProprietaire() != Constantes.MOI) {
+			if (aPlanete.getProprietaire() != Constantes.MOI
+					&& carte.getMesFlottes(aPlanete.getId()) < aPlanete.getPopulationMax()) {
 				return aPlanete;
 			}
 		}
@@ -53,8 +54,12 @@ public class Bot4 implements IBot {
 
 				if (!scoreOptimisation) {
 
-					if (source.isTerraformable()) {
+					if (source.getTerraformation() > 0) {
+						System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
+						continue;
+					}
 
+					if (source.isTerraformable()) {
 						int nbEnnemie = 0;
 						for (Planete aPlanete : carte.getVoisines(source, 6)) {
 							if (aPlanete.getProprietaire() > Constantes.MOI) {
@@ -91,6 +96,8 @@ public class Bot4 implements IBot {
 					}
 
 					// Mode Bombe
+					// Si on est visé par une attaque ou que l'on n'a plus
+					// d'ennemi proche
 					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
 					List<Planete> voisines = carte.getVoisines(source, 6);
 					int nbVoisinesEtrangeres = 0;
@@ -100,15 +107,9 @@ public class Bot4 implements IBot {
 						}
 					}
 
-					// Mode chargement de bombe
 					if ((nbVaisseauEnnemi > 0 || nbVoisinesEtrangeres == 0)
 							&& source.getPopulation() < Math.min(160, source.getPopulationMax())) {
 						System.out.println("Mode bombe: " + source);
-						continue;
-					}
-
-					if (source.getTerraformation() > 0) {
-						System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
 						continue;
 					}
 
