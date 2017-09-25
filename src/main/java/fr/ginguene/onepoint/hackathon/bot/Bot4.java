@@ -163,8 +163,9 @@ public class Bot4 implements IBot {
 				}
 
 				// Cas standards;
+
 				Planete destination = null;
-				if (carte.getPlanetes(Constantes.Neutre).isEmpty()) {
+				if (carte.getConfiguration().getTour() > 40) {
 					for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 						if (aPlanete.getProprietaire() != Constantes.MOI) {
 							destination = aPlanete;
