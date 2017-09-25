@@ -128,7 +128,7 @@ public class Bot4 implements IBot {
 				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
 					System.out.println("Lancement de la bombe: " + source);
 
-					int nbVaisseau = source.getPopulation() / 2;
+					int nbVaisseau = source.getPopulation() - 40;
 					Planete destination = null;
 					if (scoreOptimisation) {
 						List<Planete> neutres = carte.getPlanetes(Constantes.Neutre);
