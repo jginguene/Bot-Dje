@@ -18,7 +18,7 @@ public class Bot4 implements IBot {
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getProprietaire() != Constantes.MOI && aPlanete.getPopulation() < bombSize) {
+			if (aPlanete.getProprietaire() != Constantes.MOI) {
 				return aPlanete;
 			}
 		}
@@ -72,7 +72,6 @@ public class Bot4 implements IBot {
 
 					// Mode Bombe
 					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
-					int nbVaisseau = source.getPopulation() - 1;
 					List<Planete> voisines = carte.getVoisines(source, 6);
 					int nbVoisinesEtrangeres = 0;
 					for (Planete aPlanete : voisines) {
@@ -81,6 +80,7 @@ public class Bot4 implements IBot {
 						}
 					}
 
+					// Mode chargement de bombe
 					if ((nbVaisseauEnnemi > 0 || nbVoisinesEtrangeres == 0)
 							&& source.getPopulation() < Math.min(160, source.getPopulationMax())) {
 						System.out.println("Mode bombe: " + source);
@@ -124,6 +124,7 @@ public class Bot4 implements IBot {
 
 				}
 
+				// Mode Largage de Bombe
 				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
 					System.out.println("Lancement de la bombe: " + source);
 
