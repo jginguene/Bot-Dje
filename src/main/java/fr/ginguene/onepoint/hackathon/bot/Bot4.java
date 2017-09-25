@@ -58,7 +58,7 @@ public class Bot4 implements IBot {
 						carte.addFlotte(ordre.getFlotte());
 					}
 
-				if (source.getPopulation() > 140) {
+				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
 					int nbVaisseau = source.getPopulation() / 2;
 					Planete destination = getDestinationForBomb(carte, source, nbVaisseau);
 					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
