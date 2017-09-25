@@ -133,7 +133,7 @@ public class Carte {
 	public int getFlotteEnnemie(int destination) {
 		int ret = 0;
 		for (Flotte flotte : this.flottes) {
-			if (flotte.getProprietaire() > Constantes.MOI) {
+			if (flotte.getProprietaire() > Constantes.MOI && flotte.getPlaneteDestination() == destination) {
 				ret += flotte.getVaisseaux();
 			}
 		}
