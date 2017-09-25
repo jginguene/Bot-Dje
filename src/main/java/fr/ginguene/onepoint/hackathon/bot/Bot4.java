@@ -86,6 +86,8 @@ public class Bot4 implements IBot {
 				}
 
 				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
+					System.out.println("Lancement de la bombe: " + source);
+
 					int nbVaisseau = source.getPopulation() / 2;
 					Planete destination = getDestinationForBomb(carte, source, nbVaisseau);
 					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
@@ -107,17 +109,18 @@ public class Bot4 implements IBot {
 				int minScore = 0;
 				for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
 
-					if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -20) {
+					// if (aPlanete.getPopulation() -
+					// carte.getMesFlottes(aPlanete.getId()) > -20) {
 
-						int aScore = carte.getTrajetNbTour(source, aPlanete) * 4 + aPlanete.getPopulation()
-								+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
-						;
+					int aScore = carte.getTrajetNbTour(source, aPlanete) * 4 + aPlanete.getPopulation()
+							+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
+					;
 
-						if (aScore < minScore || destination == null) {
-							destination = aPlanete;
-							minScore = aScore;
-						}
+					if (aScore < minScore || destination == null) {
+						destination = aPlanete;
+						minScore = aScore;
 					}
+					// }
 
 				}
 
