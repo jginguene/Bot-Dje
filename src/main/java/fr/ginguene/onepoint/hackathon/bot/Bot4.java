@@ -17,6 +17,14 @@ public class Bot4 implements IBot {
 
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
 
+		if (carte.getPlanetes(Constantes.Neutre).isEmpty()) {
+			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+				if (aPlanete.getProprietaire() != Constantes.MOI) {
+					return aPlanete;
+				}
+			}
+		}
+
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getProprietaire() != Constantes.MOI
 					&& carte.getMesFlottes(aPlanete.getId()) < aPlanete.getPopulationMax()) {
@@ -156,21 +164,30 @@ public class Bot4 implements IBot {
 
 				// Cas standards;
 				Planete destination = null;
-				int minScore = 0;
-				for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
-					int aDistance = carte.getTrajetNbTour(source, aPlanete);
-
-					if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -1 * aDistance / 2) {
-
-						int aScore = aDistance * 4 + aPlanete.getPopulation()
-								+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
-
-						if (aScore < minScore || destination == null) {
+				if (carte.getPlanetes(Constantes.Neutre).isEmpty()) {
+					for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+						if (aPlanete.getProprietaire() != Constantes.MOI) {
 							destination = aPlanete;
-							minScore = aScore;
+							break;
 						}
 					}
 
+				} else {
+					int minScore = 0;
+					for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
+						int aDistance = carte.getTrajetNbTour(source, aPlanete);
+
+						if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -1 * aDistance / 2) {
+
+							int aScore = aDistance * 4 + aPlanete.getPopulation()
+									+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
+
+							if (aScore < minScore || destination == null) {
+								destination = aPlanete;
+								minScore = aScore;
+							}
+						}
+					}
 				}
 
 				if (destination != null) {
