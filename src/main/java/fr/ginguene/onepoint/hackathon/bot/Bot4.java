@@ -44,62 +44,86 @@ public class Bot4 implements IBot {
 
 			if (source.getPopulation() > 5) {
 
+				boolean scoreOptimisation = (carte.getPlanetesEnnemies().size() == 1);
+
 				Planete voisine = carte.getVoisines(source, 1).get(0);
 
 				// Mode Bombe
-				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
-				int nbVaisseau = source.getPopulation() - 1;
-				if (nbVaisseauEnnemi > 0 && source.getPopulation() < Math.min(160, source.getPopulationMax())) {
-					System.out.println("Mode bombe: " + source);
-					continue;
-				}
+				if (!scoreOptimisation) {
+					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
+					int nbVaisseau = source.getPopulation() - 1;
+					if (nbVaisseauEnnemi > 0 && source.getPopulation() < Math.min(160, source.getPopulationMax())) {
+						System.out.println("Mode bombe: " + source);
+						continue;
+					}
 
-				// Mode protection
-				int nbVaisseauEnnemiDuVoisin = carte.getFlotte(Constantes.Ennemi, voisine.getId());
-				if (nbVaisseauEnnemiDuVoisin > 0) {
+					// Mode protection
+					int nbVaisseauEnnemiDuVoisin = carte.getFlotteEnnemie(voisine.getId());
+					if (nbVaisseauEnnemiDuVoisin > 0) {
+						System.out.println("Mode protection: " + source);
+						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+						source.remPopulation(nbVaisseau);
+						response.addOrdre(ordre);
+						carte.addFlotte(ordre.getFlotte());
+						continue;
 
-					System.out.println("Mode protection: " + source);
-					EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
-					source.remPopulation(nbVaisseau);
-					response.addOrdre(ordre);
-					carte.addFlotte(ordre.getFlotte());
-					continue;
+					}
 
-				}
+					if (source.getTerraformation() > 0) {
+						System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
+						continue;
+					}
 
-				if (source.getTerraformation() > 0) {
-					System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
-					continue;
-				}
-
-				if (source.isTerraformable()) {
-					int nbEnnemie = 0;
-					for (Planete aPlanete : carte.getVoisines(source, 6)) {
-						if (aPlanete.getProprietaire() != Constantes.MOI) {
-							nbEnnemie++;
+					if (source.isTerraformable()) {
+						int nbEnnemie = 0;
+						for (Planete aPlanete : carte.getVoisines(source, 6)) {
+							if (aPlanete.getProprietaire() > Constantes.MOI) {
+								nbEnnemie++;
+							}
+						}
+						if (nbEnnemie == 0) {
+							Terraformation terraformation = new Terraformation();
+							terraformation.setPlanete(source);
+							response.addOrdre(terraformation);
+							System.out.println("Lancement de la terraformation de " + source);
+							continue;
 						}
 					}
-					if (nbEnnemie == 0) {
-						Terraformation terraformation = new Terraformation();
-						terraformation.setPlanete(source);
-						response.addOrdre(terraformation);
-						System.out.println("Lancement de la terraformation de " + source);
-						continue;
+
+					// Soi la planete la plus proche est ennemie, on prépare une
+					// megabombe
+					if (voisine.getProprietaire() > Constantes.MOI) {
+						if (source.getPopulation() < source.getPopulationMax() - 10) {
+							System.out.println("Megabombe en cours " + source);
+							continue;
+						} else if (!scoreOptimisation) {
+							System.out.println("Lancement de la Megabombe: " + source);
+							nbVaisseau = source.getPopulation() / 2;
+							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+							source.remPopulation(nbVaisseau);
+							response.addOrdre(ordre);
+							carte.addFlotte(ordre.getFlotte());
+							continue;
+						}
 					}
 				}
 
-				// Soi la planete la plus proche est ennemie, on prépare une
-				// megabombe
-				if (voisine.getProprietaire() > Constantes.MOI) {
+				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
+					System.out.println("Lancement de la bombe: " + source);
 
-					if (source.getPopulation() < source.getPopulationMax() - 10) {
-						System.out.println("Megabombe en cours " + source);
-						continue;
+					int nbVaisseau = source.getPopulation() / 2;
+					Planete destination = null;
+					if (scoreOptimisation) {
+						List<Planete> neutres = carte.getPlanetes(Constantes.Neutre);
+						if (neutres.size() != 0) {
+							destination = neutres.get(0);
+						}
 					} else {
-						System.out.println("Lancement de la Megabombe: " + source);
+						destination = getDestinationForBomb(carte, source, nbVaisseau);
+					}
 
-						nbVaisseau = source.getPopulation() / 2;
-						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+					if (destination != null) {
+						EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 						source.remPopulation(nbVaisseau);
 						response.addOrdre(ordre);
 						carte.addFlotte(ordre.getFlotte());
@@ -107,15 +131,7 @@ public class Bot4 implements IBot {
 					}
 				}
 
-				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
-					System.out.println("Lancement de la bombe: " + source);
-
-					nbVaisseau = source.getPopulation() / 2;
-					Planete destination = getDestinationForBomb(carte, source, nbVaisseau);
-					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
-					source.remPopulation(nbVaisseau);
-					response.addOrdre(ordre);
-					carte.addFlotte(ordre.getFlotte());
+				if (scoreOptimisation) {
 					continue;
 				}
 
@@ -138,6 +154,7 @@ public class Bot4 implements IBot {
 
 				}
 
+				int nbVaisseau = source.getPopulation() - 1;
 				System.out.println("Desination: " + source + ";nbVaisseau:" + nbVaisseau);
 				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 				source.remPopulation(nbVaisseau);

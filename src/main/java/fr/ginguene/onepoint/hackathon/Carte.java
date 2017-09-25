@@ -130,6 +130,17 @@ public class Carte {
 		return ret;
 	}
 
+	public int getFlotteEnnemie(int destination) {
+		int ret = 0;
+		for (Flotte flotte : this.flottes) {
+			if (flotte.getProprietaire() > Constantes.MOI) {
+				ret += flotte.getVaisseaux();
+			}
+		}
+
+		return ret;
+	}
+
 	public List<Flotte> getFlotte(int proprietaire) {
 
 		if (mapFlotte.containsKey(proprietaire)) {
@@ -195,6 +206,19 @@ public class Carte {
 
 	public List<Planete> getPlanetesEtrangeres() {
 		List<Planete> ret = new ArrayList<>();
+		ret.addAll(this.getPlanetes());
+		ret.removeAll(this.getMesPlanetes());
+		return ret;
+	}
+
+	public List<Planete> getPlanetesEnnemies() {
+		List<Planete> ret = new ArrayList<>();
+		for (Planete planete : this.planetes) {
+			if (planete.getProprietaire() > Constantes.MOI) {
+				ret.add(planete);
+			}
+		}
+
 		ret.addAll(this.getPlanetes());
 		ret.removeAll(this.getMesPlanetes());
 		return ret;
