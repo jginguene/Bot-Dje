@@ -70,16 +70,18 @@ public class Bot4 implements IBot {
 					}
 
 					// Mode protection
-					int nbVaisseauEnnemiDuVoisin = carte.getFlotteEnnemie(voisine.getId());
-					if (nbVaisseauEnnemiDuVoisin > 0) {
-						System.out.println("Mode protection: " + source);
-						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, 4);
-						source.remPopulation(nbVaisseau);
-						response.addOrdre(ordre);
-						carte.addFlotte(ordre.getFlotte());
-						continue;
-
-					}
+					/*
+					 * int nbVaisseauEnnemiDuVoisin =
+					 * carte.getFlotteEnnemie(voisine.getId()); if
+					 * (nbVaisseauEnnemiDuVoisin > 0) {
+					 * System.out.println("Mode protection: " + source);
+					 * EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, 4);
+					 * source.remPopulation(nbVaisseau);
+					 * response.addOrdre(ordre);
+					 * carte.addFlotte(ordre.getFlotte()); continue;
+					 * 
+					 * }
+					 */
 
 					if (source.getTerraformation() > 0) {
 						System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
