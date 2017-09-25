@@ -55,7 +55,7 @@ public class Bot4 implements IBot {
 				if (!scoreOptimisation) {
 					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
 					int nbVaisseau = source.getPopulation() - 1;
-					List<Planete> voisines = carte.getVoisines(source, 7);
+					List<Planete> voisines = carte.getVoisines(source, 6);
 					int nbVoisinesEtrangeres = 0;
 					for (Planete aPlanete : voisines) {
 						if (aPlanete.getProprietaire() != Constantes.MOI) {
