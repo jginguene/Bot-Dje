@@ -36,9 +36,11 @@ public class Bot4 implements IBot {
 			return botPremierTour.getResponse(carte);
 		}
 
-		List<Planete> mesPlanetes = carte.getPlanetes(Constantes.MOI);
+		List<Planete> mesPlanetes = carte.getMesPlanetes();
 
 		for (Planete source : mesPlanetes) {
+
+			System.out.println(source + "=> " + source.getPopulation());
 
 			if (source.getPopulation() > 5) {
 
@@ -46,7 +48,7 @@ public class Bot4 implements IBot {
 
 				if (source.getTerraformation() > 0) {
 					System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
-					break;
+					continue;
 				}
 
 				if (source.isTerraformable()) {
@@ -61,8 +63,7 @@ public class Bot4 implements IBot {
 						terraformation.setPlanete(source);
 						response.addOrdre(terraformation);
 						System.out.println("Lancement de la terraformation de " + source);
-						break;
-
+						continue;
 					}
 				}
 
@@ -72,7 +73,7 @@ public class Bot4 implements IBot {
 
 					if (source.getPopulation() < source.getPopulationMax() - 10) {
 						System.out.println("Megabombe en cours " + source);
-						break;
+						continue;
 					} else {
 						System.out.println("Lancement de la Megabombe: " + source);
 
@@ -81,7 +82,7 @@ public class Bot4 implements IBot {
 						source.remPopulation(nbVaisseau);
 						response.addOrdre(ordre);
 						carte.addFlotte(ordre.getFlotte());
-						break;
+						continue;
 					}
 				}
 
@@ -94,7 +95,7 @@ public class Bot4 implements IBot {
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
-					break;
+					continue;
 				}
 
 				// Mode Bombe
@@ -102,7 +103,7 @@ public class Bot4 implements IBot {
 				int nbVaisseau = source.getPopulation() - 1;
 				if (nbVaisseauEnnemi > 0) {
 					System.out.println("Mode bombe: " + source);
-					break;
+					continue;
 				}
 
 				// Cas standards;
@@ -115,7 +116,6 @@ public class Bot4 implements IBot {
 
 					int aScore = carte.getTrajetNbTour(source, aPlanete) * 4 + aPlanete.getPopulation()
 							+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
-					;
 
 					if (aScore < minScore || destination == null) {
 						destination = aPlanete;
