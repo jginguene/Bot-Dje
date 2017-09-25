@@ -157,12 +157,14 @@ public class Bot4 implements IBot {
 
 				}
 
-				int nbVaisseau = source.getPopulation() - 1;
-				System.out.println("Desination: " + source + ";nbVaisseau:" + nbVaisseau);
-				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
-				source.remPopulation(nbVaisseau);
-				response.addOrdre(ordre);
-				carte.addFlotte(ordre.getFlotte());
+				if (destination != null) {
+					int nbVaisseau = source.getPopulation() - 1;
+					System.out.println("Desination: " + source + ";nbVaisseau:" + nbVaisseau);
+					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+				}
 
 			}
 
