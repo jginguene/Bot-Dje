@@ -101,6 +101,7 @@ public class Bot4 implements IBot {
 				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
 				int nbVaisseau = source.getPopulation() - 1;
 				if (nbVaisseauEnnemi > 0) {
+					System.out.println("Mode bombe: " + source);
 					break;
 				}
 
@@ -124,6 +125,7 @@ public class Bot4 implements IBot {
 
 				}
 
+				System.out.println("Desination: " + source + ";nbVaisseau:" + nbVaisseau);
 				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
