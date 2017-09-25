@@ -83,7 +83,7 @@ public class Planete {
 	}
 
 	public boolean isTerraformable() {
-		return terraformation == 'H' || terraformation == 'K' || terraformation == 'L';
+		return systemeClassification == 'H' || systemeClassification == 'K' || systemeClassification == 'L';
 	}
 
 	public int getTerraformation() {
