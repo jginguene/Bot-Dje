@@ -51,8 +51,26 @@ public class Bot4 implements IBot {
 
 				Planete voisine = carte.getVoisines(source, 1).get(0);
 
-				// Mode Bombe
 				if (!scoreOptimisation) {
+
+					// Si la planete la plus proche est ennemie, on prépare une
+					// megabombe
+					if (voisine.getProprietaire() > Constantes.MOI) {
+						if (source.getPopulation() < source.getPopulationMax() - 10) {
+							System.out.println("Megabombe en cours " + source);
+							continue;
+						} else if (!scoreOptimisation) {
+							System.out.println("Lancement de la Megabombe: " + source);
+							int nbVaisseau = source.getPopulation() / 2;
+							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+							source.remPopulation(nbVaisseau);
+							response.addOrdre(ordre);
+							carte.addFlotte(ordre.getFlotte());
+							continue;
+						}
+					}
+
+					// Mode Bombe
 					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
 					int nbVaisseau = source.getPopulation() - 1;
 					List<Planete> voisines = carte.getVoisines(source, 6);
@@ -104,22 +122,6 @@ public class Bot4 implements IBot {
 						}
 					}
 
-					// Soi la planete la plus proche est ennemie, on prépare une
-					// megabombe
-					if (voisine.getProprietaire() > Constantes.MOI) {
-						if (source.getPopulation() < source.getPopulationMax() - 10) {
-							System.out.println("Megabombe en cours " + source);
-							continue;
-						} else if (!scoreOptimisation) {
-							System.out.println("Lancement de la Megabombe: " + source);
-							nbVaisseau = source.getPopulation() / 2;
-							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
-							source.remPopulation(nbVaisseau);
-							response.addOrdre(ordre);
-							carte.addFlotte(ordre.getFlotte());
-							continue;
-						}
-					}
 				}
 
 				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
