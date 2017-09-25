@@ -104,7 +104,6 @@ public class Carte {
 
 	private String getTrajetKey(Planete source, Planete destination) {
 		return getTrajetKey(source.getId(), destination.getId());
-
 	}
 
 	public List<Planete> getPlanetes() {

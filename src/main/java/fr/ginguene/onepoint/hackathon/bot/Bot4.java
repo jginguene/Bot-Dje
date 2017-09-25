@@ -120,7 +120,7 @@ public class Bot4 implements IBot {
 				Planete destination = null;
 				int minScore = 0;
 				for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
-					int aDistance = carte.getTrajetNbTour(source, destination);
+					int aDistance = carte.getTrajetNbTour(source, aPlanete);
 
 					if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -1 * aDistance / 2) {
 
