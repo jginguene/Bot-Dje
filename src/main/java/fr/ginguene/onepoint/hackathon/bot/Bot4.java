@@ -46,6 +46,24 @@ public class Bot4 implements IBot {
 
 				Planete voisine = carte.getVoisines(source, 1).get(0);
 
+				// Mode Bombe
+				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
+				int nbVaisseau = source.getPopulation() - 1;
+				if (nbVaisseauEnnemi > 0) {
+					System.out.println("Mode bombe: " + source);
+					continue;
+				}
+
+				// Mode protection
+				int nbVaisseauEnnemiDuVoisin = carte.getFlotte(Constantes.Ennemi, voisine.getId());
+				if (nbVaisseauEnnemiDuVoisin > 0) {
+					EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+
+				}
+
 				if (source.getTerraformation() > 0) {
 					System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
 					continue;
@@ -77,7 +95,7 @@ public class Bot4 implements IBot {
 					} else {
 						System.out.println("Lancement de la Megabombe: " + source);
 
-						int nbVaisseau = source.getPopulation() / 2;
+						nbVaisseau = source.getPopulation() / 2;
 						EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
 						source.remPopulation(nbVaisseau);
 						response.addOrdre(ordre);
@@ -89,20 +107,12 @@ public class Bot4 implements IBot {
 				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
 					System.out.println("Lancement de la bombe: " + source);
 
-					int nbVaisseau = source.getPopulation() / 2;
+					nbVaisseau = source.getPopulation() / 2;
 					Planete destination = getDestinationForBomb(carte, source, nbVaisseau);
 					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
-					continue;
-				}
-
-				// Mode Bombe
-				int nbVaisseauEnnemi = carte.getFlotte(Constantes.Ennemi, source.getId());
-				int nbVaisseau = source.getPopulation() - 1;
-				if (nbVaisseauEnnemi > 0) {
-					System.out.println("Mode bombe: " + source);
 					continue;
 				}
 
