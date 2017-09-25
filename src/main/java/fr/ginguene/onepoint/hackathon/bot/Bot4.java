@@ -48,18 +48,20 @@ public class Bot4 implements IBot {
 					break;
 				}
 
-				int nbEnnemie = 0;
-				for (Planete aPlanete : carte.getVoisines(source, 6)) {
-					if (aPlanete.getProprietaire() > Constantes.MOI) {
-						nbEnnemie++;
+				if (source.isTerraformable()) {
+					int nbEnnemie = 0;
+					for (Planete aPlanete : carte.getVoisines(source, 6)) {
+						if (aPlanete.getProprietaire() != Constantes.MOI) {
+							nbEnnemie++;
+						}
 					}
-				}
-				if (nbEnnemie == 0 && source.isTerraformable()) {
-					Terraformation terraformation = new Terraformation();
-					terraformation.setPlanete(source);
-					response.addOrdre(terraformation);
-					break;
+					if (nbEnnemie == 0) {
+						Terraformation terraformation = new Terraformation();
+						terraformation.setPlanete(source);
+						response.addOrdre(terraformation);
+						break;
 
+					}
 				}
 
 				// Soi la planete la plus proche est ennemie, on prépare une
