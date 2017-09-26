@@ -6,6 +6,7 @@ import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Constantes;
 import fr.ginguene.onepoint.hackathon.IBot;
 import fr.ginguene.onepoint.hackathon.Planete;
+import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 import fr.ginguene.onepoint.hackathon.ordre.Terraformation;
@@ -178,7 +179,8 @@ public class Bot4 implements IBot {
 					for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
 						int aDistance = carte.getTrajetNbTour(source, aPlanete);
 
-						if (aPlanete.getPopulation() - carte.getMesFlottes(aPlanete.getId()) > -1 * aDistance / 2) {
+						if (aPlanete.getStatus() == PlaneteStatus.Neutre && aPlanete.getPopulation()
+								- carte.getMesFlottes(aPlanete.getId()) > -1 * aDistance / 2) {
 
 							int aScore = aDistance * 4 + aPlanete.getPopulation()
 									+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
