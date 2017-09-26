@@ -70,7 +70,7 @@ public class Bot4 implements IBot {
 					if (source.isTerraformable()) {
 						int nbEnnemie = 0;
 						for (Planete aPlanete : carte.getVoisines(source, 6)) {
-							if (aPlanete.getProprietaire() > Constantes.AMI) {
+							if (aPlanete.getStatus() != PlaneteStatus.Amie) {
 								nbEnnemie++;
 							}
 						}
@@ -88,13 +88,13 @@ public class Bot4 implements IBot {
 
 					// Si la planete la plus proche est ennemie, on prépare une
 					// megabombe
-					if (voisine.getProprietaire() > Constantes.AMI) {
-						if (source.getPopulation() < source.getPopulationMax() - 10) {
+					if (voisine.getStatus() == PlaneteStatus.Ennemie) {
+						if (source.getPopulation() < voisine.getPopulation() - 40) {
 							System.out.println("Megabombe en cours " + source);
 							continue;
 						} else if (!scoreOptimisation) {
 							System.out.println("Lancement de la Megabombe: " + source);
-							int nbVaisseau = source.getPopulation() - 60;
+							int nbVaisseau = voisine.getPopulation() + 10;
 							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
 							source.remPopulation(nbVaisseau);
 							response.addOrdre(ordre);
