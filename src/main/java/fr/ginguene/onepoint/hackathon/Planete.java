@@ -90,10 +90,6 @@ public class Planete {
 		return terraformation;
 	}
 
-	public float calcDistance(Planete planete) {
-		return (float) Math.sqrt(Math.pow(x - planete.getX(), 2) + Math.pow(y - planete.getY(), 2));
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -122,6 +118,21 @@ public class Planete {
 
 	public void terraforme() {
 		this.terraformation = 20 + (this.tauxCroissance * 2);
+	}
+
+	public PlaneteStatus getStatus() {
+
+		switch (proprietaire) {
+		case Constantes.AMI:
+			return PlaneteStatus.Amie;
+
+		case Constantes.NEUTRE:
+			return PlaneteStatus.Neutre;
+
+		default:
+			return PlaneteStatus.Ennemie;
+
+		}
 	}
 
 }

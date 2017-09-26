@@ -9,7 +9,9 @@ import java.util.Map;
 
 public class Carte {
 
-	private static final Map<String, Integer> MAP_TRAJET = new HashMap<>();
+	private static Map<String, Integer> MAP_TRAJET = new HashMap<>();
+
+	private static Map<String, Float> MAP_DISTANCE = new HashMap<>();
 
 	private Configuration configuration;
 
@@ -23,6 +25,55 @@ public class Carte {
 	private List<Flotte> flottes = new ArrayList<Flotte>();
 
 	private Map<Integer, List<Flotte>> mapFlotte = new HashMap<Integer, List<Flotte>>();
+
+	public static void clear() {
+		MAP_TRAJET = new HashMap<>();
+		MAP_DISTANCE = new HashMap<>();
+		defaultRatio = -1;
+	}
+
+	public float getDistance(Planete planete1, Planete planete2) {
+		String key = this.getPlanetePairKey(planete1, planete2);
+
+		if (!MAP_DISTANCE.containsKey(key)) {
+			float distance = (float) Math.sqrt(
+					Math.pow(planete2.getX() - planete1.getX(), 2) + Math.pow(planete2.getY() - planete2.getY(), 2));
+			return MAP_DISTANCE.put(key, distance);
+		} else
+
+			return MAP_DISTANCE.get(key);
+	}
+
+	public Stat getStatistique(Planete source, int nbVoisine) {
+
+		int nbAmies = 0;
+		int nbEnnemies = 0;
+		int nbNeutres = 0;
+
+		for (Planete aPlanete : this.getVoisines(source, nbVoisine)) {
+			switch (aPlanete.getStatus()) {
+
+			case Amie:
+				nbAmies++;
+				break;
+
+			case Neutre:
+				nbNeutres++;
+
+			case Ennemie:
+				nbEnnemies++;
+
+			}
+		}
+
+		Stat stat = new Stat();
+		stat.setNbAmies(nbAmies);
+		stat.setNbEnnemies(nbEnnemies);
+		stat.setNbNeutres(nbNeutres);
+
+		return stat;
+
+	}
 
 	public void addPlanete(Planete planete) {
 		// System.out.println("Ajout planete:" + planete.getId());
@@ -45,16 +96,16 @@ public class Carte {
 
 		mapFlotte.get(flotte.getProprietaire()).add(flotte);
 
-		String key = this.getTrajetKey(flotte.getPlaneteSource(), flotte.getPlaneteDestination());
+		String key = this.getPlanetePairKey(flotte.getPlaneteSource(), flotte.getPlaneteDestination());
 		if (!MAP_TRAJET.containsKey(key)) {
 			MAP_TRAJET.put(key, flotte.getToursTotals());
 
 			if (defaultRatio == -1.0) {
 
-				float distance = getPlanete(flotte.getPlaneteSource())
-						.calcDistance(getPlanete(flotte.getPlaneteDestination()));
+				float distance = this.getDistance(getPlanete(flotte.getPlaneteSource()),
+						getPlanete(flotte.getPlaneteDestination()));
 
-				this.defaultRatio = distance / flotte.getToursTotals();
+				defaultRatio = distance / flotte.getToursTotals();
 
 				System.out.println("distance:" + distance + "; tour:" + flotte.getToursTotals() + "=> defaultRatio:"
 						+ defaultRatio);
@@ -76,7 +127,7 @@ public class Carte {
 
 	public int getTrajetNbTour(Planete source, Planete destination) {
 
-		String key = getTrajetKey(source, destination);
+		String key = getPlanetePairKey(source, destination);
 		if (MAP_TRAJET.containsKey(key)) {
 			// System.out.println("==>" + MAP_TRAJET.get(key));
 			return MAP_TRAJET.get(key);
@@ -84,7 +135,7 @@ public class Carte {
 
 		// temps de trajet inconnu
 		// Ajouter l'extrapolation
-		float distance = source.calcDistance(destination);
+		float distance = this.getDistance(source, destination);
 
 		// System.out.println("==>distance:" + distance);
 		// System.out.println("==>defaultRatio:" + defaultRatio);
@@ -93,7 +144,7 @@ public class Carte {
 
 	}
 
-	private String getTrajetKey(int source, int destination) {
+	private String getPlanetePairKey(int source, int destination) {
 		if (source < destination) {
 			return source + "#" + destination;
 		} else {
@@ -102,8 +153,8 @@ public class Carte {
 
 	}
 
-	private String getTrajetKey(Planete source, Planete destination) {
-		return getTrajetKey(source.getId(), destination.getId());
+	private String getPlanetePairKey(Planete source, Planete destination) {
+		return getPlanetePairKey(source.getId(), destination.getId());
 	}
 
 	public List<Planete> getPlanetes() {
@@ -133,7 +184,7 @@ public class Carte {
 	public int getFlotteEnnemie(int destination) {
 		int ret = 0;
 		for (Flotte flotte : this.flottes) {
-			if (flotte.getProprietaire() > Constantes.MOI && flotte.getPlaneteDestination() == destination) {
+			if (flotte.getProprietaire() > Constantes.AMI && flotte.getPlaneteDestination() == destination) {
 				ret += flotte.getVaisseaux();
 			}
 		}
@@ -179,7 +230,7 @@ public class Carte {
 	}
 
 	public List<Flotte> getMesFlottes() {
-		return this.getFlotte(Constantes.MOI);
+		return this.getFlotte(Constantes.AMI);
 	}
 
 	public int getMesFlottes(Planete destination) {
@@ -201,7 +252,7 @@ public class Carte {
 	}
 
 	public List<Planete> getMesPlanetes() {
-		return this.getPlanetes(Constantes.MOI);
+		return this.getPlanetes(Constantes.AMI);
 	}
 
 	public List<Planete> getPlanetesEtrangeres() {
@@ -214,7 +265,7 @@ public class Carte {
 	public List<Planete> getPlanetesEnnemies() {
 		List<Planete> ret = new ArrayList<>();
 		for (Planete planete : this.planetes) {
-			if (planete.getProprietaire() > Constantes.MOI) {
+			if (planete.getProprietaire() > Constantes.AMI) {
 				ret.add(planete);
 			}
 		}
@@ -227,7 +278,7 @@ public class Carte {
 
 	public List<Planete> getMesTerraformations() {
 		List<Planete> ret = new ArrayList<>();
-		for (Planete planete : this.getPlanetes(Constantes.MOI)) {
+		for (Planete planete : this.getPlanetes(Constantes.AMI)) {
 			if (planete.getTerraformation() > 0) {
 				ret.add(planete);
 			}
@@ -240,7 +291,7 @@ public class Carte {
 
 		for (Planete aPlanete : this.planetes) {
 			if (aPlanete.getId() != planete.getId()) {
-				map.put(planete.calcDistance(aPlanete), aPlanete);
+				map.put(this.getDistance(planete, aPlanete), aPlanete);
 			}
 		}
 
@@ -260,7 +311,8 @@ public class Carte {
 
 		for (Planete aPlanete : this.planetes) {
 			if (aPlanete.getId() != planete.getId()) {
-				map.put(planete.calcDistance(aPlanete), aPlanete);
+				float distance = this.getDistance(planete, aPlanete);
+				map.put(distance, aPlanete);
 			}
 		}
 
@@ -290,8 +342,8 @@ public class Carte {
 		Planete ret = null;
 
 		for (Planete aPlanete : this.planetes) {
-			if (aPlanete.getProprietaire() != Constantes.MOI) {
-				float aDistance = planete.calcDistance(aPlanete);
+			if (aPlanete.getProprietaire() != Constantes.AMI) {
+				float aDistance = this.getDistance(planete, aPlanete);
 				if (ret == null || aDistance < distance) {
 					ret = aPlanete;
 					distance = aDistance;
@@ -308,8 +360,8 @@ public class Carte {
 		Planete ret = null;
 
 		for (Planete aPlanete : this.planetes) {
-			if (aPlanete.getProprietaire() != Constantes.MOI && !exclues.contains(aPlanete)) {
-				float aDistance = planete.calcDistance(aPlanete);
+			if (aPlanete.getProprietaire() != Constantes.AMI && !exclues.contains(aPlanete)) {
+				float aDistance = this.getDistance(planete, aPlanete);
 				if (ret == null || aDistance < distance) {
 					ret = aPlanete;
 					distance = aDistance;

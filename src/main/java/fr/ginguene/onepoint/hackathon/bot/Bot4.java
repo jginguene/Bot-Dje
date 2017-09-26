@@ -16,16 +16,16 @@ public class Bot4 implements IBot {
 
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
 
-		if (carte.getPlanetes(Constantes.Neutre).isEmpty()) {
+		if (carte.getPlanetes(Constantes.NEUTRE).isEmpty()) {
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-				if (aPlanete.getProprietaire() != Constantes.MOI) {
+				if (aPlanete.getProprietaire() != Constantes.AMI) {
 					return aPlanete;
 				}
 			}
 		}
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getProprietaire() != Constantes.MOI
+			if (aPlanete.getProprietaire() != Constantes.AMI
 					&& carte.getMesFlottes(aPlanete.getId()) < aPlanete.getPopulationMax()) {
 				return aPlanete;
 			}
@@ -69,7 +69,7 @@ public class Bot4 implements IBot {
 					if (source.isTerraformable()) {
 						int nbEnnemie = 0;
 						for (Planete aPlanete : carte.getVoisines(source, 6)) {
-							if (aPlanete.getProprietaire() > Constantes.MOI) {
+							if (aPlanete.getProprietaire() > Constantes.AMI) {
 								nbEnnemie++;
 							}
 						}
@@ -87,7 +87,7 @@ public class Bot4 implements IBot {
 
 					// Si la planete la plus proche est ennemie, on prépare une
 					// megabombe
-					if (voisine.getProprietaire() > Constantes.MOI) {
+					if (voisine.getProprietaire() > Constantes.AMI) {
 						if (source.getPopulation() < source.getPopulationMax() - 10) {
 							System.out.println("Megabombe en cours " + source);
 							continue;
@@ -109,7 +109,7 @@ public class Bot4 implements IBot {
 					List<Planete> voisines = carte.getVoisines(source, 5);
 					int nbVoisinesEtrangeres = 0;
 					for (Planete aPlanete : voisines) {
-						if (aPlanete.getProprietaire() != Constantes.MOI) {
+						if (aPlanete.getProprietaire() != Constantes.AMI) {
 							nbVoisinesEtrangeres++;
 						}
 
@@ -129,7 +129,7 @@ public class Bot4 implements IBot {
 
 					int nbEnnemie = 0;
 					for (Planete aPlanete : carte.getVoisines(source, 6)) {
-						if (aPlanete.getProprietaire() > Constantes.MOI) {
+						if (aPlanete.getProprietaire() > Constantes.AMI) {
 							nbEnnemie++;
 						}
 					}
@@ -141,7 +141,7 @@ public class Bot4 implements IBot {
 
 					Planete destination = null;
 					if (scoreOptimisation) {
-						List<Planete> neutres = carte.getPlanetes(Constantes.Neutre);
+						List<Planete> neutres = carte.getPlanetes(Constantes.NEUTRE);
 						if (neutres.size() != 0) {
 							destination = neutres.get(0);
 						}
@@ -167,7 +167,7 @@ public class Bot4 implements IBot {
 				Planete destination = null;
 				if (carte.getConfiguration().getTour() > 40) {
 					for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-						if (aPlanete.getProprietaire() != Constantes.MOI) {
+						if (aPlanete.getProprietaire() != Constantes.AMI) {
 							destination = aPlanete;
 							break;
 						}

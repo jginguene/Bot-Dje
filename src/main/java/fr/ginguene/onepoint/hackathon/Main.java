@@ -29,6 +29,8 @@ import fr.ginguene.onepoint.hackathon.bot.Bot4;
 @SpringBootApplication
 public class Main {
 
+	private int partie = -1;
+
 	private InputParser parser = new InputParser();
 	private static final IBot bot = new Bot4();
 
@@ -39,8 +41,11 @@ public class Main {
 	@RequestMapping(method = RequestMethod.POST)
 	public String bot(@RequestBody String input) {
 
-		// System.out.println("input:" + input);
 		Carte carte = parser.parse(input);
+
+		if (carte.getConfiguration().getIdentifiantPartie() != partie) {
+			Carte.clear();
+		}
 
 		Response response = bot.getResponse(carte);
 		System.out.println("Response:" + response.toString());

@@ -36,14 +36,6 @@ public class InputParser {
 
 		return carte;
 
-		/*
-		 * Format d'une ligne de type Flotte : F <Propriétaire:int>
-		 * <Vaisseaux:int> <IdSource:int> <IdDestination:int> <ToursTotal:int>
-		 * <ToursRestants:int>
-		 * 
-		 * Format d'une ligne de type Configuration : C <tour:int>
-		 * <toursMaximum:int> <IdentifiantPartie:long>
-		 */
 	}
 
 }
