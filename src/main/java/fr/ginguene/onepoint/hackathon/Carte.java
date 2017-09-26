@@ -37,7 +37,7 @@ public class Carte {
 
 		if (!MAP_DISTANCE.containsKey(key)) {
 			float distance = (float) Math.sqrt(
-					Math.pow(planete2.getX() - planete1.getX(), 2) + Math.pow(planete2.getY() - planete2.getY(), 2));
+					Math.pow(planete2.getX() - planete1.getX(), 2) + Math.pow(planete2.getY() - planete1.getY(), 2));
 			MAP_DISTANCE.put(key, distance);
 		}
 
