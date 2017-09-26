@@ -38,10 +38,10 @@ public class Carte {
 		if (!MAP_DISTANCE.containsKey(key)) {
 			float distance = (float) Math.sqrt(
 					Math.pow(planete2.getX() - planete1.getX(), 2) + Math.pow(planete2.getY() - planete2.getY(), 2));
-			return MAP_DISTANCE.put(key, distance);
-		} else
+			MAP_DISTANCE.put(key, distance);
+		}
 
-			return MAP_DISTANCE.get(key);
+		return MAP_DISTANCE.get(key);
 	}
 
 	public Stat getStatistique(Planete source, int nbVoisine) {
