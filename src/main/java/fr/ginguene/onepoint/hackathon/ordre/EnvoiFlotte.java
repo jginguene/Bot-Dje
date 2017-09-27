@@ -1,5 +1,6 @@
 package fr.ginguene.onepoint.hackathon.ordre;
 
+import fr.ginguene.onepoint.hackathon.Constantes;
 import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.Planete;
 
@@ -15,6 +16,10 @@ public class EnvoiFlotte implements Ordre {
 
 		if (source.getPopulation() < nbVaisseau) {
 			nbVaisseau = source.getPopulation() - 1;
+		}
+
+		if (source.getProprietaire() != Constantes.AMI) {
+			destination = null;
 		}
 
 		if (destination != null) {
