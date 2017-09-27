@@ -381,4 +381,15 @@ public class Carte {
 		return configuration;
 	}
 
+	public Planete getPlaneteLaPlusProche(Planete planete, PlaneteStatus status) {
+
+		for (Planete aPlanete : this.getPlanetesOrderByDistance(planete)) {
+			if (aPlanete.getStatus() == status) {
+				return aPlanete;
+			}
+		}
+		return null;
+
+	}
+
 }

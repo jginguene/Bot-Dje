@@ -103,7 +103,7 @@ public class Bot4 implements IBot {
 						}
 					}
 
-					// Mode Bombe
+					// Mode chargement de Bombe
 					// Si on est visé par une attaque ou que l'on n'a plus
 					// d'ennemi proche
 					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
@@ -165,46 +165,27 @@ public class Bot4 implements IBot {
 
 				// Cas standards;
 
-				Planete destination = null;
-				if (carte.getConfiguration().getTour() > 40) {
-					for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-						if (aPlanete.getProprietaire() != Constantes.AMI) {
-							destination = aPlanete;
-							break;
-						}
-					}
-
-				} else {
-					int minScore = 0;
-					for (Planete aPlanete : carte.getPlanetesEtrangeres()) {
-						int aDistance = carte.getTrajetNbTour(source, aPlanete);
-
-						if (aPlanete.getStatus() == PlaneteStatus.Neutre && aPlanete.getPopulation()
-								- carte.getMesFlottes(aPlanete.getId()) > -1 * aDistance / 2) {
-
-							int aScore = aDistance * 4 + aPlanete.getPopulation()
-									+ carte.getFlottesEnnemiesFrom(aPlanete.getId());
-
-							if (aScore < minScore || destination == null) {
-								destination = aPlanete;
-								minScore = aScore;
-							}
-						}
-					}
-				}
-
+				// Une planete neutre proche a été trouvée
+				Planete destination = this.getDestinationNeutre(source, carte);
 				if (destination != null) {
-
 					int nbVaisseau = source.getPopulation() - 1;
-					if (source.getPopulation() > 20) {
-						nbVaisseau = source.getPopulation() - 20;
-					}
-
-					System.out.println("Desination: " + source + ";nbVaisseau:" + nbVaisseau);
 					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
+					continue;
+				}
+
+				// Attaque par défaut d'une planete proche
+				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+					if (aPlanete.getStatus() != PlaneteStatus.Amie) {
+						int nbVaisseau = source.getPopulation() - 1;
+						EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+						source.remPopulation(nbVaisseau);
+						response.addOrdre(ordre);
+						carte.addFlotte(ordre.getFlotte());
+						continue;
+					}
 				}
 
 			}
@@ -212,6 +193,29 @@ public class Bot4 implements IBot {
 		}
 
 		return response;
+
+	}
+
+	private Planete getDestinationNeutre(Planete source, Carte carte) {
+
+		Planete destination = null;
+		int minPopulation = -1;
+
+		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+
+			Planete ennemiLaPlusProche = carte.getPlaneteLaPlusProche(aPlanete, PlaneteStatus.Ennemie);
+			float distanceEnnemi = carte.getDistance(ennemiLaPlusProche, aPlanete);
+			float distanceSource = carte.getDistance(source, aPlanete);
+			int mesFlottes = carte.getMesFlottes(aPlanete);
+
+			if (carte.getFlotteEnnemie(aPlanete.getId()) == 0 && distanceSource < distanceEnnemi
+					&& (destination == null || destination.getPopulation() - mesFlottes < minPopulation)) {
+				destination = aPlanete;
+				minPopulation = destination.getPopulation() - mesFlottes;
+			}
+		}
+
+		return destination;
 
 	}
 
