@@ -134,7 +134,8 @@ public class Bot4 implements IBot {
 					}
 
 					int nbVaisseau = source.getPopulation() - 60;
-					if (nbEnnemie == 0 && carte.getFlotteEnnemie(source.getId()) == 0) {
+
+					if (nbVaisseau < 0 || (nbEnnemie == 0 && carte.getFlotteEnnemie(source.getId()) == 0)) {
 						nbVaisseau = source.getPopulation() - 10;
 					}
 
