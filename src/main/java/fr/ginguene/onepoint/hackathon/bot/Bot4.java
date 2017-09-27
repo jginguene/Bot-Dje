@@ -169,7 +169,7 @@ public class Bot4 implements IBot {
 				Stat stat = carte.getStatistique();
 
 				// Mode guerre rangée
-				if (stat.getNbAmies() > 8 && stat.getNbEnnemies() > 8) {
+				if (stat.getNbAmies() > 8) {
 
 					// Les planete les plus loingtaines tirent par boulet de 20
 					Stat sourceStat = carte.getStatistique(source, 4);
