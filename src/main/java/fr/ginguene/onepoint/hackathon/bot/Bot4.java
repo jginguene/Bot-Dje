@@ -113,7 +113,7 @@ public class Bot4 implements IBot {
 					 * }
 					 */
 
-					if (allowBomb && nbVaisseauEnnemi > 0
+					if (allowBomb && nbVaisseauEnnemi > source.getPopulation() - 10
 							&& source.getPopulation() < Math.min(40, source.getPopulationMax() - 1)) {
 						System.out.println("Mode bombe: " + source + "=> " + ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
 						continue;
