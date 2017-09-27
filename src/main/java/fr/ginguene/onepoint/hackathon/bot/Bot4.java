@@ -206,17 +206,19 @@ public class Bot4 implements IBot {
 		int minPopulation = -1;
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+			if (aPlanete.getStatus() == PlaneteStatus.Neutre) {
 
-			Planete ennemiLaPlusProche = carte.getPlaneteLaPlusProche(aPlanete, PlaneteStatus.Ennemie);
-			float distanceEnnemi = carte.getDistance(ennemiLaPlusProche, aPlanete);
-			float distanceSource = carte.getDistance(source, aPlanete);
-			int mesFlottes = carte.getMesFlottes(aPlanete);
+				Planete ennemiLaPlusProche = carte.getPlaneteLaPlusProche(aPlanete, PlaneteStatus.Ennemie);
+				float distanceEnnemi = carte.getDistance(ennemiLaPlusProche, aPlanete);
+				float distanceSource = carte.getDistance(source, aPlanete);
+				int mesFlottes = carte.getMesFlottes(aPlanete);
 
-			if (carte.getFlotteEnnemie(aPlanete.getId()) == 0 && distanceSource < distanceEnnemi
-					&& aPlanete.getPopulation() - mesFlottes > 5
-					&& (destination == null || destination.getPopulation() - mesFlottes < minPopulation)) {
-				destination = aPlanete;
-				minPopulation = destination.getPopulation() - mesFlottes;
+				if (carte.getFlotteEnnemie(aPlanete.getId()) == 0 && distanceSource < distanceEnnemi
+						&& aPlanete.getPopulation() - mesFlottes > 5
+						&& (destination == null || destination.getPopulation() - mesFlottes < minPopulation)) {
+					destination = aPlanete;
+					minPopulation = destination.getPopulation() - mesFlottes;
+				}
 			}
 		}
 
