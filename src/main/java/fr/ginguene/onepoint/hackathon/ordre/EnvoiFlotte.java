@@ -17,10 +17,12 @@ public class EnvoiFlotte implements Ordre {
 			nbVaisseau = source.getPopulation() - 1;
 		}
 
-		this.flotte = new Flotte();
-		flotte.setPlaneteDestination(destination.getId());
-		flotte.setPlaneteSource(source.getId());
-		flotte.setVaisseaux(nbVaisseau);
+		if (destination != null) {
+			this.flotte = new Flotte();
+			flotte.setPlaneteDestination(destination.getId());
+			flotte.setPlaneteSource(source.getId());
+			flotte.setVaisseaux(nbVaisseau);
+		}
 
 	}
 
@@ -31,6 +33,10 @@ public class EnvoiFlotte implements Ordre {
 
 	@Override
 	public String asString() {
+
+		if (flotte == null) {
+			return "";
+		}
 
 		if (flotte.getVaisseaux() <= 3) {
 			System.err.println("Essai d'envoi d'une flotte de " + flotte.getVaisseaux() + " vaisseaux (<3) de "
