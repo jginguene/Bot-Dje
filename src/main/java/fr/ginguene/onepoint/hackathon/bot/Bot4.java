@@ -216,7 +216,7 @@ public class Bot4 implements IBot {
 				int mesFlottes = carte.getMesFlottes(aPlanete);
 
 				if (carte.getFlotteEnnemie(aPlanete.getId()) == 0 && distanceSource < distanceEnnemi
-						&& aPlanete.getPopulation() - mesFlottes > 5
+						&& aPlanete.getPopulation() - mesFlottes < -5
 						&& (destination == null || destination.getPopulation() - mesFlottes < minPopulation)) {
 					destination = aPlanete;
 					minPopulation = destination.getPopulation() - mesFlottes;
