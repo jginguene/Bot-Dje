@@ -21,7 +21,7 @@ public class BotPremierTour implements IBot {
 
 		for (Planete destination : carte.getVoisines(source, NB_VOISINE_TO_EXPLORE)) {
 
-			if (destination.getPopulation() + 1 < nbPopRestante) {
+			if (destination.getPopulation() + 1 < nbPopRestante && destination.getPopulation() < 50) {
 
 				int nbVaisseaux = destination.getPopulation() + 1;
 				EnvoiFlotte envoiFlotte = new EnvoiFlotte(source, destination, nbVaisseaux);
