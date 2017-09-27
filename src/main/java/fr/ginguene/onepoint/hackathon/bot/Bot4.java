@@ -84,22 +84,21 @@ public class Bot4 implements IBot {
 
 					// Si la planete la plus proche est ennemie, on prépare une
 					// megabombe
-					if (voisine.getStatus() == PlaneteStatus.Ennemie) {
-
-						if (source.getPopulation() < voisine.getPopulation() + 40
-								&& source.getPopulation() < source.getPopulationMax()) {
-							System.out.println("Megabombe en cours " + source);
-							continue;
-						} else if (!scoreOptimisation) {
-							System.out.println("Lancement de la Megabombe: " + source);
-							int nbVaisseau = Math.min(source.getPopulation() - 10, voisine.getPopulation() + 10);
-							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
-							source.remPopulation(nbVaisseau);
-							response.addOrdre(ordre);
-							carte.addFlotte(ordre.getFlotte());
-							continue;
-						}
-					}
+					/*
+					 * if (voisine.getStatus() == PlaneteStatus.Ennemie) {
+					 * 
+					 * if (source.getPopulation() < voisine.getPopulation() + 40
+					 * && source.getPopulation() < source.getPopulationMax()) {
+					 * System.out.println("Megabombe en cours " + source);
+					 * continue; } else if (!scoreOptimisation) {
+					 * System.out.println("Lancement de la Megabombe: " +
+					 * source); int nbVaisseau = Math.min(source.getPopulation()
+					 * - 10, voisine.getPopulation() + 10); EnvoiFlotte ordre =
+					 * new EnvoiFlotte(source, voisine, nbVaisseau);
+					 * source.remPopulation(nbVaisseau);
+					 * response.addOrdre(ordre);
+					 * carte.addFlotte(ordre.getFlotte()); continue; } }
+					 */
 
 					// Mode chargement de Bombe
 					// Si on est visé par une attaque ou que l'on n'a plus
