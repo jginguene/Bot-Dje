@@ -118,7 +118,6 @@ public class Carte {
 	}
 
 	public void addFlotte(Flotte flotte) {
-		// System.out.println("Ajout planete:" + planete.getId());
 		this.flottes.add(flotte);
 
 		if (!mapFlotte.containsKey(flotte.getProprietaire())) {
@@ -225,11 +224,18 @@ public class Carte {
 
 	public List<Flotte> getFlotte(int proprietaire) {
 
-		if (mapFlotte.containsKey(proprietaire)) {
-			return mapFlotte.get(proprietaire);
-		} else {
-			return new ArrayList<>();
+		List<Flotte> ret = new ArrayList<>();
+		for (Flotte flotte : this.flottes) {
+			if (flotte.getProprietaire() == proprietaire) {
+
+			}
 		}
+		return ret;
+
+		/*
+		 * if (mapFlotte.containsKey(proprietaire)) { return
+		 * mapFlotte.get(proprietaire); } else { return new ArrayList<>(); }
+		 */
 	}
 
 	public List<Flotte> getFlotteEnnemies() {
