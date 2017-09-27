@@ -121,6 +121,29 @@ public class Bot4 implements IBot {
 						continue;
 					}
 
+				} else {
+					if (source.getPopulation() == source.getPopulationMax()) {
+						Planete destination = null;
+						float distance = -1;
+
+						for (Planete aPlanete : carte.getPlanetes()) {
+							if (aPlanete.getStatus() != PlaneteStatus.Ennemie) {
+								float aDistance = carte.getDistance(aPlanete, source);
+								if (distance > aDistance || destination == null) {
+									distance = aDistance;
+									destination = aPlanete;
+								}
+
+							}
+							int nbVaisseau = source.getPopulation() - 1;
+							EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+							source.remPopulation(nbVaisseau);
+							response.addOrdre(ordre);
+							carte.addFlotte(ordre.getFlotte());
+							continue;
+						}
+
+					}
 				}
 
 				// Mode Larguage de Bombe
