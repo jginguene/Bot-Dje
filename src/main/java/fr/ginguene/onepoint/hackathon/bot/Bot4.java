@@ -186,7 +186,7 @@ public class Bot4 implements IBot {
 				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 					if (aPlanete.getStatus() != PlaneteStatus.Amie) {
 						int nbVaisseau = source.getPopulation() - 1;
-						EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+						EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
 						source.remPopulation(nbVaisseau);
 						response.addOrdre(ordre);
 						carte.addFlotte(ordre.getFlotte());
