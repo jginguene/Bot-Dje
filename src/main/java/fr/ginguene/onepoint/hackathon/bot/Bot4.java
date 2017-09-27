@@ -17,20 +17,13 @@ public class Bot4 implements IBot {
 
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
 
-		if (carte.getPlanetes(Constantes.NEUTRE).isEmpty()) {
-			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-				if (aPlanete.getProprietaire() != Constantes.AMI) {
-					return aPlanete;
-				}
-			}
-		}
-
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getProprietaire() != Constantes.AMI
 					&& carte.getMesFlottes(aPlanete.getId()) < aPlanete.getPopulationMax()) {
 				return aPlanete;
 			}
 		}
+
 		return null;
 
 	}
