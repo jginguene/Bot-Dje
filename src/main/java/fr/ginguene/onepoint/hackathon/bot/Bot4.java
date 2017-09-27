@@ -84,26 +84,28 @@ public class Bot4 implements IBot {
 
 					// Si la planete la plus proche est ennemie, on prépare une
 					// megabombe
-					/*
-					 * if (voisine.getStatus() == PlaneteStatus.Ennemie) {
-					 * 
-					 * if (source.getPopulation() < voisine.getPopulation() + 40
-					 * && source.getPopulation() < source.getPopulationMax()) {
-					 * System.out.println("Megabombe en cours " + source);
-					 * continue; } else if (!scoreOptimisation) {
-					 * System.out.println("Lancement de la Megabombe: " +
-					 * source); int nbVaisseau = Math.min(source.getPopulation()
-					 * - 10, voisine.getPopulation() + 10); EnvoiFlotte ordre =
-					 * new EnvoiFlotte(source, voisine, nbVaisseau);
-					 * source.remPopulation(nbVaisseau);
-					 * response.addOrdre(ordre);
-					 * carte.addFlotte(ordre.getFlotte()); continue; } }
-					 */
+
+					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
+					if (voisine.getStatus() == PlaneteStatus.Ennemie && nbVaisseauEnnemi > 0) {
+
+						if (source.getPopulation() < voisine.getPopulation() + 40
+								&& source.getPopulation() < source.getPopulationMax()) {
+							System.out.println("Megabombe en cours " + source);
+							continue;
+						} else if (!scoreOptimisation) {
+							System.out.println("Lancement de la Megabombe: " + source);
+							int nbVaisseau = Math.min(source.getPopulation() - 10, voisine.getPopulation() + 10);
+							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
+							source.remPopulation(nbVaisseau);
+							response.addOrdre(ordre);
+							carte.addFlotte(ordre.getFlotte());
+							continue;
+						}
+					}
 
 					// Mode chargement de Bombe
 					// Si on est visé par une attaque ou que l'on n'a plus
 					// d'ennemi proche
-					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
 					/*
 					 * List<Planete> voisines = carte.getVoisines(source, 5);
 					 * int nbVoisinesEtrangeres = 0; for (Planete aPlanete :
@@ -248,6 +250,7 @@ public class Bot4 implements IBot {
 	}
 
 	private void attaquePlaneteEtrangereLaPlusProche(Response response, Planete source, Carte carte) {
+
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getStatus() != PlaneteStatus.Amie
 					&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete)) {
