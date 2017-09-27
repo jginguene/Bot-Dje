@@ -47,6 +47,8 @@ public class Bot4 implements IBot {
 
 		List<Planete> mesPlanetes = carte.getMesPlanetes();
 
+		boolean allowBomb = mesPlanetes.size() > 4;
+
 		for (Planete source : mesPlanetes) {
 
 			System.out.println(source + "=> population " + source.getPopulation() + "/" + source.getPopulationMax());
@@ -118,7 +120,7 @@ public class Bot4 implements IBot {
 
 					}
 
-					if ((nbVaisseauEnnemi > 10 || nbVoisinesEtrangeres == 0)
+					if (allowBomb && (nbVaisseauEnnemi > 10 || nbVoisinesEtrangeres == 0)
 							&& source.getPopulation() < Math.min(160, source.getPopulationMax() - 1)) {
 						System.out.println("Mode bombe: " + source + "=> nbVoisinesEtrangeres:" + nbVoisinesEtrangeres
 								+ ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
