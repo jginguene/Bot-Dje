@@ -186,7 +186,7 @@ public class Bot4 implements IBot {
 						source.remPopulation(nbVaisseau);
 						response.addOrdre(ordre);
 						carte.addFlotte(ordre.getFlotte());
-						continue;
+						break;
 					}
 				}
 
