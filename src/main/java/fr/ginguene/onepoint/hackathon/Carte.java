@@ -44,6 +44,37 @@ public class Carte {
 		return MAP_DISTANCE.get(key);
 	}
 
+	public Stat getStatistique() {
+
+		int nbAmies = 0;
+		int nbEnnemies = 0;
+		int nbNeutres = 0;
+
+		for (Planete aPlanete : planetes) {
+			switch (aPlanete.getStatus()) {
+
+			case Amie:
+				nbAmies++;
+				break;
+
+			case Neutre:
+				nbNeutres++;
+
+			case Ennemie:
+				nbEnnemies++;
+
+			}
+		}
+
+		Stat stat = new Stat();
+		stat.setNbAmies(nbAmies);
+		stat.setNbEnnemies(nbEnnemies);
+		stat.setNbNeutres(nbNeutres);
+
+		return stat;
+
+	}
+
 	public Stat getStatistique(Planete source, int nbVoisine) {
 
 		int nbAmies = 0;

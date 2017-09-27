@@ -4,10 +4,12 @@ import java.util.List;
 
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Constantes;
+import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.IBot;
 import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
+import fr.ginguene.onepoint.hackathon.Stat;
 import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 import fr.ginguene.onepoint.hackathon.ordre.Terraformation;
 
@@ -113,7 +115,7 @@ public class Bot4 implements IBot {
 
 					}
 
-					if (allowBomb && (nbVaisseauEnnemi > 10 || nbVoisinesEtrangeres == 0)
+					if (allowBomb && (nbVaisseauEnnemi > 0 || nbVoisinesEtrangeres == 0)
 							&& source.getPopulation() < Math.min(160, source.getPopulationMax() - 1)) {
 						System.out.println("Mode bombe: " + source + "=> nbVoisinesEtrangeres:" + nbVoisinesEtrangeres
 								+ ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
@@ -164,6 +166,36 @@ public class Bot4 implements IBot {
 
 				// Cas standards;
 
+				Stat stat = carte.getStatistique();
+
+				// Mode guerre rangée
+				if (stat.getNbAmies() > 8 && stat.getNbEnnemies() > 8) {
+
+					// Les planete les plus loingtaines tirent par boulet de 20
+					Stat sourceStat = carte.getStatistique(source, 4);
+					if (sourceStat.getNbAmies() == 4) {
+						attaquePlaneteEtrangereLaPlusProche(response, source, carte);
+					}
+
+					// Si on peut se joindre à une attaque en cours, on le fait
+					for (Flotte flotte : carte.getFlotte(Constantes.AMI)) {
+						Planete destination = carte.getPlanete(flotte.getPlaneteDestination());
+						int nbVaisseau = carte.getMesFlottes(flotte.getPlaneteDestination());
+
+						if (nbVaisseau < destination.getPopulationMax()
+								&& flotte.getToursRestants() == carte.getTrajetNbTour(source, destination)) {
+							nbVaisseau = source.getPopulation() - 1;
+							EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+							source.remPopulation(nbVaisseau);
+							response.addOrdre(ordre);
+							carte.addFlotte(ordre.getFlotte());
+							break;
+						}
+
+					}
+
+				}
+
 				// Une planete neutre proche a été trouvée
 				Planete destination = this.getDestinationNeutre(source, carte);
 				if (destination != null) {
@@ -176,16 +208,7 @@ public class Bot4 implements IBot {
 				}
 
 				// Attaque par défaut d'une planete proche
-				for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-					if (aPlanete.getStatus() != PlaneteStatus.Amie) {
-						int nbVaisseau = source.getPopulation() - 1;
-						EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
-						source.remPopulation(nbVaisseau);
-						response.addOrdre(ordre);
-						carte.addFlotte(ordre.getFlotte());
-						break;
-					}
-				}
+				attaquePlaneteEtrangereLaPlusProche(response, source, carte);
 
 			}
 
@@ -193,6 +216,19 @@ public class Bot4 implements IBot {
 
 		return response;
 
+	}
+
+	private void attaquePlaneteEtrangereLaPlusProche(Response response, Planete source, Carte carte) {
+		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+			if (aPlanete.getStatus() != PlaneteStatus.Amie) {
+				int nbVaisseau = source.getPopulation() - 1;
+				EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
+				source.remPopulation(nbVaisseau);
+				response.addOrdre(ordre);
+				carte.addFlotte(ordre.getFlotte());
+				break;
+			}
+		}
 	}
 
 	private Planete getDestinationNeutre(Planete source, Carte carte) {
