@@ -173,7 +173,7 @@ public class Bot4 implements IBot {
 
 					// Les planete les plus loingtaines tirent par boulet de 20
 					Stat sourceStat = carte.getStatistique(source, 4);
-					if (sourceStat.getNbAmies() == 4 && source.getPopulation() < 20) {
+					if (sourceStat.getNbAmies() == 4 && source.getPopulation() > 20) {
 						attaquePlaneteEtrangereLaPlusProche(response, source, carte);
 					}
 
