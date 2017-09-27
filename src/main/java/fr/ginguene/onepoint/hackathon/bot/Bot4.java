@@ -250,7 +250,7 @@ public class Bot4 implements IBot {
 
 	private boolean aidePlanete(Response response, Planete source, Carte carte) {
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getStatus() != PlaneteStatus.Amie
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie
 					&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete) * 2) {
 
 				int maFlotte = carte.getFlotte(Constantes.AMI, aPlanete.getId());
@@ -277,7 +277,7 @@ public class Bot4 implements IBot {
 
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 				if (aPlanete.getStatus() != PlaneteStatus.Amie
-						&& aPlanete.getPopulation() + 20 < carte.getMesFlottes(aPlanete)) {
+						&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete)) {
 
 					int nbVaisseau = source.getPopulation() - 20;
 
