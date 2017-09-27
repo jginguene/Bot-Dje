@@ -12,6 +12,11 @@ public class EnvoiFlotte implements Ordre {
 	private Flotte flotte;
 
 	public EnvoiFlotte(Planete source, Planete destination, int nbVaisseau) {
+
+		if (source.getPopulation() < nbVaisseau) {
+			nbVaisseau = source.getPopulation() - 1;
+		}
+
 		this.flotte = new Flotte();
 		flotte.setPlaneteDestination(destination.getId());
 		flotte.setPlaneteSource(source.getId());

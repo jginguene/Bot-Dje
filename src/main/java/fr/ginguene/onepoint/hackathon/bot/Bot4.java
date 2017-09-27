@@ -89,7 +89,8 @@ public class Bot4 implements IBot {
 					// Si la planete la plus proche est ennemie, on prépare une
 					// megabombe
 					if (voisine.getStatus() == PlaneteStatus.Ennemie) {
-						if (source.getPopulation() < voisine.getPopulation() - 40) {
+
+						if (source.getPopulation() < voisine.getPopulation() + 40) {
 							System.out.println("Megabombe en cours " + source);
 							continue;
 						} else if (!scoreOptimisation) {
