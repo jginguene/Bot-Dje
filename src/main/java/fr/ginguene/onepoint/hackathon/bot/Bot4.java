@@ -49,7 +49,7 @@ public class Bot4 implements IBot {
 
 		for (Planete source : mesPlanetes) {
 
-			System.out.println(source + "=> " + source.getPopulation());
+			System.out.println(source + "=> population " + source.getPopulation() + "/" + source.getPopulationMax());
 
 			if (source.getPopulation() > 5) {
 
@@ -118,9 +118,10 @@ public class Bot4 implements IBot {
 
 					}
 
-					if ((nbVaisseauEnnemi > 0 || nbVoisinesEtrangeres == 0)
+					if ((nbVaisseauEnnemi > 10 || nbVoisinesEtrangeres == 0)
 							&& source.getPopulation() < Math.min(160, source.getPopulationMax() - 1)) {
-						System.out.println("Mode bombe: " + source);
+						System.out.println("Mode bombe: " + source + "=> nbVoisinesEtrangeres:" + nbVoisinesEtrangeres
+								+ ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
 						continue;
 					}
 
@@ -128,7 +129,6 @@ public class Bot4 implements IBot {
 
 				// Mode Largage de Bombe
 				if (source.getPopulation() > 140 || source.getPopulation() > source.getPopulationMax() - 20) {
-					System.out.println("Lancement de la bombe: " + source);
 
 					int nbEnnemie = 0;
 					for (Planete aPlanete : carte.getVoisines(source, 6)) {
@@ -141,6 +141,8 @@ public class Bot4 implements IBot {
 					if (nbEnnemie == 0 && carte.getFlotteEnnemie(source.getId()) == 0) {
 						nbVaisseau = source.getPopulation() - 10;
 					}
+
+					System.out.println("Lancement de la bombe: " + source + " => nbVaisseau:" + nbVaisseau);
 
 					Planete destination = null;
 					if (scoreOptimisation) {
