@@ -277,7 +277,7 @@ public class Bot4 implements IBot {
 
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 				if (aPlanete.getStatus() != PlaneteStatus.Amie
-						&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete)) {
+						&& aPlanete.getPopulation() + 20 < carte.getMesFlottes(aPlanete)) {
 
 					int nbVaisseau = source.getPopulation() - 20;
 
