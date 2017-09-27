@@ -243,7 +243,7 @@ public class Bot4 implements IBot {
 		Planete destination = null;
 		int minPopulation = -1;
 
-		// System.out.println("getDestinationNeutre " + source);
+		System.out.println("getDestinationNeutre " + source);
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getStatus() == PlaneteStatus.Neutre) {
@@ -253,10 +253,9 @@ public class Bot4 implements IBot {
 				float distanceSource = carte.getDistance(source, aPlanete);
 				int mesFlottes = carte.getMesFlottes(aPlanete);
 
-				// System.out.println(aPlanete + ": mesFlottes:" + mesFlottes +
-				// ";distanceEnnemi:" + distanceEnnemi
-				// + ";distanceSource:" + distanceSource +
-				// ";aPlanete.getPopulation:" + aPlanete.getPopulation());
+				System.out.println(aPlanete + ": mesFlottes:" + mesFlottes + "; distanceEnnemi:" + distanceEnnemi
+						+ ";distanceSource: " + distanceSource + "; aPlanete.getPopulation:" + aPlanete.getPopulation()
+						+ "; minPopulation:" + minPopulation);
 
 				if (distanceSource < distanceEnnemi && aPlanete.getPopulation() - mesFlottes > -5
 						&& (destination == null || destination.getPopulation() - mesFlottes < minPopulation)) {
@@ -266,6 +265,7 @@ public class Bot4 implements IBot {
 			}
 		}
 
+		System.out.println("selecty  " + destination);
 		return destination;
 
 	}
