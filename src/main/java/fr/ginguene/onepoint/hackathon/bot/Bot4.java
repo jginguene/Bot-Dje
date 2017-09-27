@@ -90,12 +90,13 @@ public class Bot4 implements IBot {
 					// megabombe
 					if (voisine.getStatus() == PlaneteStatus.Ennemie) {
 
-						if (source.getPopulation() < voisine.getPopulation() + 40) {
+						if (source.getPopulation() < voisine.getPopulation() + 40
+								&& source.getPopulation() < source.getPopulationMax()) {
 							System.out.println("Megabombe en cours " + source);
 							continue;
 						} else if (!scoreOptimisation) {
 							System.out.println("Lancement de la Megabombe: " + source);
-							int nbVaisseau = voisine.getPopulation() + 10;
+							int nbVaisseau = Math.min(source.getPopulation() - 10, voisine.getPopulation() + 10);
 							EnvoiFlotte ordre = new EnvoiFlotte(source, voisine, nbVaisseau);
 							source.remPopulation(nbVaisseau);
 							response.addOrdre(ordre);
@@ -126,12 +127,12 @@ public class Bot4 implements IBot {
 				}
 
 				// Mode Largage de Bombe
-				if (source.getPopulation() > 140 || source.getPopulation() == source.getPopulationMax()) {
+				if (source.getPopulation() > 140 || source.getPopulation() > source.getPopulationMax() - 20) {
 					System.out.println("Lancement de la bombe: " + source);
 
 					int nbEnnemie = 0;
 					for (Planete aPlanete : carte.getVoisines(source, 6)) {
-						if (aPlanete.getProprietaire() > Constantes.AMI) {
+						if (aPlanete.getStatus() != PlaneteStatus.Amie) {
 							nbEnnemie++;
 						}
 					}
