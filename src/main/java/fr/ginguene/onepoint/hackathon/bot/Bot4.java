@@ -250,19 +250,23 @@ public class Bot4 implements IBot {
 	}
 
 	private void attaquePlaneteEtrangereLaPlusProche(Response response, Planete source, Carte carte) {
+		if (source.getPopulation() > 40) {
 
-		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getStatus() != PlaneteStatus.Amie
-					&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete)) {
-				int nbVaisseau = source.getPopulation() - 20;
-				EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
-				source.remPopulation(nbVaisseau);
-				response.addOrdre(ordre);
-				carte.addFlotte(ordre.getFlotte());
+			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+				if (aPlanete.getStatus() != PlaneteStatus.Amie
+						&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete)) {
 
-				System.out.println(
-						"attaquePlaneteEtrangereLaPlusProche: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
-				break;
+					int nbVaisseau = source.getPopulation() - 20;
+
+					EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+
+					System.out.println("attaquePlaneteEtrangereLaPlusProche: " + source + " -> " + aPlanete + " ["
+							+ nbVaisseau + "]");
+					break;
+				}
 			}
 		}
 	}
