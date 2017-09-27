@@ -184,7 +184,7 @@ public class Bot4 implements IBot {
 
 						if (nbVaisseau < destination.getPopulationMax() + 20
 								&& flotte.getToursRestants() == carte.getTrajetNbTour(source, destination) + 1) {
-							nbVaisseau = source.getPopulation() - 1;
+							nbVaisseau = source.getPopulation() - 20;
 							EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 							source.remPopulation(nbVaisseau);
 							response.addOrdre(ordre);
@@ -225,7 +225,7 @@ public class Bot4 implements IBot {
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getStatus() != PlaneteStatus.Amie
 					&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete)) {
-				int nbVaisseau = source.getPopulation() - 1;
+				int nbVaisseau = source.getPopulation() - 20;
 				EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
