@@ -4,7 +4,6 @@ import java.util.List;
 
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Constantes;
-import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.IBot;
 import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
@@ -169,32 +168,34 @@ public class Bot4 implements IBot {
 				Stat stat = carte.getStatistique();
 
 				// Mode guerre rangée
-				if (stat.getNbAmies() > 8) {
-
-					// Les planete les plus loingtaines tirent par boulet de 20
-					Stat sourceStat = carte.getStatistique(source, 4);
-					if (sourceStat.getNbAmies() == 4 && source.getPopulation() > 20) {
-						attaquePlaneteEtrangereLaPlusProche(response, source, carte);
-					}
-
-					// Si on peut se joindre à une attaque en cours, on le fait
-					for (Flotte flotte : carte.getFlotte(Constantes.AMI)) {
-						Planete destination = carte.getPlanete(flotte.getPlaneteDestination());
-						int nbVaisseau = carte.getMesFlottes(flotte.getPlaneteDestination());
-
-						if (nbVaisseau < destination.getPopulationMax() + 20
-								&& flotte.getToursRestants() == carte.getTrajetNbTour(source, destination) + 1) {
-							nbVaisseau = source.getPopulation() - 20;
-							EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
-							source.remPopulation(nbVaisseau);
-							response.addOrdre(ordre);
-							carte.addFlotte(ordre.getFlotte());
-							break;
-						}
-
-					}
-
-				}
+				/*
+				 * if (stat.getNbAmies() > 8) {
+				 * 
+				 * // Les planete les plus loingtaines tirent par boulet de 20
+				 * Stat sourceStat = carte.getStatistique(source, 4); if
+				 * (sourceStat.getNbAmies() == 4 && source.getPopulation() > 20)
+				 * { attaquePlaneteEtrangereLaPlusProche(response, source,
+				 * carte); }
+				 * 
+				 * // Si on peut se joindre à une attaque en cours, on le fait
+				 * for (Flotte flotte : carte.getFlotte(Constantes.AMI)) {
+				 * Planete destination =
+				 * carte.getPlanete(flotte.getPlaneteDestination()); int
+				 * nbVaisseau =
+				 * carte.getMesFlottes(flotte.getPlaneteDestination());
+				 * 
+				 * if (nbVaisseau < destination.getPopulationMax() + 20 &&
+				 * flotte.getToursRestants() == carte.getTrajetNbTour(source,
+				 * destination) + 1) { nbVaisseau = source.getPopulation() - 20;
+				 * EnvoiFlotte ordre = new EnvoiFlotte(source, destination,
+				 * nbVaisseau); source.remPopulation(nbVaisseau);
+				 * response.addOrdre(ordre); carte.addFlotte(ordre.getFlotte());
+				 * break; }
+				 * 
+				 * }
+				 * 
+				 * }
+				 */
 
 				// Une planete neutre proche a été trouvée
 				Planete destination = this.getDestinationNeutre(source, carte);
