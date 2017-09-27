@@ -115,7 +115,7 @@ public class Bot4 implements IBot {
 
 					}
 
-					if (allowBomb && (nbVaisseauEnnemi > 0 || nbVoisinesEtrangeres == 0)
+					if (allowBomb && (nbVaisseauEnnemi > 0)
 							&& source.getPopulation() < Math.min(160, source.getPopulationMax() - 1)) {
 						System.out.println("Mode bombe: " + source + "=> nbVoisinesEtrangeres:" + nbVoisinesEtrangeres
 								+ ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
@@ -124,7 +124,7 @@ public class Bot4 implements IBot {
 
 				}
 
-				// Mode Largage de Bombe
+				// Mode Larguage de Bombe
 				if (source.getPopulation() > 140 || source.getPopulation() > source.getPopulationMax() - 20) {
 
 					int nbEnnemie = 0;
