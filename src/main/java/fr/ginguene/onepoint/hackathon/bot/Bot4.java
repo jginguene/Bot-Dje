@@ -114,7 +114,7 @@ public class Bot4 implements IBot {
 					 */
 
 					if (allowBomb && nbVaisseauEnnemi > 0
-							&& source.getPopulation() < Math.min(160, source.getPopulationMax() - 1)) {
+							&& source.getPopulation() < Math.min(40, source.getPopulationMax() - 1)) {
 						System.out.println("Mode bombe: " + source + "=> " + ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
 						continue;
 					}
@@ -211,7 +211,9 @@ public class Bot4 implements IBot {
 				}
 
 				// Attaque par défaut d'une planete proche
-				attaquePlaneteEtrangereLaPlusProche(response, source, carte);
+				if (!aidePlanete(response, source, carte)) {
+					attaquePlaneteEtrangereLaPlusProche(response, source, carte);
+				}
 
 			}
 
@@ -219,6 +221,30 @@ public class Bot4 implements IBot {
 
 		return response;
 
+	}
+
+	private boolean aidePlanete(Response response, Planete source, Carte carte) {
+		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+			if (aPlanete.getStatus() != PlaneteStatus.Amie
+					&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete) * 2) {
+
+				int maFlotte = carte.getFlotte(Constantes.AMI, aPlanete.getId());
+				if (maFlotte > 0) {
+
+					int nbVaisseau = 5;
+					EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+
+					System.out.println("aidePlanete: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
+					return true;
+
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private void attaquePlaneteEtrangereLaPlusProche(Response response, Planete source, Carte carte) {
