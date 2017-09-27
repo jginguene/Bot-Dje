@@ -204,6 +204,9 @@ public class Bot4 implements IBot {
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
+
+					System.out
+							.println("getDestinationNeutre " + source + " -> " + destination + " [" + nbVaisseau + "]");
 					continue;
 				}
 
@@ -226,6 +229,9 @@ public class Bot4 implements IBot {
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
 				carte.addFlotte(ordre.getFlotte());
+
+				System.out.println(
+						"attaquePlaneteEtrangereLaPlusProche: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
 				break;
 			}
 		}
@@ -244,8 +250,7 @@ public class Bot4 implements IBot {
 				float distanceSource = carte.getDistance(source, aPlanete);
 				int mesFlottes = carte.getMesFlottes(aPlanete);
 
-				if (carte.getFlotteEnnemie(aPlanete.getId()) == 0 && distanceSource < distanceEnnemi
-						&& aPlanete.getPopulation() - mesFlottes < -5
+				if (distanceSource < distanceEnnemi && aPlanete.getPopulation() - mesFlottes < -5
 						&& (destination == null || destination.getPopulation() - mesFlottes < minPopulation)) {
 					destination = aPlanete;
 					minPopulation = destination.getPopulation() - mesFlottes;
