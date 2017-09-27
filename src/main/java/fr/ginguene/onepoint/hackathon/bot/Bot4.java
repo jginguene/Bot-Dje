@@ -106,19 +106,18 @@ public class Bot4 implements IBot {
 					// Si on est visé par une attaque ou que l'on n'a plus
 					// d'ennemi proche
 					int nbVaisseauEnnemi = carte.getFlotteEnnemie(source.getId());
-					List<Planete> voisines = carte.getVoisines(source, 5);
-					int nbVoisinesEtrangeres = 0;
-					for (Planete aPlanete : voisines) {
-						if (aPlanete.getProprietaire() != Constantes.AMI) {
-							nbVoisinesEtrangeres++;
-						}
+					/*
+					 * List<Planete> voisines = carte.getVoisines(source, 5);
+					 * int nbVoisinesEtrangeres = 0; for (Planete aPlanete :
+					 * voisines) { if (aPlanete.getProprietaire() !=
+					 * Constantes.AMI) { nbVoisinesEtrangeres++; }
+					 * 
+					 * }
+					 */
 
-					}
-
-					if (allowBomb && (nbVaisseauEnnemi > 0)
+					if (allowBomb && nbVaisseauEnnemi > 0
 							&& source.getPopulation() < Math.min(160, source.getPopulationMax() - 1)) {
-						System.out.println("Mode bombe: " + source + "=> nbVoisinesEtrangeres:" + nbVoisinesEtrangeres
-								+ ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
+						System.out.println("Mode bombe: " + source + "=> " + ";nbVaisseauEnnemi:" + nbVaisseauEnnemi);
 						continue;
 					}
 
