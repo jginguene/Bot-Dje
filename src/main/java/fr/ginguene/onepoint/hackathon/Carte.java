@@ -130,7 +130,7 @@ public class Carte {
 		if (!MAP_TRAJET.containsKey(key)) {
 			MAP_TRAJET.put(key, flotte.getToursTotals());
 
-			if (defaultRatio == -1.0) {
+			if (defaultRatio == -1.0 && flotte.getToursTotals() != 0) {
 
 				float distance = this.getDistance(getPlanete(flotte.getPlaneteSource()),
 						getPlanete(flotte.getPlaneteDestination()));
