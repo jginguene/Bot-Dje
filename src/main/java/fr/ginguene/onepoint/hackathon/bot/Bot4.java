@@ -24,7 +24,6 @@ public class Bot4 implements IBot {
 				return aPlanete;
 			}
 		}
-
 		return null;
 
 	}
@@ -46,6 +45,13 @@ public class Bot4 implements IBot {
 		for (Planete source : mesPlanetes) {
 
 			System.out.println(source + "=> population " + source.getPopulation() + "/" + source.getPopulationMax());
+
+			for (Planete planete : carte.getPlanetes()) {
+				if (planete.getStatus() != PlaneteStatus.Amie) {
+					System.out.println(
+							carte.getDistance(planete, source) + " => " + carte.getTrajetNbTour(planete, source));
+				}
+			}
 
 			if (source.getPopulation() > 5) {
 
