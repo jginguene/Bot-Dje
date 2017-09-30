@@ -293,7 +293,8 @@ public class Bot5 implements IBot {
 	private boolean attaquePlaneteNeutre(Response response, Planete source, Carte carte) {
 
 		Planete destination = null;
-		int minCount = -1;
+		int minCout = -1;
+		int nbPop = -1;
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getStatus() == PlaneteStatus.Neutre) {
@@ -311,15 +312,16 @@ public class Bot5 implements IBot {
 						+ mesFlottes + " + " + flottesEnnemie + " + " + 1 + " NbTour["
 						+ +carte.getTrajetNbTour(source, aPlanete) + "]");
 
-				if ((destination == null || aCout < minCount && aCout > 0) && distanceEnnemi < distanceSource) {
+				if ((destination == null || aCout < minCout && aCout > 0) && distanceEnnemi < distanceSource) {
 					destination = aPlanete;
-					minCount = aCout;
+					minCout = aCout;
+					nbPop = aPlanete.getPopulation() - mesFlottes + flottesEnnemie + 1;
 				}
 			}
 		}
 
 		if (destination != null) {
-			int nbVaisseau = Math.min(minCount, source.getPopulation() - 1);
+			int nbVaisseau = Math.min(nbPop, source.getPopulation() - 1);
 			EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 			source.remPopulation(nbVaisseau);
 			response.addOrdre(ordre);
