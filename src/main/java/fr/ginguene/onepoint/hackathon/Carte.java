@@ -17,7 +17,7 @@ public class Carte {
 
 	private List<Planete> planetes = new ArrayList<Planete>();
 
-	private static float defaultRatio = -1;
+	private static float DEFAULT_RATIO = -1;
 
 	// key: id proprietaire
 	private Map<Integer, List<Planete>> mapPlanete = new HashMap<Integer, List<Planete>>();
@@ -27,9 +27,10 @@ public class Carte {
 	private Map<Integer, List<Flotte>> mapFlotte = new HashMap<Integer, List<Flotte>>();
 
 	public static void clear() {
+		System.out.println("clear");
 		MAP_TRAJET = new HashMap<>();
 		MAP_DISTANCE = new HashMap<>();
-		defaultRatio = -1;
+		DEFAULT_RATIO = -1;
 	}
 
 	public float getDistance(Planete planete1, Planete planete2) {
@@ -130,15 +131,15 @@ public class Carte {
 		if (!MAP_TRAJET.containsKey(key)) {
 			MAP_TRAJET.put(key, flotte.getToursTotals());
 
-			if (defaultRatio == -1.0 && flotte.getToursTotals() != 0) {
+			if (DEFAULT_RATIO == -1.0 && flotte.getToursTotals() > 0) {
 
 				float distance = this.getDistance(getPlanete(flotte.getPlaneteSource()),
 						getPlanete(flotte.getPlaneteDestination()));
 
-				defaultRatio = distance / flotte.getToursTotals();
+				DEFAULT_RATIO = distance / flotte.getToursTotals();
 
 				System.out.println("distance:" + distance + "; tour:" + flotte.getToursTotals() + "=> defaultRatio:"
-						+ defaultRatio);
+						+ DEFAULT_RATIO);
 			}
 
 		}
@@ -168,9 +169,9 @@ public class Carte {
 		float distance = this.getDistance(source, destination);
 
 		System.out.println("==>distance:" + distance);
-		System.out.println("==>defaultRatio:" + defaultRatio);
+		System.out.println("==>defaultRatio:" + DEFAULT_RATIO);
 
-		return (int) (distance / defaultRatio);
+		return (int) (distance / DEFAULT_RATIO);
 
 	}
 
@@ -201,7 +202,7 @@ public class Carte {
 	}
 
 	public int getFlotte(int proprietaire, int destination) {
-		List<Flotte> flottes = this.getFlotte(proprietaire);
+		List<Flotte> flottes = this.getFlottes(proprietaire);
 		int ret = 0;
 		for (Flotte flotte : flottes) {
 			if (flotte.getPlaneteDestination() == destination) {
@@ -211,7 +212,11 @@ public class Carte {
 		return ret;
 	}
 
-	public int getFlotteEnnemie(int destination) {
+	public int getFlottesEnnemie(Planete planete) {
+		return getFlottesEnnemie(planete.getId());
+	}
+
+	public int getFlottesEnnemie(int destination) {
 		int ret = 0;
 		for (Flotte flotte : this.flottes) {
 			if (flotte.getProprietaire() > Constantes.AMI && flotte.getPlaneteDestination() == destination) {
@@ -222,7 +227,7 @@ public class Carte {
 		return ret;
 	}
 
-	public List<Flotte> getFlotte(int proprietaire) {
+	public List<Flotte> getFlottes(int proprietaire) {
 
 		List<Flotte> ret = new ArrayList<>();
 		for (Flotte flotte : this.flottes) {
@@ -238,7 +243,7 @@ public class Carte {
 		 */
 	}
 
-	public List<Flotte> getFlotteEnnemies() {
+	public List<Flotte> getFlottesEnnemie() {
 		List<Flotte> flottes = new ArrayList<>();
 		flottes.addAll(this.flottes);
 		flottes.removeAll(this.getMesFlottes());
@@ -246,19 +251,9 @@ public class Carte {
 
 	}
 
-	public int getFlottesEnnemies(int destination) {
-		int ret = 0;
-		for (Flotte flotte : getFlotteEnnemies()) {
-			if (flotte.getPlaneteDestination() == destination) {
-				ret += flotte.getVaisseaux();
-			}
-		}
-		return ret;
-	}
-
 	public int getFlottesEnnemiesFrom(int source) {
 		int ret = 0;
-		for (Flotte flotte : getFlotteEnnemies()) {
+		for (Flotte flotte : getFlottesEnnemie()) {
 			if (flotte.getPlaneteSource() == source) {
 				ret += flotte.getVaisseaux();
 			}
@@ -267,7 +262,7 @@ public class Carte {
 	}
 
 	public List<Flotte> getMesFlottes() {
-		return this.getFlotte(Constantes.AMI);
+		return this.getFlottes(Constantes.AMI);
 	}
 
 	public int getMesFlottes(Planete destination) {
