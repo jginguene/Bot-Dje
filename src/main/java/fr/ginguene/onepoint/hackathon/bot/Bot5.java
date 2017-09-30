@@ -46,12 +46,12 @@ public class Bot5 implements IBot {
 
 			System.out.println(source + "=> population " + source.getPopulation() + "/" + source.getPopulationMax());
 
-			for (Planete planete : carte.getPlanetes()) {
-				if (planete.getStatus() != PlaneteStatus.Amie) {
-					System.out.println(
-							carte.getDistance(planete, source) + " => " + carte.getTrajetNbTour(planete, source));
-				}
-			}
+			/*
+			 * for (Planete planete : carte.getPlanetes()) { if
+			 * (planete.getStatus() != PlaneteStatus.Amie) { System.out.println(
+			 * carte.getDistance(planete, source) + " => " +
+			 * carte.getTrajetNbTour(planete, source)); } }
+			 */
 
 			if (source.getPopulation() > 5) {
 
@@ -306,6 +306,10 @@ public class Bot5 implements IBot {
 
 				int aCout = aPlanete.getPopulation() - mesFlottes + flottesEnnemie + 1
 						+ carte.getTrajetNbTour(source, aPlanete);
+
+				System.out.println(aPlanete + " => aCout[" + aCout + "] = POP[" + aPlanete.getPopulation() + "]" + " - "
+						+ mesFlottes + " + " + flottesEnnemie + " + " + 1 + " NbTour["
+						+ +carte.getTrajetNbTour(source, aPlanete) + "]");
 
 				if (aCout < minCount && aCout > 0 && distanceEnnemi < distanceSource) {
 					destination = aPlanete;
