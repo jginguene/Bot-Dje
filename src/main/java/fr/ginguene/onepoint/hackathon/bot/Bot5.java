@@ -321,7 +321,7 @@ public class Bot5 implements IBot {
 		}
 
 		if (destination != null) {
-			int nbVaisseau = Math.min(nbPop, source.getPopulation() - 1);
+			int nbVaisseau = Math.min(minCout, source.getPopulation() - 1);
 			EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
 			source.remPopulation(nbVaisseau);
 			response.addOrdre(ordre);
