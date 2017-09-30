@@ -57,8 +57,9 @@ public class Bot5 implements IBot {
 
 				boolean scoreOptimisation = (carte.getPlanetesEnnemies().size() <= 4
 						&& carte.getConfiguration().getTour() > 100);
-
-				System.out.println("scoreOptimisation=> " + scoreOptimisation);
+				if (scoreOptimisation) {
+					System.out.println("scoreOptimisation=> " + scoreOptimisation);
+				}
 
 				Planete voisine = carte.getVoisines(source, 1).get(0);
 
@@ -303,9 +304,10 @@ public class Bot5 implements IBot {
 				int mesFlottes = carte.getMesFlottes(aPlanete);
 				int flottesEnnemie = carte.getFlottesEnnemie(aPlanete);
 
-				int aCout = aPlanete.getPopulation() - mesFlottes + flottesEnnemie + 1;
+				int aCout = aPlanete.getPopulation() - mesFlottes + flottesEnnemie + 1
+						+ carte.getTrajetNbTour(source, aPlanete);
 
-				if (aCout < minCount && aCout > 0) {
+				if (aCout < minCount && aCout > 0 && distanceEnnemi < distanceSource) {
 					destination = aPlanete;
 					minCount = aCout;
 				}

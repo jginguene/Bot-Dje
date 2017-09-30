@@ -29,7 +29,7 @@ import fr.ginguene.onepoint.hackathon.bot.Bot5;
 @SpringBootApplication
 public class Main {
 
-	private int partie = -1;
+	private long partie = -1;
 
 	private InputParser parser = new InputParser();
 	private static final IBot bot = new Bot5();
@@ -44,6 +44,7 @@ public class Main {
 		Carte carte = parser.parse(input);
 
 		if (carte.getConfiguration().getIdentifiantPartie() != partie) {
+			partie = carte.getConfiguration().getIdentifiantPartie();
 			Carte.clear();
 		}
 
