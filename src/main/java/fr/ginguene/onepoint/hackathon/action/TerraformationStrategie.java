@@ -6,10 +6,18 @@ import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.ordre.Terraformation;
 
-public class TerraformationStrategie implements IStrategie {
+public class TerraformationStrategie extends AbstractStrategie {
+
+	public TerraformationStrategie(boolean isDebug) {
+		super(isDebug);
+	}
+
+	public TerraformationStrategie() {
+		super();
+	}
 
 	@Override
-	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore, boolean debug) {
+	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 		if (source.getTerraformation() > 0) {
 			System.out.println("Terraformation en cours " + source + " -> " + source.getTerraformation());
 			return true;
@@ -27,14 +35,13 @@ public class TerraformationStrategie implements IStrategie {
 				Terraformation terraformation = new Terraformation();
 				terraformation.setPlanete(source);
 				response.addOrdre(terraformation);
-				if (debug) {
-					System.out.println("Lancement de la terraformation de " + source);
-				}
+
+				trace("Lancement de la terraformation de " + source);
+
 				return true;
 			} else {
-				if (debug) {
-					System.out.println(source + " terraformable => " + nbEnnemie + " ennemies");
-				}
+				trace(source + " terraformable => " + nbEnnemie + " ennemies");
+
 			}
 		}
 

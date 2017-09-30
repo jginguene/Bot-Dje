@@ -6,10 +6,18 @@ import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
-public class MegabombeStrategie implements IStrategie {
+public class MegabombeStrategie extends AbstractStrategie {
+
+	public MegabombeStrategie(boolean isDebug) {
+		super(isDebug);
+	}
+
+	public MegabombeStrategie() {
+		super();
+	}
 
 	@Override
-	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore, boolean debug) {
+	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
 		if (isOptimizingScore) {
 			if (source.getPopulation() == source.getPopulationMax()) {
