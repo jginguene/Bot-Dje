@@ -303,7 +303,7 @@ public class Bot5 implements IBot {
 				int mesFlottes = carte.getMesFlottes(aPlanete);
 				int flottesEnnemie = carte.getFlottesEnnemie(aPlanete);
 
-				int aCout = destination.getPopulation() - mesFlottes + flottesEnnemie + 1;
+				int aCout = aPlanete.getPopulation() - mesFlottes + flottesEnnemie + 1;
 
 				if (aCout < minCount && aCout > 0) {
 					destination = aPlanete;
