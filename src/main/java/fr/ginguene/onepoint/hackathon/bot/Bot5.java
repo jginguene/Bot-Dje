@@ -311,7 +311,7 @@ public class Bot5 implements IBot {
 						+ mesFlottes + " + " + flottesEnnemie + " + " + 1 + " NbTour["
 						+ +carte.getTrajetNbTour(source, aPlanete) + "]");
 
-				if (aCout < minCount && aCout > 0 && distanceEnnemi < distanceSource) {
+				if ((destination == null || aCout < minCount && aCout > 0) && distanceEnnemi < distanceSource) {
 					destination = aPlanete;
 					minCount = aCout;
 				}
