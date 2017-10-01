@@ -20,18 +20,18 @@ public class RenfortStrategie extends AbstractStrategie {
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 		int nbEnnemie = getNbEnnemieVoisine(carte, source, 6);
 
-		if (source.getPopulation() < source.getPopulationMax() / 2) {
-			return true;
-		}
-
 		if (nbEnnemie == 0) {
+
+			if (source.getPopulation() < source.getPopulationMax() / 2) {
+				return true;
+			}
 
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 				if (aPlanete.getStatus() == PlaneteStatus.Amie) {
 					nbEnnemie = getNbEnnemieVoisine(carte, aPlanete, 3);
 					if (nbEnnemie > 0) {
 
-						int nbVaisseau = source.getPopulation() - 1;
+						int nbVaisseau = source.getPopulation() - 20;
 
 						EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 						source.remPopulation(nbVaisseau);
