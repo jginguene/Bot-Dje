@@ -33,10 +33,6 @@ public class AideAttaqueNeutreStrategie extends AbstractStrategie {
 
 			int nbVaisseauxManquant = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi;
 
-			if (nbVaisseauxEnnemi > 0) {
-				nbVaisseauxManquant += 20;
-			}
-
 			if (aPlanete.getStatus() == PlaneteStatus.Neutre && nbVaisseauxManquant > 0 && nbVaisseauxAmi > 0) {
 
 				int nbVaisseau = Math.min(nbVaisseauxManquant, source.getPopulation() - 3);
