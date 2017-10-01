@@ -6,13 +6,13 @@ import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
-public class AideStrategie extends AbstractStrategie {
+public class AideAttaqueEnnemieStrategie extends AbstractStrategie {
 
-	public AideStrategie(boolean isDebug) {
+	public AideAttaqueEnnemieStrategie(boolean isDebug) {
 		super(isDebug);
 	}
 
-	public AideStrategie() {
+	public AideAttaqueEnnemieStrategie() {
 		super();
 	}
 
