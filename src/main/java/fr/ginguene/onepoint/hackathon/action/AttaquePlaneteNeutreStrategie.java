@@ -53,7 +53,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 		if (destination != null) {
 			System.out.println("nbPop: " + nbPop + "; source.getPopulation():" + source.getPopulation());
 
-			nbPop = Math.max(3, nbPop);
+			nbPop = Math.max(4, nbPop);
 			int nbVaisseau = Math.min(nbPop, source.getPopulation() - 1);
 
 			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
