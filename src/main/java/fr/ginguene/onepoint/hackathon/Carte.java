@@ -121,7 +121,7 @@ public class Carte {
 	public void addFlotte(Flotte flotte) {
 		this.flottes.add(flotte);
 
-		if (!mapFlotte.containsKey(flotte.getProprietaire())) {
+		if (!mapFlotte.containsKey(flotte.getSourceStatus())) {
 			mapFlotte.put(flotte.getSourceStatus(), new ArrayList<>());
 		}
 
@@ -198,7 +198,11 @@ public class Carte {
 	}
 
 	public List<Flotte> getFlottes(PlaneteStatus flotteStatus) {
-		return mapFlotte.get(flotteStatus);
+		List<Flotte> ret = mapFlotte.get(flotteStatus);
+		if (ret == null) {
+			ret = new ArrayList<>();
+		}
+		return ret;
 	}
 
 	public List<Flotte> getFlottes(PlaneteStatus flotteStatus, Planete destination) {
@@ -207,7 +211,6 @@ public class Carte {
 			if (flotte.getDestination().equals(destination)) {
 				ret.add(flotte);
 			}
-
 		}
 		return ret;
 	}
