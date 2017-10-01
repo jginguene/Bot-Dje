@@ -18,7 +18,7 @@ import fr.ginguene.onepoint.hackathon.action.TerraformationStrategie;
 
 public class Bot5 implements IBot {
 
-	private AbstractStrategie[] stategies = new AbstractStrategie[] { new PremierTourStrategie(),
+	private AbstractStrategie[] strategies = new AbstractStrategie[] { new PremierTourStrategie(),
 			new TerraformationStrategie(true), new MegabombeStrategie(true), new AideStrategie(true),
 			new BombardeStrategie(true), new AttaquePlaneteNeutreStrategie(true), new AttaquePlaneteEnnemie(true)
 
@@ -43,10 +43,11 @@ public class Bot5 implements IBot {
 				System.out.println("=> " + isScoreOptimizing);
 			}
 
-			for (AbstractStrategie stategie : stategies) {
+			for (AbstractStrategie strategie : strategies) {
 
-				if (!stategie.execute(response, source, carte, isScoreOptimizing)) {
-					continue;
+				if (strategie.execute(response, source, carte, isScoreOptimizing)) {
+					System.out.println(source + " use stategie " + strategie.getClass().getSimpleName());
+					break;
 				}
 
 			}
