@@ -57,7 +57,7 @@ public class EnvoiFlotte implements Ordre {
 
 		// <PlanèteSource:int> <PlanèteCible:int> <NombreUnités:int>
 		try {
-			return flotte.getSource() + " " + flotte.getDestination() + " " + flotte.getVaisseaux();
+			return flotte.getSourceId() + " " + flotte.getDestinationId() + " " + flotte.getVaisseaux();
 		} catch (Exception e) {
 			System.err.println("Failed to serialize order:" + flotte.getSource() + "-" + flotte.getDestination() + "-"
 					+ flotte.getVaisseaux());
