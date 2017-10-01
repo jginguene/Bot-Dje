@@ -158,7 +158,7 @@ public class Carte {
 		String key = getPlanetePairKey(source, destination);
 
 		if (MAP_TRAJET.containsKey(key)) {
-			System.out.println("T==>" + MAP_TRAJET.get(key));
+			// System.out.println("T==>" + MAP_TRAJET.get(key));
 			return MAP_TRAJET.get(key);
 		}
 
@@ -166,8 +166,8 @@ public class Carte {
 		// Ajouter l'extrapolation
 		float distance = this.getDistance(source, destination);
 
-		System.out.println("==>distance:" + distance);
-		System.out.println("==>defaultRatio:" + DEFAULT_RATIO);
+		// System.out.println("==>distance:" + distance);
+		// System.out.println("==>defaultRatio:" + DEFAULT_RATIO);
 
 		return (int) (distance / DEFAULT_RATIO);
 

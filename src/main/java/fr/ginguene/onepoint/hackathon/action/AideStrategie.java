@@ -22,6 +22,10 @@ public class AideStrategie extends AbstractStrategie {
 			return false;
 		}
 
+		if (source.getPopulation() < 5) {
+			return false;
+		}
+
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie
@@ -30,12 +34,18 @@ public class AideStrategie extends AbstractStrategie {
 				int mesVaisseaux = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
 
 				if (mesVaisseaux > 0) {
-					int nbVaisseau = 5;
+
+					int nbVaisseau = source.getPopulation() - 1;
+
+					if (source.getPopulation() > 20) {
+						nbVaisseau = source.getPopulation() - 20;
+					}
+
 					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
-					this.trace("aidePlanete: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
+					this.trace("AidePlanete: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
 					return true;
 				}
 			}
