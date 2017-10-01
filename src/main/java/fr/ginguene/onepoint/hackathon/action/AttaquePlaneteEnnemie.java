@@ -27,10 +27,9 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 
 			int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
 			int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
-
 			int nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi + nbVaisseauxEnnemi;
 
-			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
 
 				int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - 3);
 
