@@ -55,7 +55,7 @@ public class EnvoiFlotte implements Ordre {
 			return "";
 		}
 
-		if (flotte.getVaisseaux() > flotte.getVaisseaux() + 1) {
+		if (flotte.getVaisseaux() > flotte.getSource().getPopulation() + 1) {
 			System.err.println("Essai d'envoi d'une flotte de  " + flotte.getVaisseaux() + " depuis "
 					+ flotte.getSource() + "[" + flotte.getSource().getPopulation() + "]");
 			return "";
