@@ -16,9 +16,35 @@ public class PremierTourStrategie extends AbstractStrategie {
 
 			int nbPopRestante = source.getPopulation() - 1;
 
+			for (Planete destination : carte.getVoisines(source, 10)) {
+
+				if (destination.getPopulation() + 1 < nbPopRestante && destination.getPopulation() < 20) {
+
+					int nbVaisseaux = destination.getPopulation() + 1;
+					EnvoiFlotte envoiFlotte = new EnvoiFlotte(carte, source, destination, nbVaisseaux);
+					response.addOrdre(envoiFlotte);
+					nbPopRestante -= nbVaisseaux;
+					source.remPopulation(nbVaisseaux);
+				}
+
+			}
+
 			for (Planete destination : carte.getVoisines(source, NB_VOISINE_TO_EXPLORE)) {
 
 				if (destination.getPopulation() + 1 < nbPopRestante && destination.getPopulation() < 50) {
+
+					int nbVaisseaux = destination.getPopulation() + 1;
+					EnvoiFlotte envoiFlotte = new EnvoiFlotte(carte, source, destination, nbVaisseaux);
+					response.addOrdre(envoiFlotte);
+					nbPopRestante -= nbVaisseaux;
+					source.remPopulation(nbVaisseaux);
+				}
+
+			}
+
+			for (Planete destination : carte.getVoisines(source, NB_VOISINE_TO_EXPLORE)) {
+
+				if (destination.getPopulation() + 1 < nbPopRestante) {
 
 					int nbVaisseaux = destination.getPopulation() + 1;
 					EnvoiFlotte envoiFlotte = new EnvoiFlotte(carte, source, destination, nbVaisseaux);
