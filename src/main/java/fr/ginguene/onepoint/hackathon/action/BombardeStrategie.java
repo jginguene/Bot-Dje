@@ -21,7 +21,7 @@ public class BombardeStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		if (source.getPopulation() > 140 || source.getPopulation() > source.getPopulationMax() - 20) {
+		if (source.getPopulation() > 100 || source.getPopulation() > source.getPopulationMax() - 20) {
 
 			int nbPlanetesEnnemie = 0;
 			for (Planete aPlanete : carte.getVoisines(source, 6)) {
