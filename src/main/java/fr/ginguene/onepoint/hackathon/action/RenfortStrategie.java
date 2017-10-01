@@ -28,7 +28,7 @@ public class RenfortStrategie extends AbstractStrategie {
 
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 				if (aPlanete.getStatus() == PlaneteStatus.Amie) {
-					nbEnnemie = getNbEnnemieVoisine(carte, aPlanete, 3);
+					nbEnnemie = getNbEnnemieVoisine(carte, aPlanete, 4);
 					if (nbEnnemie > 0) {
 
 						int nbVaisseau = source.getPopulation() - 10;
