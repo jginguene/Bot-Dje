@@ -8,21 +8,18 @@ import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.action.AbstractStrategie;
 import fr.ginguene.onepoint.hackathon.action.AideStrategie;
-import fr.ginguene.onepoint.hackathon.action.AttaquePlaneteEtrangereLaPlusProcheStrategie;
+import fr.ginguene.onepoint.hackathon.action.AttaquePlaneteEnnemie;
 import fr.ginguene.onepoint.hackathon.action.AttaquePlaneteNeutreStrategie;
 import fr.ginguene.onepoint.hackathon.action.BombardeStrategie;
 import fr.ginguene.onepoint.hackathon.action.MegabombeStrategie;
+import fr.ginguene.onepoint.hackathon.action.PremierTourStrategie;
 import fr.ginguene.onepoint.hackathon.action.TerraformationStrategie;
 
 public class Bot5 implements IBot {
 
-	private BotPremierTour botPremierTour = new BotPremierTour();
-
-	private AttaquePlaneteEtrangereLaPlusProcheStrategie attaquePlaneteEtrangereLaPlusProcheStrategie = new AttaquePlaneteEtrangereLaPlusProcheStrategie();
-
-	private AbstractStrategie[] stategies = new AbstractStrategie[] { new TerraformationStrategie(true),
-			new MegabombeStrategie(true), new AideStrategie(true), new BombardeStrategie(true),
-			new AttaquePlaneteNeutreStrategie(true), new AttaquePlaneteEtrangereLaPlusProcheStrategie(true)
+	private AbstractStrategie[] stategies = new AbstractStrategie[] { new PremierTourStrategie(),
+			new TerraformationStrategie(true), new MegabombeStrategie(true), new AideStrategie(true),
+			new BombardeStrategie(true), new AttaquePlaneteNeutreStrategie(true), new AttaquePlaneteEnnemie(true)
 
 	};
 
@@ -31,10 +28,6 @@ public class Bot5 implements IBot {
 		Response response = new Response();
 
 		System.out.println("Tour " + carte.getConfiguration().getTour());
-
-		if (carte.getConfiguration().getTour() == 0) {
-			return botPremierTour.getResponse(carte);
-		}
 
 		List<Planete> mesPlanetes = carte.getMesPlanetes();
 

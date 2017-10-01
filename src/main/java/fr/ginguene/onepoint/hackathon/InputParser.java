@@ -21,7 +21,7 @@ public class InputParser {
 				break;
 
 			case "F":
-				Flotte flotte = new Flotte(attributes);
+				Flotte flotte = new Flotte(attributes, carte);
 				carte.addFlotte(flotte);
 				break;
 

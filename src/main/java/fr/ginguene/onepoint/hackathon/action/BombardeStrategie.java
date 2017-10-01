@@ -24,16 +24,17 @@ public class BombardeStrategie extends AbstractStrategie {
 
 		if (source.getPopulation() > 140 || source.getPopulation() > source.getPopulationMax() - 20) {
 
-			int nbEnnemie = 0;
+			int nbPlanetesEnnemie = 0;
 			for (Planete aPlanete : carte.getVoisines(source, 6)) {
 				if (aPlanete.getStatus() != PlaneteStatus.Amie) {
-					nbEnnemie++;
+					nbPlanetesEnnemie++;
 				}
 			}
 
 			int nbVaisseau = source.getPopulation() - 60;
+			int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source);
 
-			if (nbVaisseau < 0 || (nbEnnemie == 0 && carte.getFlottesEnnemie(source.getId()) == 0)) {
+			if (nbVaisseau < 0 || (nbPlanetesEnnemie == 0 && nbVaisseauxEnnemi == 0)) {
 				nbVaisseau = source.getPopulation() - 10;
 			}
 
@@ -50,7 +51,7 @@ public class BombardeStrategie extends AbstractStrategie {
 			}
 
 			if (destination != null) {
-				EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
 				carte.addFlotte(ordre.getFlotte());
@@ -64,8 +65,9 @@ public class BombardeStrategie extends AbstractStrategie {
 	private Planete getDestinationForBomb(Carte carte, Planete source, int bombSize) {
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getProprietaire() != Constantes.AMI
-					&& carte.getMesFlottes(aPlanete.getId()) < aPlanete.getPopulationMax()) {
+			int nbVaisseauxAmis = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
+
+			if (aPlanete.getStatus() != PlaneteStatus.Amie && nbVaisseauxAmis < aPlanete.getPopulationMax()) {
 				return aPlanete;
 			}
 		}

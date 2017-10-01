@@ -34,7 +34,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 					}
 					int nbVaisseau = source.getPopulation() - 1;
-					EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());

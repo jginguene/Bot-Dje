@@ -20,11 +20,11 @@ public class Carte {
 	private static float DEFAULT_RATIO = -1;
 
 	// key: id proprietaire
-	private Map<Integer, List<Planete>> mapPlanete = new HashMap<Integer, List<Planete>>();
+	private Map<PlaneteStatus, List<Planete>> mapPlanete = new HashMap<PlaneteStatus, List<Planete>>();
 
 	private List<Flotte> flottes = new ArrayList<Flotte>();
 
-	private Map<Integer, List<Flotte>> mapFlotte = new HashMap<Integer, List<Flotte>>();
+	private Map<PlaneteStatus, List<Flotte>> mapFlotte = new HashMap<PlaneteStatus, List<Flotte>>();
 
 	public static void clear() {
 		System.out.println("clear");
@@ -112,7 +112,7 @@ public class Carte {
 		this.planetes.add(planete);
 
 		if (!mapPlanete.containsKey(planete.getProprietaire())) {
-			mapPlanete.put(planete.getProprietaire(), new ArrayList<>());
+			mapPlanete.put(planete.getStatus(), new ArrayList<>());
 		}
 
 		mapPlanete.get(planete.getProprietaire()).add(planete);
@@ -122,25 +122,21 @@ public class Carte {
 		this.flottes.add(flotte);
 
 		if (!mapFlotte.containsKey(flotte.getProprietaire())) {
-			mapFlotte.put(flotte.getProprietaire(), new ArrayList<>());
+			mapFlotte.put(flotte.getSourceStatus(), new ArrayList<>());
 		}
 
-		mapFlotte.get(flotte.getProprietaire()).add(flotte);
+		mapFlotte.get(flotte.getSourceStatus()).add(flotte);
 
-		String key = this.getPlanetePairKey(flotte.getPlaneteSource(), flotte.getPlaneteDestination());
+		String key = this.getPlanetePairKey(flotte.getSource(), flotte.getDestination());
 		if (!MAP_TRAJET.containsKey(key)) {
 			MAP_TRAJET.put(key, flotte.getToursTotals());
 
 			if (DEFAULT_RATIO == -1.0 && flotte.getToursTotals() > 0) {
 
-				float distance = this.getDistance(getPlanete(flotte.getPlaneteSource()),
-						getPlanete(flotte.getPlaneteDestination()));
+				float distance = this.getDistance(flotte.getSource(), flotte.getDestination());
 
 				DEFAULT_RATIO = distance / flotte.getToursTotals();
 
-				// System.out.println("distance:" + distance + "; tour:" +
-				// flotte.getToursTotals() + "=> defaultRatio:"
-				// + DEFAULT_RATIO);
 			}
 
 		}
@@ -182,7 +178,6 @@ public class Carte {
 		} else {
 			return destination + "#" + source;
 		}
-
 	}
 
 	private String getPlanetePairKey(Planete source, Planete destination) {
@@ -202,82 +197,37 @@ public class Carte {
 		}
 	}
 
-	public int getFlotte(int proprietaire, int destination) {
-		List<Flotte> flottes = this.getFlottes(proprietaire);
-		int ret = 0;
-		for (Flotte flotte : flottes) {
-			if (flotte.getPlaneteDestination() == destination) {
-				ret += flotte.getVaisseaux();
-			}
-		}
-		return ret;
+	public List<Flotte> getFlottes(PlaneteStatus flotteStatus) {
+		return mapFlotte.get(flotteStatus);
 	}
 
-	public int getFlottesEnnemie(Planete planete) {
-		return getFlottesEnnemie(planete.getId());
-	}
-
-	public int getFlottesEnnemie(int destination) {
-		int ret = 0;
-		for (Flotte flotte : this.flottes) {
-			if (flotte.getProprietaire() > Constantes.AMI && flotte.getPlaneteDestination() == destination) {
-				ret += flotte.getVaisseaux();
-			}
-		}
-
-		return ret;
-	}
-
-	public List<Flotte> getFlottes(int proprietaire) {
-
+	public List<Flotte> getFlottes(PlaneteStatus flotteStatus, Planete destination) {
 		List<Flotte> ret = new ArrayList<>();
-		for (Flotte flotte : this.flottes) {
-			if (flotte.getProprietaire() == proprietaire) {
-
+		for (Flotte flotte : getFlottes(flotteStatus)) {
+			if (flotte.getDestination().equals(destination)) {
+				ret.add(flotte);
 			}
-		}
-		return ret;
 
-		/*
-		 * if (mapFlotte.containsKey(proprietaire)) { return
-		 * mapFlotte.get(proprietaire); } else { return new ArrayList<>(); }
-		 */
-	}
-
-	public List<Flotte> getFlottesEnnemie() {
-		List<Flotte> flottes = new ArrayList<>();
-		flottes.addAll(this.flottes);
-		flottes.removeAll(this.getMesFlottes());
-		return flottes;
-
-	}
-
-	public int getFlottesEnnemiesFrom(int source) {
-		int ret = 0;
-		for (Flotte flotte : getFlottesEnnemie()) {
-			if (flotte.getPlaneteSource() == source) {
-				ret += flotte.getVaisseaux();
-			}
 		}
 		return ret;
 	}
 
-	public List<Flotte> getMesFlottes() {
-		return this.getFlottes(Constantes.AMI);
-	}
-
-	public int getMesFlottes(Planete destination) {
-		return getMesFlottes(destination.getId());
-	}
-
-	public int getMesFlottes(int destination) {
-		int ret = 0;
-		for (Flotte flotte : getMesFlottes()) {
-			if (flotte.getPlaneteDestination() == destination) {
-				ret += flotte.getVaisseaux();
-			}
+	public int getNbVaisseauInFlotteFrom(PlaneteStatus flotteStatus, Planete source) {
+		int res = 0;
+		for (Flotte flotte : getFlottes(flotteStatus, source)) {
+			res += flotte.getVaisseaux();
 		}
-		return ret;
+		return res;
+
+	}
+
+	public int getNbVaisseauInFlotte(PlaneteStatus flotteStatus, Planete destination) {
+		int res = 0;
+		for (Flotte flotte : getFlottes(flotteStatus, destination)) {
+			res += flotte.getVaisseaux();
+		}
+		return res;
+
 	}
 
 	public int getNbPlanete() {

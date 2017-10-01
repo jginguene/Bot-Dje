@@ -33,27 +33,28 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 				Planete ennemiLaPlusProche = carte.getPlaneteLaPlusProche(aPlanete, PlaneteStatus.Ennemie);
 				float distanceEnnemi = carte.getDistance(ennemiLaPlusProche, aPlanete);
 				float distanceSource = carte.getDistance(source, aPlanete);
-				int mesFlottes = carte.getMesFlottes(aPlanete);
-				int flottesEnnemie = carte.getFlottesEnnemie(aPlanete);
 
-				int aCout = aPlanete.getPopulation() - mesFlottes + flottesEnnemie + 1
+				int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
+				int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
+
+				int aCout = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1
 						+ carte.getTrajetNbTour(source, aPlanete);
 
-				this.trace(aPlanete + " => aCout[" + aCout + "] = POP[" + aPlanete.getPopulation() + "]" + " - "
-						+ mesFlottes + " + " + flottesEnnemie + " + " + 1 + " NbTour["
-						+ +carte.getTrajetNbTour(source, aPlanete) + "]");
+				this.trace(aPlanete + " => aCout[" + aCout + "] = POP[" + aPlanete.getPopulation() + "]"
+						+ " - nbVaisseauxAmi[" + nbVaisseauxAmi + "] + nbVaisseauxEnnemi[" + nbVaisseauxEnnemi + "] + "
+						+ 1 + " NbTour[" + +carte.getTrajetNbTour(source, aPlanete) + "]");
 
 				if ((destination == null || aCout < minCout && aCout > 0) && distanceEnnemi < distanceSource) {
 					destination = aPlanete;
 					minCout = aCout;
-					nbPop = aPlanete.getPopulation() - mesFlottes + flottesEnnemie + 1;
+					nbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
 				}
 			}
 		}
 
 		if (destination != null) {
 			int nbVaisseau = Math.min(nbPop, source.getPopulation() - 1);
-			EnvoiFlotte ordre = new EnvoiFlotte(source, destination, nbVaisseau);
+			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
 			source.remPopulation(nbVaisseau);
 			response.addOrdre(ordre);
 			carte.addFlotte(ordre.getFlotte());

@@ -1,5 +1,6 @@
 package fr.ginguene.onepoint.hackathon.ordre;
 
+import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Constantes;
 import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.Planete;
@@ -12,7 +13,7 @@ public class EnvoiFlotte implements Ordre {
 
 	private Flotte flotte;
 
-	public EnvoiFlotte(Planete source, Planete destination, int nbVaisseau) {
+	public EnvoiFlotte(Carte carte, Planete source, Planete destination, int nbVaisseau) {
 
 		if (source.getPopulation() < nbVaisseau) {
 			nbVaisseau = source.getPopulation() - 1;
@@ -23,9 +24,9 @@ public class EnvoiFlotte implements Ordre {
 		}
 
 		if (destination != null) {
-			this.flotte = new Flotte();
-			flotte.setPlaneteDestination(destination.getId());
-			flotte.setPlaneteSource(source.getId());
+			this.flotte = new Flotte(carte);
+			flotte.setDestinationId(destination.getId());
+			flotte.setSourceId(source.getId());
 			flotte.setVaisseaux(nbVaisseau);
 		}
 
@@ -45,21 +46,21 @@ public class EnvoiFlotte implements Ordre {
 
 		if (flotte.getVaisseaux() <= 3) {
 			System.err.println("Essai d'envoi d'une flotte de " + flotte.getVaisseaux() + " vaisseaux (<3) de "
-					+ flotte.getPlaneteDestination() + " vers " + flotte.getPlaneteDestination());
+					+ flotte.getSource() + " vers " + flotte.getDestination());
 			return "";
 		}
 
-		if (flotte.getPlaneteDestination() == flotte.getPlaneteSource()) {
-			System.err.println("Essai d'envoi d'une flotte depuis et vers  " + flotte.getPlaneteSource());
+		if (flotte.getDestination() == flotte.getSource()) {
+			System.err.println("Essai d'envoi d'une flotte depuis et vers  " + flotte.getSource());
 			return "";
 		}
 
 		// <PlanèteSource:int> <PlanèteCible:int> <NombreUnités:int>
 		try {
-			return flotte.getPlaneteSource() + " " + flotte.getPlaneteDestination() + " " + flotte.getVaisseaux();
+			return flotte.getSource() + " " + flotte.getDestination() + " " + flotte.getVaisseaux();
 		} catch (Exception e) {
-			System.err.println("Failed to serialize order:" + flotte.getPlaneteSource() + "-"
-					+ flotte.getPlaneteDestination() + "-" + flotte.getVaisseaux());
+			System.err.println("Failed to serialize order:" + flotte.getSource() + "-" + flotte.getDestination() + "-"
+					+ flotte.getVaisseaux());
 			return "";
 		}
 	}

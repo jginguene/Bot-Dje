@@ -1,7 +1,6 @@
 package fr.ginguene.onepoint.hackathon.action;
 
 import fr.ginguene.onepoint.hackathon.Carte;
-import fr.ginguene.onepoint.hackathon.Constantes;
 import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
@@ -24,21 +23,20 @@ public class AideStrategie extends AbstractStrategie {
 		}
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie
-					&& aPlanete.getPopulationMax() < carte.getMesFlottes(aPlanete) * 2) {
+					&& aPlanete.getPopulationMax() < carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete) * 2) {
 
-				int maFlotte = carte.getFlotte(Constantes.AMI, aPlanete.getId());
-				if (maFlotte > 0) {
+				int mesVaisseaux = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
 
+				if (mesVaisseaux > 0) {
 					int nbVaisseau = 5;
-					EnvoiFlotte ordre = new EnvoiFlotte(source, aPlanete, nbVaisseau);
+					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
-
 					this.trace("aidePlanete: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
 					return true;
-
 				}
 			}
 		}
