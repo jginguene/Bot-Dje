@@ -3,7 +3,6 @@ package fr.ginguene.onepoint.hackathon.action;
 import java.util.List;
 
 import fr.ginguene.onepoint.hackathon.Carte;
-import fr.ginguene.onepoint.hackathon.Constantes;
 import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
@@ -42,7 +41,7 @@ public class BombardeStrategie extends AbstractStrategie {
 
 			Planete destination = null;
 			if (isOptimizingScore) {
-				List<Planete> neutres = carte.getPlanetes(Constantes.NEUTRE);
+				List<Planete> neutres = carte.getPlanetes(PlaneteStatus.Neutre);
 				if (neutres.size() != 0) {
 					destination = neutres.get(0);
 				}

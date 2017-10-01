@@ -111,11 +111,11 @@ public class Carte {
 		// System.out.println("Ajout planete:" + planete.getId());
 		this.planetes.add(planete);
 
-		if (!mapPlanete.containsKey(planete.getProprietaire())) {
+		if (!mapPlanete.containsKey(planete.getStatus())) {
 			mapPlanete.put(planete.getStatus(), new ArrayList<>());
 		}
 
-		mapPlanete.get(planete.getProprietaire()).add(planete);
+		mapPlanete.get(planete.getStatus()).add(planete);
 	}
 
 	public void addFlotte(Flotte flotte) {
@@ -188,10 +188,10 @@ public class Carte {
 		return planetes;
 	}
 
-	public List<Planete> getPlanetes(int proprietaire) {
+	public List<Planete> getPlanetes(PlaneteStatus status) {
 
-		if (mapPlanete.containsKey(proprietaire)) {
-			return mapPlanete.get(proprietaire);
+		if (mapPlanete.containsKey(status)) {
+			return mapPlanete.get(status);
 		} else {
 			return new ArrayList<>();
 		}
@@ -234,34 +234,9 @@ public class Carte {
 		return this.planetes.size();
 	}
 
-	public List<Planete> getMesPlanetes() {
-		return this.getPlanetes(Constantes.AMI);
-	}
-
-	public List<Planete> getPlanetesEtrangeres() {
-		List<Planete> ret = new ArrayList<>();
-		ret.addAll(this.getPlanetes());
-		ret.removeAll(this.getMesPlanetes());
-		return ret;
-	}
-
-	public List<Planete> getPlanetesEnnemies() {
-		List<Planete> ret = new ArrayList<>();
-		for (Planete planete : this.planetes) {
-			if (planete.getProprietaire() > Constantes.AMI) {
-				ret.add(planete);
-			}
-		}
-
-		ret.addAll(this.getPlanetes());
-		ret.removeAll(this.getMesPlanetes());
-		return ret;
-
-	}
-
 	public List<Planete> getMesTerraformations() {
 		List<Planete> ret = new ArrayList<>();
-		for (Planete planete : this.getPlanetes(Constantes.AMI)) {
+		for (Planete planete : this.getPlanetes(PlaneteStatus.Amie)) {
 			if (planete.getTerraformation() > 0) {
 				ret.add(planete);
 			}

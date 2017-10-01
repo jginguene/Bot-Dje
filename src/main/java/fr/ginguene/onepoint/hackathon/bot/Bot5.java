@@ -5,6 +5,7 @@ import java.util.List;
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.IBot;
 import fr.ginguene.onepoint.hackathon.Planete;
+import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.action.AbstractStrategie;
 import fr.ginguene.onepoint.hackathon.action.AideStrategie;
@@ -29,14 +30,14 @@ public class Bot5 implements IBot {
 
 		System.out.println("Tour " + carte.getConfiguration().getTour());
 
-		List<Planete> mesPlanetes = carte.getMesPlanetes();
+		List<Planete> mesPlanetes = carte.getPlanetes(PlaneteStatus.Amie);
+		int nbPlanetesEnnemies = carte.getPlanetes(PlaneteStatus.Ennemie).size();
+
+		boolean isScoreOptimizing = (nbPlanetesEnnemies <= 4 && carte.getConfiguration().getTour() > 100);
 
 		for (Planete source : mesPlanetes) {
 
 			System.out.println(source + "=> population " + source.getPopulation() + "/" + source.getPopulationMax());
-
-			boolean isScoreOptimizing = (carte.getPlanetesEnnemies().size() <= 4
-					&& carte.getConfiguration().getTour() > 100);
 
 			if (isScoreOptimizing) {
 				System.out.println("=> " + isScoreOptimizing);
