@@ -51,11 +51,10 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 		}
 
 		if (destination != null) {
+			System.out.println("nbPop: " + nbPop + "; source.getPopulation():" + source.getPopulation());
 
 			nbPop = Math.min(3, nbPop);
 			int nbVaisseau = Math.min(nbPop, source.getPopulation() - 1);
-
-			System.out.println("nbPop: " + nbPop + "; source.getPopulation():" + source.getPopulation());
 
 			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
 			source.remPopulation(nbVaisseau);
