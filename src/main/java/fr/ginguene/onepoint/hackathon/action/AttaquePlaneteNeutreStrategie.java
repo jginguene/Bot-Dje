@@ -42,30 +42,19 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 
 				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
 
-				this.trace(aPlanete + " => aCout[" + aCout + "] = POP[" + aPlanete.getPopulation() + "]"
-						+ " - nbVaisseauxAmi[" + nbVaisseauxAmi + "] + nbVaisseauxEnnemi[" + nbVaisseauxEnnemi + "] + "
-						+ 1 + " NbTour[" + +carte.getTrajetNbTour(source, aPlanete) + "] ");
-				this.trace("distanceEnnemi:" + distanceEnnemi);
-				this.trace("distanceSource:" + distanceSource);
-				this.trace("destination:" + destination);
-				this.trace("aCout:" + aCout);
-				this.trace("minCout:" + minCout);
-				this.trace("aNbPop:" + aNbPop);
-
 				/*
-				 * 2017-10-01T12:39:36.787563+00:00 app[web.1]: Planete 23 =>
-				 * aCout[7] = POP[36] - nbVaisseauxAmi[37] +
-				 * nbVaisseauxEnnemi[0] + 1 NbTour[7]
-				 * 2017-10-01T12:39:36.787609+00:00 app[web.1]:
-				 * distanceEnnemi:504.76233 2017-10-01T12:39:36.787644+00:00
-				 * app[web.1]: distanceSource:144.01389
-				 * 2017-10-01T12:39:36.787646+00:00 app[web.1]: destination:null
-				 * 2017-10-01T12:39:36.787660+00:00 app[web.1]: aCout:7
-				 * 2017-10-01T12:39:36.787661+00:00 app[web.1]: minCout:-1
-				 * 2017-10-01T12:39:36.787671+00:00 app[web.1]: nbPop:0
+				 * this.trace(aPlanete + " => aCout[" + aCout + "] = POP[" +
+				 * aPlanete.getPopulation() + "]" + " - nbVaisseauxAmi[" +
+				 * nbVaisseauxAmi + "] + nbVaisseauxEnnemi[" + nbVaisseauxEnnemi
+				 * + "] + " + 1 + " NbTour[" + +carte.getTrajetNbTour(source,
+				 * aPlanete) + "] "); this.trace("distanceEnnemi:" +
+				 * distanceEnnemi); this.trace("distanceSource:" +
+				 * distanceSource); this.trace("destination:" + destination);
+				 * this.trace("aCout:" + aCout); this.trace("minCout:" +
+				 * minCout); this.trace("aNbPop:" + aNbPop);
 				 */
 
-				if ((destination == null || aCout < minCout) && distanceEnnemi < distanceSource && aNbPop > 0) {
+				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > 0) {
 					System.out.println("===> " + aPlanete + " best choice for the moment");
 					destination = aPlanete;
 					minCout = aCout;
