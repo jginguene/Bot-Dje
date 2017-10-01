@@ -37,6 +37,8 @@ public class Bot5 implements IBot {
 
 		boolean isScoreOptimizing = (nbPlanetesEnnemies <= 4 && carte.getConfiguration().getTour() > 100);
 
+		isScoreOptimizing = false;
+
 		for (Planete source : mesPlanetes) {
 
 			System.out.println(source + "=> population " + source.getPopulation() + "/" + source.getPopulationMax());
