@@ -40,7 +40,8 @@ public class TerraformationStrategie extends AbstractStrategie {
 
 				return true;
 			} else {
-				trace(source + " terraformable => " + nbEnnemie + " ennemies");
+				// trace(source + " terraformable => " + nbEnnemie + "
+				// ennemies");
 
 			}
 		}
