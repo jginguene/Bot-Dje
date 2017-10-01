@@ -35,7 +35,7 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
 
-				int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - 3);
+				int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - 4);
 
 				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 				source.remPopulation(nbVaisseau);
