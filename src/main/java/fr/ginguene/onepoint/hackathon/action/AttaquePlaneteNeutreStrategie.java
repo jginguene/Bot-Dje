@@ -19,7 +19,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		if (isOptimizingScore) {
+		if (source.getPopulation() < 5) {
 			return false;
 		}
 
