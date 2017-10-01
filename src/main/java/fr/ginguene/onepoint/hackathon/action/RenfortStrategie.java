@@ -20,8 +20,8 @@ public class RenfortStrategie extends AbstractStrategie {
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 		int nbEnnemie = getNbEnnemieVoisine(carte, source, 6);
 
-		if (source.getPopulation() < 5) {
-			return false;
+		if (source.getPopulation() < source.getPopulationMax() / 2) {
+			return true;
 		}
 
 		if (nbEnnemie == 0) {
