@@ -44,7 +44,8 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 						+ " - nbVaisseauxAmi[" + nbVaisseauxAmi + "] + nbVaisseauxEnnemi[" + nbVaisseauxEnnemi + "] + "
 						+ 1 + " NbTour[" + +carte.getTrajetNbTour(source, aPlanete) + "]");
 
-				if ((destination == null || aCout < minCout && aCout > 0) && distanceEnnemi < distanceSource) {
+				if ((destination == null || aCout < minCout && aCout > 0) && distanceEnnemi < distanceSource
+						&& nbPop > 0) {
 					destination = aPlanete;
 					minCout = aCout;
 					nbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
@@ -59,7 +60,8 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 			response.addOrdre(ordre);
 			carte.addFlotte(ordre.getFlotte());
 
-			System.out.println("attaquePlaneteNeutre: " + source + " -> " + destination + " [" + nbVaisseau + "]");
+			System.out.println("AttaquePlaneteNeutre: " + source + " -> " + destination + " [" + nbVaisseau + "]");
+			return true;
 
 		}
 		return false;
