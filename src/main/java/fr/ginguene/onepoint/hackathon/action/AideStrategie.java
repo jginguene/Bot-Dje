@@ -29,7 +29,7 @@ public class AideStrategie extends AbstractStrategie {
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie
-					&& aPlanete.getPopulationMax() < carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete) * 2) {
+					&& aPlanete.getPopulationMax() < carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete)) {
 
 				int mesVaisseaux = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
 
