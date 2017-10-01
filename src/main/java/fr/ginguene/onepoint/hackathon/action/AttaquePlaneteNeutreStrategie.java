@@ -25,7 +25,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 
 		Planete destination = null;
 		int minCout = -1;
-		int nbPop = -1;
+		int nbPop = 0;
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getStatus() == PlaneteStatus.Neutre) {
@@ -42,7 +42,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 
 				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
 
-				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > 1) {
+				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > -5) {
 					destination = aPlanete;
 					minCout = aCout;
 					nbPop = aNbPop;
