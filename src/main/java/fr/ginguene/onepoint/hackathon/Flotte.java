@@ -22,6 +22,7 @@ public class Flotte {
 		this.destinationId = Integer.parseInt(attributes[4]);
 		this.toursTotals = Integer.parseInt(attributes[5]);
 		this.toursRestants = Integer.parseInt(attributes[6]);
+		this.carte = carte;
 
 	}
 
