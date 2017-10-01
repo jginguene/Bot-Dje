@@ -38,7 +38,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 				int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
 
 				int aCout = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1
-						+ carte.getTrajetNbTour(source, aPlanete);
+						+ carte.getTrajetNbTour(source, aPlanete) * 2;
 
 				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
 
