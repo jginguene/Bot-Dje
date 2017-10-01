@@ -42,20 +42,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 
 				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
 
-				/*
-				 * this.trace(aPlanete + " => aCout[" + aCout + "] = POP[" +
-				 * aPlanete.getPopulation() + "]" + " - nbVaisseauxAmi[" +
-				 * nbVaisseauxAmi + "] + nbVaisseauxEnnemi[" + nbVaisseauxEnnemi
-				 * + "] + " + 1 + " NbTour[" + +carte.getTrajetNbTour(source,
-				 * aPlanete) + "] "); this.trace("distanceEnnemi:" +
-				 * distanceEnnemi); this.trace("distanceSource:" +
-				 * distanceSource); this.trace("destination:" + destination);
-				 * this.trace("aCout:" + aCout); this.trace("minCout:" +
-				 * minCout); this.trace("aNbPop:" + aNbPop);
-				 */
-
 				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > 0) {
-					System.out.println("===> " + aPlanete + " best choice for the moment");
 					destination = aPlanete;
 					minCout = aCout;
 					nbPop = aNbPop;
