@@ -45,7 +45,7 @@ public class AideAttaqueEnnemieStrategie extends AbstractStrategie {
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
-					this.trace("AidePlanete: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
+					this.trace("AideAttaqueEnnemieStrategie: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
 					return true;
 				}
 			}

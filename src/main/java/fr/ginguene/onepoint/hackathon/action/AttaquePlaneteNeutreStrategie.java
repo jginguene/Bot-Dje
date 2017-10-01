@@ -42,7 +42,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 
 				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
 
-				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > 0) {
+				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > 1) {
 					destination = aPlanete;
 					minCout = aCout;
 					nbPop = aNbPop;

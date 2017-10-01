@@ -23,7 +23,7 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 			return false;
 		}
 
-		if (source.getPopulation() < 5) {
+		if (source.getPopulation() < 10) {
 			return false;
 		}
 
@@ -35,7 +35,7 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
 
-				int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - 4);
+				int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - 8);
 
 				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 				source.remPopulation(nbVaisseau);

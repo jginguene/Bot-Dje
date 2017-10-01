@@ -49,7 +49,7 @@ public class AideAttaqueNeutreStrategie extends AbstractStrategie {
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
 				carte.addFlotte(ordre.getFlotte());
-				this.trace("AidePlanete: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
+				this.trace("AideAttaqueNeutreStrategie: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
 				return true;
 			}
 
