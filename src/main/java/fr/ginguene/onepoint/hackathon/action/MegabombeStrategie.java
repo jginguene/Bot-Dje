@@ -2,7 +2,9 @@ package fr.ginguene.onepoint.hackathon.action;
 
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Planete;
+import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
+import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class MegabombeStrategie extends AbstractStrategie {
 
@@ -17,24 +19,17 @@ public class MegabombeStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		if (isOptimizingScore) {
-			/*
-			 * if (source.getPopulation() == source.getPopulationMax()) {
-			 * Planete destination = null; float distance = -1;
-			 * 
-			 * for (Planete aPlanete : carte.getPlanetes()) { if
-			 * (aPlanete.getStatus() != PlaneteStatus.Ennemie) { float aDistance
-			 * = carte.getDistance(aPlanete, source); if (distance > aDistance
-			 * || destination == null) { distance = aDistance; destination =
-			 * aPlanete; }
-			 * 
-			 * } int nbVaisseau = source.getPopulation() - 1; EnvoiFlotte ordre
-			 * = new EnvoiFlotte(carte, source, destination, nbVaisseau);
-			 * source.remPopulation(nbVaisseau); response.addOrdre(ordre);
-			 * carte.addFlotte(ordre.getFlotte()); return true; }
-			 * 
-			 * }
-			 */
+		if (source.getPopulation() == source.getPopulationMax()) {
+
+			Planete destination = carte.getPlaneteLaPlusProche(source, PlaneteStatus.Ennemie);
+			int nbVaisseau = source.getPopulation() - 10;
+
+			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
+			source.remPopulation(nbVaisseau);
+			response.addOrdre(ordre);
+			carte.addFlotte(ordre.getFlotte());
+			return true;
+
 		}
 		return false;
 	}
