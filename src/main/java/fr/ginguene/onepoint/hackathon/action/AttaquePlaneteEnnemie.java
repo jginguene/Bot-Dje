@@ -23,6 +23,10 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 			return false;
 		}
 
+		if (source.getPopulation() < 5) {
+			return false;
+		}
+
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
 			int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
