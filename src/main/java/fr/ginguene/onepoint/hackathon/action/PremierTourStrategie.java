@@ -2,6 +2,7 @@ package fr.ginguene.onepoint.hackathon.action;
 
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Planete;
+import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
@@ -20,11 +21,18 @@ public class PremierTourStrategie extends AbstractStrategie {
 
 				if (destination.getPopulation() + 1 < nbPopRestante && destination.getPopulation() < 20) {
 
-					int nbVaisseaux = destination.getPopulation() + 1;
-					EnvoiFlotte envoiFlotte = new EnvoiFlotte(carte, source, destination, nbVaisseaux);
-					response.addOrdre(envoiFlotte);
-					nbPopRestante -= nbVaisseaux;
-					source.remPopulation(nbVaisseaux);
+					Planete ennemiLaPlusProche = carte.getPlaneteLaPlusProche(destination, PlaneteStatus.Ennemie);
+					float distanceEnnemi = carte.getDistance(ennemiLaPlusProche, destination);
+					float distanceSource = carte.getDistance(source, destination);
+
+					if (distanceSource < distanceEnnemi) {
+
+						int nbVaisseaux = destination.getPopulation() + 1;
+						EnvoiFlotte envoiFlotte = new EnvoiFlotte(carte, source, destination, nbVaisseaux);
+						response.addOrdre(envoiFlotte);
+						nbPopRestante -= nbVaisseaux;
+						source.remPopulation(nbVaisseaux);
+					}
 				}
 
 			}
