@@ -37,10 +37,6 @@ public class AideAttaqueNeutreStrategie extends AbstractStrategie {
 
 				int nbVaisseau = Math.min(nbVaisseauxManquant, source.getPopulation() - 3);
 
-				if (source.getPopulation() > 20) {
-					nbVaisseau = source.getPopulation() - 20;
-				}
-
 				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 				source.remPopulation(nbVaisseau);
 				response.addOrdre(ordre);
