@@ -20,8 +20,8 @@ import fr.ginguene.onepoint.hackathon.action.TerraformationStrategie;
 public class Bot5 implements IBot {
 
 	private AbstractStrategie[] strategies = new AbstractStrategie[] { new PremierTourStrategie(),
-			new TerraformationStrategie(true), new MegabombeStrategie(true), new ProtectionStrategie(),
-			new AideStrategie(true), new BombardeStrategie(true), new AttaquePlaneteNeutreStrategie(true),
+			new TerraformationStrategie(true), new MegabombeStrategie(true), new BombardeStrategie(true),
+			new ProtectionStrategie(), new AideStrategie(true), new AttaquePlaneteNeutreStrategie(true),
 			new AttaquePlaneteEnnemie(true)
 
 	};
