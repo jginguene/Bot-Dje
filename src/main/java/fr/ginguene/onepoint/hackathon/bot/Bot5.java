@@ -45,7 +45,7 @@ public class Bot5 implements IBot {
 
 			for (AbstractStrategie stategie : stategies) {
 
-				if (stategie.execute(response, source, carte, isScoreOptimizing)) {
+				if (!stategie.execute(response, source, carte, isScoreOptimizing)) {
 					continue;
 				}
 
