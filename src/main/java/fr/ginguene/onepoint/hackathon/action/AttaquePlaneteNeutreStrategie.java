@@ -40,18 +40,17 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 				int aCout = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1
 						+ carte.getTrajetNbTour(source, aPlanete);
 
-				/*
-				 * this.trace(aPlanete + " => aCout[" + aCout + "] = POP[" +
-				 * aPlanete.getPopulation() + "]" + " - nbVaisseauxAmi[" +
-				 * nbVaisseauxAmi + "] + nbVaisseauxEnnemi[" + nbVaisseauxEnnemi
-				 * + "] + " + 1 + " NbTour[" + +carte.getTrajetNbTour(source,
-				 * aPlanete) + "] "); this.trace("distanceEnnemi:" +
-				 * distanceEnnemi); this.trace("distanceSource:" +
-				 * distanceSource); this.trace("destination:" + destination);
-				 * this.trace("aCout:" + aCout); this.trace("minCout:" +
-				 * minCout); this.trace("nbPop:" + nbPop);
-				 */
 				nbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
+
+				this.trace(aPlanete + " => aCout[" + aCout + "] = POP[" + aPlanete.getPopulation() + "]"
+						+ " - nbVaisseauxAmi[" + nbVaisseauxAmi + "] + nbVaisseauxEnnemi[" + nbVaisseauxEnnemi + "] + "
+						+ 1 + " NbTour[" + +carte.getTrajetNbTour(source, aPlanete) + "] ");
+				this.trace("distanceEnnemi:" + distanceEnnemi);
+				this.trace("distanceSource:" + distanceSource);
+				this.trace("destination:" + destination);
+				this.trace("aCout:" + aCout);
+				this.trace("minCout:" + minCout);
+				this.trace("nbPop:" + nbPop);
 
 				if ((destination == null || aCout < minCout) && distanceEnnemi < distanceSource && nbPop > 0) {
 					destination = aPlanete;
