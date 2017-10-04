@@ -1,6 +1,7 @@
 package fr.ginguene.onepoint.hackathon.action;
 
 import fr.ginguene.onepoint.hackathon.Carte;
+import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
@@ -40,29 +41,39 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
-			int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
-			int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
-			int nbVaisseauManquant;
-
-			if (nbVaisseauxEnnemi > 0) {
-				nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi + nbVaisseauxEnnemi + 100;
-			} else {
-				nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi;
+			boolean bombeEnApproche = false;
+			for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, aPlanete)) {
+				if (flotte.getVaisseaux() >= aPlanete.getPopulationMax()) {
+					bombeEnApproche = true;
+				}
 			}
 
-			if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
+			if (!bombeEnApproche) {
 
-				int nbVaisseauxEnnemiSource = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source);
+				int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
+				int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
+				int nbVaisseauManquant;
 
-				int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - nbVaisseauxEnnemiSource - 1);
+				if (nbVaisseauxEnnemi > 0) {
+					nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi + nbVaisseauxEnnemi + 100;
+				} else {
+					nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi;
+				}
 
-				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
-				source.remPopulation(nbVaisseau);
-				response.addOrdre(ordre);
-				carte.addFlotte(ordre.getFlotte());
+				if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
 
-				this.trace("AttaquePlaneteEnnemie: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
-				return true;
+					int nbVaisseauxEnnemiSource = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source);
+
+					int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - nbVaisseauxEnnemiSource - 1);
+
+					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+
+					this.trace("AttaquePlaneteEnnemie: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
+					return true;
+				}
 			}
 		}
 
