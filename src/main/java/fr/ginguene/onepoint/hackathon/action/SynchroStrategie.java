@@ -28,9 +28,13 @@ public class SynchroStrategie extends AbstractStrategie {
 		}
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+
 			int distanceEnTour = carte.getTrajetNbTour(source, aPlanete);
 
 			for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, aPlanete)) {
+
+				trace("distance " + source + "-" + aPlanete + ":" + distanceEnTour);
+				trace("flotte: " + flotte.getToursRestants());
 
 				if (flotte.getToursRestants() == distanceEnTour) {
 
