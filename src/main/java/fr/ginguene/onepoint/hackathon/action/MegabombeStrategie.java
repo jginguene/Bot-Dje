@@ -36,12 +36,11 @@ public class MegabombeStrategie extends AbstractStrategie {
 					source.remPopulation(nbVaisseau);
 					response.addOrdre(ordre);
 					carte.addFlotte(ordre.getFlotte());
+					return true;
 
 				}
 
 			}
-
-			return true;
 
 		}
 		return false;
