@@ -23,7 +23,7 @@ public class SynchroStrategie extends AbstractStrategie {
 			return false;
 		}
 
-		if (source.getPopulation() < 40) {
+		if (source.getPopulation() < 3) {
 			return false;
 		}
 
@@ -38,7 +38,7 @@ public class SynchroStrategie extends AbstractStrategie {
 
 				if (flotte.getToursRestants() == distanceEnTour) {
 
-					int nbVaisseau = source.getPopulation() - 20;
+					int nbVaisseau = source.getPopulation() - 3;
 
 					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 					source.remPopulation(nbVaisseau);
