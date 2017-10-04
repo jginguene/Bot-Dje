@@ -216,6 +216,16 @@ public class Carte {
 		return ret;
 	}
 
+	public int getNbEnnemie(Planete source, int nbVoisines) {
+		int nbEnnemie = 0;
+		for (Planete aPlanete : this.getVoisines(source, 6)) {
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
+				nbEnnemie++;
+			}
+		}
+		return nbEnnemie;
+	}
+
 	public int getNbVaisseauInFlotteFrom(PlaneteStatus flotteStatus, Planete source) {
 		int res = 0;
 		for (Flotte flotte : getFlottes(flotteStatus, source)) {
