@@ -39,9 +39,7 @@ public class AttaquePlaneteEnnemie2 extends AbstractStrategie {
 		}
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getStatus() == PlaneteStatus.Ennemie)
-				;
-			{
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
 				int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
 				if (nbVaisseauxAmi == 0) {
 
