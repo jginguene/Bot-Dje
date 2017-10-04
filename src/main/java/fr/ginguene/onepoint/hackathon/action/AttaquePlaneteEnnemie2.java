@@ -39,16 +39,20 @@ public class AttaquePlaneteEnnemie2 extends AbstractStrategie {
 		}
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
-			if (nbVaisseauxAmi == 0) {
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie)
+				;
+			{
+				int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
+				if (nbVaisseauxAmi == 0) {
 
-				int nbVaisseau = source.getPopulation() - 20;
+					int nbVaisseau = source.getPopulation() - 20;
 
-				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
-				source.remPopulation(nbVaisseau);
-				response.addOrdre(ordre);
-				carte.addFlotte(ordre.getFlotte());
-				return true;
+					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+					return true;
+				}
 			}
 
 		}
