@@ -23,6 +23,12 @@ public class TerraformationStrategie extends AbstractStrategie {
 			return true;
 		}
 
+		for (Planete aPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
+			if (aPlanete.getTerraformation() > 0) {
+				return false;
+			}
+		}
+
 		if (source.isTerraformable()) {
 			int nbEnnemie = 0;
 			for (Planete aPlanete : carte.getVoisines(source, 6)) {
