@@ -27,7 +27,14 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 			return false;
 		}
 
-		if (carte.getPlanetesOrderByDistance(source).get(0).getStatus() == PlaneteStatus.Ennemie) {
+		int nbEnnemie = 0;
+		for (Planete aPlanete : carte.getVoisines(source, 3)) {
+			if (aPlanete.getStatus() != PlaneteStatus.Amie) {
+				nbEnnemie++;
+			}
+		}
+
+		if (nbEnnemie >= 2) {
 			return false;
 		}
 
@@ -35,7 +42,13 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 
 			int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
 			int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
-			int nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi + nbVaisseauxEnnemi + 100;
+			int nbVaisseauManquant;
+
+			if (nbVaisseauxEnnemi > 0) {
+				nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi + nbVaisseauxEnnemi + 100;
+			} else {
+				nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi;
+			}
 
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
 
