@@ -19,7 +19,7 @@ public class PreparationBombeStrategie extends AbstractStrategie {
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
 		int nbEnnemie = 0;
-		for (Planete aPlanete : carte.getVoisines(source, 6)) {
+		for (Planete aPlanete : carte.getVoisines(source, 7)) {
 			if (aPlanete.getStatus() != PlaneteStatus.Amie) {
 				nbEnnemie++;
 			}

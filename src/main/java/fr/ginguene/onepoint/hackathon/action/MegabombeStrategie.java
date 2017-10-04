@@ -41,6 +41,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 					if (!bombeEnApproche) {
 						int nbVaisseau = Math.min(aPlanete.getPopulationMax(), source.getPopulation() - 20);
 
+						// Si on est au front on envoi une bombe moins forte
 						if (carte.getNbEnnemie(source, 3) >= 2) {
 							nbVaisseau = source.getPopulation() / 2;
 						}
