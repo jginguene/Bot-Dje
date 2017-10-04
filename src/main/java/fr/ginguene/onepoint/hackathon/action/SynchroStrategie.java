@@ -37,7 +37,7 @@ public class SynchroStrategie extends AbstractStrategie {
 				// distanceEnTour);
 				// trace("flotte: " + flotte.getToursRestants());
 
-				if (flotte.getToursRestants() == distanceEnTour + 1) {
+				if (flotte.getToursRestants() == distanceEnTour - 1) {
 
 					int nbVaisseau = source.getPopulation() - 3;
 
