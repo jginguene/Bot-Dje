@@ -28,7 +28,7 @@ public class AttaquePlaneteEnnemie2 extends AbstractStrategie {
 		}
 
 		int nbEnnemie = 0;
-		for (Planete aPlanete : carte.getVoisines(source, 5)) {
+		for (Planete aPlanete : carte.getVoisines(source, 4)) {
 			if (aPlanete.getStatus() != PlaneteStatus.Amie) {
 				nbEnnemie++;
 			}
