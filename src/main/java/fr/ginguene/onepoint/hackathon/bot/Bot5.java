@@ -36,8 +36,7 @@ public class Bot5 implements IBot {
 		int nbPlanetesEnnemies = carte.getPlanetes(PlaneteStatus.Ennemie).size();
 
 		boolean isScoreOptimizing = (nbPlanetesEnnemies <= 4 && carte.getConfiguration().getTour() > 100);
-
-		isScoreOptimizing = false;
+		// isScoreOptimizing = false;
 
 		for (Planete source : mesPlanetes) {
 

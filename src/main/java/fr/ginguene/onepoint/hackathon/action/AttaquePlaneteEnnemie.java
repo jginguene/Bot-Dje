@@ -24,6 +24,12 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 			return false;
 		}
 
+		Planete ennemie = carte.getEnnemiLaPlusProche(source);
+		int distance = carte.getTrajetNbTour(source, ennemie);
+		if (distance <= 10) {
+			return false;
+		}
+
 		int nbEnnemie = carte.getNbEnnemie(source, 4);
 
 		int minNbVaisseauRestant = 1 + 20 * nbEnnemie;
