@@ -42,22 +42,19 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 
 		if (destination == null) {
 			destination = chooseTarget(source, carte);
-
 			trace("choix de " + destination + " pour " + source);
-
 			targetMap.put(source, destination);
+		}
 
-			int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 1;
-			trace("nbVaisseau " + nbVaisseau + " = " + source.getPopulation() + " - "
-					+ -carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source));
+		int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 1;
+		trace("nbVaisseau " + nbVaisseau + " = " + source.getPopulation() + " - "
+				+ -carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source));
 
-			if (nbVaisseau > 3) {
-				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
-				source.remPopulation(nbVaisseau);
-				response.addOrdre(ordre);
-				return true;
-			}
-
+		if (nbVaisseau > 3) {
+			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
+			source.remPopulation(nbVaisseau);
+			response.addOrdre(ordre);
+			return true;
 		}
 
 		return false;
