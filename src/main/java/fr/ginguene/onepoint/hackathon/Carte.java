@@ -235,6 +235,17 @@ public class Carte {
 
 	}
 
+	public int getNbVaisseauInFlotte(PlaneteStatus flotteStatus, Planete destination, int nbTour) {
+		int res = 0;
+		for (Flotte flotte : getFlottes(flotteStatus, destination)) {
+			if (flotte.getToursRestants() <= nbTour) {
+				res += flotte.getVaisseaux();
+			}
+		}
+		return res;
+
+	}
+
 	public int getNbVaisseauInFlotte(PlaneteStatus flotteStatus, Planete destination) {
 		int res = 0;
 		for (Flotte flotte : getFlottes(flotteStatus, destination)) {

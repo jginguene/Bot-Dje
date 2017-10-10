@@ -40,21 +40,18 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 					if (!bombeEnApproche) {
 
-						int nbVaisseau = Math.min(aPlanete.getPopulationMax() + 1, source.getPopulation() - 20);
-
-						// Si on est au front on envoi une bombe moins forte
-						if (carte.getNbEnnemie(source, 3) >= 2) {
+						if (aPlanete.getPopulationMax() + 1 > source.getPopulation() - 1
+								- carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 10)) {
 							return false;
-						} else {
-							if (nbVaisseau >= aPlanete.getPopulationMax()) {
-								EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
-								source.remPopulation(nbVaisseau);
-								response.addOrdre(ordre);
-								carte.addFlotte(ordre.getFlotte());
-								return true;
-							}
-
 						}
+
+						int nbVaisseau = aPlanete.getPopulationMax() + 1;
+
+						EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
+						source.remPopulation(nbVaisseau);
+						response.addOrdre(ordre);
+						carte.addFlotte(ordre.getFlotte());
+						return true;
 
 					}
 
