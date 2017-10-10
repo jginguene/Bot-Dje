@@ -33,8 +33,13 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 
 		}
 
-		int coutAttaque = ennemie.getPopulation()
-				+ ennemie.getTauxCroissance() * carte.getTrajetNbTour(source, ennemie);
+		int distance = carte.getTrajetNbTour(source, ennemie);
+
+		if (distance > 10) {
+			return false;
+		}
+
+		int coutAttaque = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance;
 
 		if (coutAttaque < source.getPopulation() + 10) {
 
