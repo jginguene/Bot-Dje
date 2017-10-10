@@ -21,7 +21,7 @@ public class Bot5 implements IBot {
 
 	private AbstractStrategie[] strategies = new AbstractStrategie[] { new PremierTourStrategie(),
 			new TerraformationStrategie(true), new PreparationBombeStrategie(), new MegabombeStrategie(),
-			new AttaquePlaneteEnnemieRapprochee(), new ProtectionStrategie(),
+			new ProtectionStrategie(), new AttaquePlaneteEnnemieRapprochee(),
 			// new BombardeStrategie(true),
 			// new RenfortStrategie(),
 			// new AideAttaqueNeutreStrategie(true),
