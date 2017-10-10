@@ -23,6 +23,10 @@ public class TerraformationStrategie extends AbstractStrategie {
 			return true;
 		}
 
+		if (carte.getConfiguration().getTour() < 50) {
+			return false;
+		}
+
 		for (Planete aPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
 			if (aPlanete.getTerraformation() > 4) {
 				return false;
