@@ -12,7 +12,7 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 
-	private Map<Planete, Planete> targetMap = new HashMap<Planete, Planete>();
+	private Map<Planete, Integer> targetMap = new HashMap<Planete, Integer>();
 
 	public AttaquePlaneteEnnemieAPlusieurs(boolean isDebug) {
 		super(isDebug);
@@ -31,7 +31,9 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 
 		if (targetMap.containsKey(source)) {
 
-			destination = targetMap.get(source);
+			int destinationId = targetMap.get(source);
+			destination = carte.getPlanete(destinationId);
+
 			trace(source + " => " + destination);
 			if (destination.getStatus() == PlaneteStatus.Amie) {
 				trace(destination + " conquise");
@@ -43,7 +45,7 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 		if (destination == null) {
 			destination = chooseTarget(source, carte);
 			trace("choix de " + destination + " pour " + source);
-			targetMap.put(source, destination);
+			targetMap.put(source, destination.getId());
 		}
 
 		int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 1;
@@ -61,22 +63,22 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 	}
 
 	private Planete chooseTarget(Planete source, Carte carte) {
-		Map<Planete, Integer> map = new HashMap<Planete, Integer>();
-		for (Planete destination : targetMap.values()) {
-			if (map.containsKey(destination)) {
-				map.put(destination, map.get(destination) + 1);
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		for (Integer destinationId : targetMap.values()) {
+			if (map.containsKey(destinationId)) {
+				map.put(destinationId, map.get(destinationId) + 1);
 			} else {
-				map.put(destination, 1);
+				map.put(destinationId, 1);
 			}
 		}
 
 		// On touve déja une planète ciblée par moins de 3 planète
-		for (Planete destination : map.keySet()) {
-			int count = map.get(destination);
+		for (Integer destinationId : map.keySet()) {
+			int count = map.get(destinationId);
 			if (count < 3) {
 
 				trace("Planete déja visée trouvée");
-				return destination;
+				return carte.getPlanete(destinationId);
 			}
 		}
 
