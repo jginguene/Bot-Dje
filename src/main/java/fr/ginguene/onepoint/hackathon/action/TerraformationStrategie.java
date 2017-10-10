@@ -24,18 +24,13 @@ public class TerraformationStrategie extends AbstractStrategie {
 		}
 
 		for (Planete aPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
-			if (aPlanete.getTerraformation() > 0) {
+			if (aPlanete.getTerraformation() > 2) {
 				return false;
 			}
 		}
 
 		if (source.isTerraformable()) {
-			int nbEnnemie = 0;
-			for (Planete aPlanete : carte.getVoisines(source, 6)) {
-				if (aPlanete.getStatus() != PlaneteStatus.Amie) {
-					nbEnnemie++;
-				}
-			}
+			int nbEnnemie = carte.getNbEnnemie(source, 6);
 
 			if (nbEnnemie == 0) {
 				Terraformation terraformation = new Terraformation();
