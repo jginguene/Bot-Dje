@@ -18,8 +18,8 @@ import fr.ginguene.onepoint.hackathon.action.bot7.AttaquePlaneteEnnemieAPlusieur
 public class Bot7 implements IBot {
 
 	private AbstractStrategie[] strategies = new AbstractStrategie[] { new PremierTourStrategie(),
-			new TerraformationStrategie(true), new ProtectionStrategie(), new AttaquePlaneteNeutreStrategie(true),
-			new AttaquePlaneteEnnemieAPlusieurs(true), new MegabombeStrategie()
+			new TerraformationStrategie(true), new AttaquePlaneteEnnemieAPlusieurs(true), new ProtectionStrategie(),
+			new AttaquePlaneteNeutreStrategie(true), new MegabombeStrategie()
 
 	};
 
