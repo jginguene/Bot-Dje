@@ -10,7 +10,7 @@ public class ProtectionStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source);
+		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
 
 		if (nbVaisseauEnnemie == 0 || source.getPopulation() > source.getPopulationMax() / 2) {
 			return false;
