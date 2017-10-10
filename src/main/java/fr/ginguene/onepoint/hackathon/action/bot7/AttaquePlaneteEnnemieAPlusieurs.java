@@ -27,9 +27,14 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 
 		Planete destination = null;
 
+		trace("targetMap:" + targetMap);
+
 		if (targetMap.containsKey(source)) {
+
 			destination = targetMap.get(source);
+			trace(source + " => " + destination);
 			if (destination.getStatus() == PlaneteStatus.Amie) {
+				trace(destination + " conquise");
 				targetMap.remove(source);
 				destination = null;
 			}
@@ -37,6 +42,9 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 
 		if (destination == null) {
 			destination = chooseTarget(source, carte);
+
+			trace("choix de " + destination + " pour " + source);
+
 			targetMap.put(source, destination);
 
 			int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 1;
@@ -67,6 +75,8 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 		for (Planete destination : map.keySet()) {
 			int count = map.get(destination);
 			if (count < 3) {
+
+				trace("Planete déja visée trouvée");
 				return destination;
 			}
 		}
