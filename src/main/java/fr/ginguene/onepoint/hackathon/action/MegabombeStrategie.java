@@ -20,13 +20,12 @@ public class MegabombeStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		if (source.getPopulationMax() < 40) {
+		if (source.getPopulationMax() < 80) {
 			return false;
 
 		}
 
-		if ((source.getPopulationMax() == source.getPopulation() || source.getPopulation() > 100)
-				&& source.getPopulation() > source.getPopulationMax() / 2) {
+		if (source.getPopulation() > source.getPopulationMax() / 2) {
 
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
