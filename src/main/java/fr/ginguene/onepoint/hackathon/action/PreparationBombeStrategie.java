@@ -18,6 +18,10 @@ public class PreparationBombeStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
+		if (source.getPopulationMax() <= 80) {
+			return false;
+		}
+
 		int nbEnnemie = 0;
 		for (Planete aPlanete : carte.getVoisines(source, 7)) {
 			if (aPlanete.getStatus() != PlaneteStatus.Amie) {

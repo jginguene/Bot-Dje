@@ -8,6 +8,7 @@ import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.action.AbstractStrategie;
+import fr.ginguene.onepoint.hackathon.action.Acharnement;
 import fr.ginguene.onepoint.hackathon.action.AttaquePlaneteEnnemieRapprochee;
 import fr.ginguene.onepoint.hackathon.action.AttaquePlaneteNeutreStrategie;
 import fr.ginguene.onepoint.hackathon.action.DefenseTerraformation;
@@ -22,7 +23,7 @@ public class Bot5 implements IBot {
 	private AbstractStrategie[] strategies = new AbstractStrategie[] { new PremierTourStrategie(),
 			new DefenseTerraformation(), new TerraformationStrategie(true), new MegabombeStrategie(),
 			new PreparationBombeStrategie(), new ProtectionStrategie(), new AttaquePlaneteEnnemieRapprochee(),
-			new AttaquePlaneteNeutreStrategie(true),
+			new AttaquePlaneteNeutreStrategie(true), new Acharnement()
 			// new AttaquePlaneteEnnemie(true)
 
 	};
