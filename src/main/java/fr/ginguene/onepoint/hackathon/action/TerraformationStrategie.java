@@ -24,7 +24,7 @@ public class TerraformationStrategie extends AbstractStrategie {
 		}
 
 		for (Planete aPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
-			if (aPlanete.getTerraformation() > 2) {
+			if (aPlanete.getTerraformation() > 4) {
 				return false;
 			}
 		}
