@@ -25,7 +25,8 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 		}
 
-		if (source.getPopulation() > 100 && source.getPopulation() > source.getPopulationMax() / 2) {
+		if ((source.getPopulationMax() == source.getPopulation() || source.getPopulation() > 100)
+				&& source.getPopulation() > source.getPopulationMax() / 2) {
 
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
@@ -44,24 +45,14 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 						// Si on est au front on envoi une bombe moins forte
 						if (carte.getNbEnnemie(source, 3) >= 2) {
-							nbVaisseau = source.getPopulation() / 2;
-
-							if (nbVaisseau > aPlanete.getPopulation() + 20) {
-								EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
-								source.remPopulation(nbVaisseau);
-								response.addOrdre(ordre);
-								carte.addFlotte(ordre.getFlotte());
-								return true;
-							}
+							return false;
 						} else {
-
 							if (nbVaisseau >= aPlanete.getPopulationMax()) {
 								EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 								source.remPopulation(nbVaisseau);
 								response.addOrdre(ordre);
 								carte.addFlotte(ordre.getFlotte());
 								return true;
-
 							}
 
 						}
