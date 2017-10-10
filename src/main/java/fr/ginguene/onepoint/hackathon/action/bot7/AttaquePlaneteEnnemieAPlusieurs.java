@@ -8,6 +8,7 @@ import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 import fr.ginguene.onepoint.hackathon.action.AbstractStrategie;
+import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 
@@ -37,6 +38,16 @@ public class AttaquePlaneteEnnemieAPlusieurs extends AbstractStrategie {
 		if (destination == null) {
 			destination = chooseTarget(source, carte);
 			targetMap.put(source, destination);
+
+			int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 1;
+
+			if (nbVaisseau > 3) {
+				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
+				source.remPopulation(nbVaisseau);
+				response.addOrdre(ordre);
+				return true;
+			}
+
 		}
 
 		return false;
