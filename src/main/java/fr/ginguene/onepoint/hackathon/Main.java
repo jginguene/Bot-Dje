@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ginguene.onepoint.hackathon.bot.Bot7;
+import fr.ginguene.onepoint.hackathon.bot.Bot5;
 
 @RestController
 @SpringBootApplication
@@ -32,7 +32,7 @@ public class Main {
 	private long partie = -1;
 
 	private InputParser parser = new InputParser();
-	private static final IBot bot = new Bot7();
+	private static IBot bot;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);
@@ -46,6 +46,7 @@ public class Main {
 		if (carte.getConfiguration().getIdentifiantPartie() != partie) {
 			partie = carte.getConfiguration().getIdentifiantPartie();
 			Carte.clear();
+			bot = new Bot5();
 		}
 
 		Response response = bot.getResponse(carte);
