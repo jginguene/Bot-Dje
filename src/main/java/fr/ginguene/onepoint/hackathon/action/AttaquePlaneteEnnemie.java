@@ -24,55 +24,48 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 			return false;
 		}
 
-		if (source.getPopulation() < 10) {
-			return false;
-		}
+		int nbEnnemie = carte.getNbEnnemie(source, 4);
 
-		int nbEnnemie = 0;
-		for (Planete aPlanete : carte.getVoisines(source, 3)) {
-			if (aPlanete.getStatus() != PlaneteStatus.Amie) {
-				nbEnnemie++;
-			}
-		}
+		int minNbVaisseauRestant = 1 + 20 * nbEnnemie;
 
-		if (nbEnnemie >= 2) {
+		if (source.getPopulation() < minNbVaisseauRestant) {
 			return false;
 		}
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
 
-			boolean bombeEnApproche = false;
-			for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, aPlanete)) {
-				if (flotte.getVaisseaux() >= aPlanete.getPopulationMax()) {
-					bombeEnApproche = true;
-				}
-			}
-
-			if (!bombeEnApproche) {
-
-				int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
-				int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
-				int nbVaisseauManquant;
-
-				if (nbVaisseauxEnnemi > 0) {
-					nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi + nbVaisseauxEnnemi + 100;
-				} else {
-					nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi;
+				boolean bombeEnApproche = false;
+				for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, aPlanete)) {
+					if (flotte.getVaisseaux() >= aPlanete.getPopulationMax()) {
+						bombeEnApproche = true;
+					}
 				}
 
-				if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
+				if (!bombeEnApproche) {
 
-					int nbVaisseauxEnnemiSource = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source);
+					int nbVaisseauxAmi = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete);
+					int nbVaisseauxEnnemi = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, aPlanete);
+					int nbVaisseauManquant;
 
-					int nbVaisseau = Math.min(nbVaisseauManquant, source.getPopulation() - nbVaisseauxEnnemiSource - 1);
+					if (nbVaisseauxEnnemi > 0) {
+						nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi + nbVaisseauxEnnemi + 100;
+					} else {
+						nbVaisseauManquant = aPlanete.getPopulationMax() - nbVaisseauxAmi;
+					}
 
-					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
-					source.remPopulation(nbVaisseau);
-					response.addOrdre(ordre);
-					carte.addFlotte(ordre.getFlotte());
+					if (aPlanete.getStatus() == PlaneteStatus.Ennemie && nbVaisseauManquant > 0) {
 
-					this.trace("AttaquePlaneteEnnemie: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
-					return true;
+						int nbVaisseau = source.getPopulation() - minNbVaisseauRestant;
+
+						EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
+						source.remPopulation(nbVaisseau);
+						response.addOrdre(ordre);
+						carte.addFlotte(ordre.getFlotte());
+
+						this.trace("AttaquePlaneteEnnemie: " + source + " -> " + aPlanete + " [" + nbVaisseau + "]");
+						return true;
+					}
 				}
 			}
 		}
