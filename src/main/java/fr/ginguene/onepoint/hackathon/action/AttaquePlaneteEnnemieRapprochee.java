@@ -20,17 +20,21 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
+		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source);
+
+		if (nbVaisseauEnnemie > source.getPopulation()) {
+			return false;
+		}
+
 		Planete ennemie = carte.getEnnemiLaPlusProche(source);
 
 		for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, ennemie)) {
 			if (flotte.getVaisseaux() > ennemie.getPopulationMax()) {
 				return false;
 			}
-
 			if (flotte.getSource().equals(source)) {
 				return false;
 			}
-
 		}
 
 		int distance = carte.getTrajetNbTour(source, ennemie);
