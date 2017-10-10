@@ -25,7 +25,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 		}
 
-		if (source.getPopulation() == source.getPopulationMax()) {
+		if (source.getPopulation() > source.getPopulationMax() / 2) {
 
 			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
