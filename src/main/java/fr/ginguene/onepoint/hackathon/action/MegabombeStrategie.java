@@ -20,7 +20,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		int nbMaxVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
+		int nbMaxVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 30);
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
