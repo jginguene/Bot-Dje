@@ -21,45 +21,30 @@ public class Acharnement extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		System.out.println("acharnement " + source + " -> destinationId:" + destinationId);
+		Planete destination = carte.getEnnemiLaPlusProche(source);
 
-		Planete destination = null;
+		int nbVaisseau = 0;
+		for (Planete maPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
+			nbVaisseau += maPlanete.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, maPlanete, 20);
+		}
 
-		if (destinationId > 0) {
-			destination = carte.getPlanete(destinationId);
-			if (destination.getStatus() == PlaneteStatus.Amie) {
-				destination = null;
-				destinationId = -1;
+		if (nbVaisseau > destination.getPopulationMax()) {
+
+			for (Planete maPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
+				int aNbVaisseau = maPlanete.getPopulation()
+						- carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, maPlanete, 20) - 1;
+
+				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, aNbVaisseau);
+				source.remPopulation(nbVaisseau);
+				response.addOrdre(ordre);
+				carte.addFlotte(ordre.getFlotte());
 			}
-		}
 
-		if (destination == null) {
-			destination = chooseTarget(source, carte);
-			System.out.println("new  destinationId:" + destination.getId());
-			destinationId = destination.getId();
-		}
-
-		int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 1;
-
-		System.out.println("nbVaisseau:" + nbVaisseau);
-		System.out.println(" carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) :"
-				+ carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source));
-		System.out.println(" source.getPopulation() :" + source.getPopulation());
-
-		if (nbVaisseau > 3) {
-			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
-			source.remPopulation(nbVaisseau);
-			response.addOrdre(ordre);
 			return true;
+
 		}
 
 		return false;
-	}
-
-	private Planete chooseTarget(Planete source, Carte carte) {
-
-		// On choisit la planete ennemie la plus proche
-		return carte.getEnnemiLaPlusProche(source);
 
 	}
 
