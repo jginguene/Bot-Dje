@@ -20,30 +20,22 @@ public class MegabombeStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		if (source.getPopulationMax() < 80) {
-			return false;
+		int nbMaxVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
 
-		}
+		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
-		if (source.getPopulation() > source.getPopulationMax() / 2) {
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
 
-			for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-
-				if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
-
-					boolean bombeEnApproche = false;
-					for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, aPlanete)) {
-						if (flotte.getVaisseaux() >= aPlanete.getPopulationMax()) {
-							bombeEnApproche = true;
-						}
+				boolean bombeEnApproche = false;
+				for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, aPlanete)) {
+					if (flotte.getVaisseaux() >= aPlanete.getPopulationMax()) {
+						bombeEnApproche = true;
 					}
+				}
 
-					if (!bombeEnApproche) {
+				if (!bombeEnApproche) {
 
-						if (aPlanete.getPopulationMax() + 1 > source.getPopulation() - 1
-								- carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 10)) {
-							return false;
-						}
+					if (nbMaxVaisseau > aPlanete.getPopulationMax()) {
 
 						int nbVaisseau = aPlanete.getPopulationMax() + 1;
 
@@ -52,13 +44,9 @@ public class MegabombeStrategie extends AbstractStrategie {
 						response.addOrdre(ordre);
 						carte.addFlotte(ordre.getFlotte());
 						return true;
-
 					}
-
 				}
-
 			}
-
 		}
 		return false;
 	}
