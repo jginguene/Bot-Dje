@@ -218,7 +218,7 @@ public class Carte {
 
 	public int getNbEnnemie(Planete source, int nbVoisines) {
 		int nbEnnemie = 0;
-		for (Planete aPlanete : this.getVoisines(source, 6)) {
+		for (Planete aPlanete : this.getVoisines(source, nbVoisines)) {
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
 				nbEnnemie++;
 			}
