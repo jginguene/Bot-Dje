@@ -35,8 +35,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 				if (!bombeEnApproche) {
 
-					if (nbMaxVaisseau > aPlanete.getPopulationMax()) {
-
+					if (nbMaxVaisseau > aPlanete.getPopulationMax() - 20) {
 						int nbVaisseau = aPlanete.getPopulationMax() + 1;
 
 						EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
@@ -45,6 +44,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 						carte.addFlotte(ordre.getFlotte());
 						return true;
 					}
+
 				}
 			}
 		}
