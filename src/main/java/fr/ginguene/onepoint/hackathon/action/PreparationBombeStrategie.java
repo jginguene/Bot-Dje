@@ -2,6 +2,7 @@ package fr.ginguene.onepoint.hackathon.action;
 
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Planete;
+import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
 
 public class PreparationBombeStrategie extends AbstractStrategie {
@@ -22,8 +23,9 @@ public class PreparationBombeStrategie extends AbstractStrategie {
 		}
 
 		int nbEnnemie = carte.getNbEnnemie(source, 7);
+		int nbNeutre = carte.getNbVoisine(source, PlaneteStatus.Neutre, 7);
 
-		if (nbEnnemie == 0 && source.getPopulation() < source.getPopulationMax()) {
+		if ((nbEnnemie + nbNeutre) == 0 && source.getPopulation() < source.getPopulationMax()) {
 			return true;
 
 		}
