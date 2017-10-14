@@ -28,7 +28,7 @@ public class Acharnement extends AbstractStrategie {
 			nbVaisseau += maPlanete.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, maPlanete, 20);
 		}
 
-		if (nbVaisseau > destination.getPopulationMax()) {
+		if (nbVaisseau > destination.getPopulation()) {
 
 			for (Planete maPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
 				int aNbVaisseau = maPlanete.getPopulation()
