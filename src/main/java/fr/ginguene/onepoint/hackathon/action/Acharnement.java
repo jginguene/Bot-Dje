@@ -27,6 +27,7 @@ public class Acharnement extends AbstractStrategie {
 
 		if (destinationId > 0) {
 			destination = carte.getPlanete(destinationId);
+
 			if (destination.getStatus() == PlaneteStatus.Amie) {
 				destination = null;
 				destinationId = -1;
