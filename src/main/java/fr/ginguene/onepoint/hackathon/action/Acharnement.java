@@ -89,7 +89,7 @@ public class Acharnement extends AbstractStrategie {
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getPopulationMax() > 40 && aPlanete.getTauxCroissance() > 1
-					&& aPlanete.getStatus() != PlaneteStatus.Amie) {
+					&& aPlanete.getStatus() != PlaneteStatus.Amie && !reverseMap.containsKey(aPlanete.getId())) {
 				return aPlanete;
 			}
 
