@@ -40,10 +40,6 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 		}
 
-		if (source.getPopulationMax() < 80) {
-			return false;
-		}
-
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
