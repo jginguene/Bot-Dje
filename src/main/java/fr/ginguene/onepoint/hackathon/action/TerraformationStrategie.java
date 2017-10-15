@@ -27,10 +27,15 @@ public class TerraformationStrategie extends AbstractStrategie {
 			return false;
 		}
 
+		int nbTerr = 0;
 		for (Planete aPlanete : carte.getPlanetes(PlaneteStatus.Amie)) {
-			if (aPlanete.getTerraformation() > 5) {
-				return false;
+			if (aPlanete.getTerraformation() > 1) {
+				nbTerr++;
 			}
+		}
+
+		if (nbTerr > 3) {
+			return false;
 		}
 
 		if (source.isTerraformable()) {
