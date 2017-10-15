@@ -33,8 +33,10 @@ public class Acharnement extends AbstractStrategie {
 					bombeEnApproche = true;
 				}
 			}
+			int nbVaisseau = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, destination);
 
-			if (destination.getStatus() == PlaneteStatus.Amie || bombeEnApproche) {
+			if (destination.getStatus() == PlaneteStatus.Amie || bombeEnApproche
+					|| nbVaisseau > destination.getPopulationMax() * 3) {
 				destination = null;
 				destinationId = -1;
 			}
