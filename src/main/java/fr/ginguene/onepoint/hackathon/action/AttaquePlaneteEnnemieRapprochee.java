@@ -40,7 +40,7 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 
 		int coutAttaque = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance + nbVaisseauEnnemie;
 
-		if (coutAttaque < source.getPopulation() + 10) {
+		if (coutAttaque < source.getPopulation() + 1) {
 
 			int nbVaisseau = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance;
 			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, ennemie, nbVaisseau);

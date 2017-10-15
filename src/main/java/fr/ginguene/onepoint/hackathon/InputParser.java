@@ -14,6 +14,8 @@ public class InputParser {
 
 			String type = attributes[0];
 
+			System.out.println("--->" + line);
+
 			switch (type) {
 			case "P":
 				Planete planete = new Planete(attributes);
