@@ -12,7 +12,9 @@ public class ProtectionStrategie extends AbstractStrategie {
 
 		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
 
-		System.out.println("==>" + source + ":" + nbVaisseauEnnemie);
+		if (nbVaisseauEnnemie == 0) {
+			return false;
+		}
 
 		return (source.getPopulation() < nbVaisseauEnnemie + 10);
 	}
