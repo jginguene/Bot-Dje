@@ -24,8 +24,6 @@ public class MegabombeStrategie extends AbstractStrategie {
 			return false;
 		}
 
-		int nbMaxVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 30);
-
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 
 			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
@@ -39,8 +37,8 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 				if (!bombeEnApproche) {
 
-					if (nbMaxVaisseau > aPlanete.getPopulationMax() - 20) {
-						int nbVaisseau = aPlanete.getPopulationMax() + 1;
+					if (source.getPopulation() > aPlanete.getPopulationMax() - 10) {
+						int nbVaisseau = aPlanete.getPopulationMax();
 
 						EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 						source.remPopulation(nbVaisseau);
