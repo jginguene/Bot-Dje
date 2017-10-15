@@ -30,6 +30,8 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getStatus() == PlaneteStatus.Neutre) {
 
+				int mesEnnemies = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
+
 				Planete ennemiLaPlusProche = carte.getPlaneteLaPlusProche(aPlanete, PlaneteStatus.Ennemie);
 				float distanceEnnemi = carte.getDistance(ennemiLaPlusProche, aPlanete);
 				float distanceSource = carte.getDistance(source, aPlanete);
@@ -40,7 +42,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 				int aCout = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1
 						+ carte.getTrajetNbTour(source, aPlanete) * 2 - aPlanete.getTauxCroissance() * 10;
 
-				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
+				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1 - mesEnnemies;
 
 				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > 0) {
 					destination = aPlanete;
