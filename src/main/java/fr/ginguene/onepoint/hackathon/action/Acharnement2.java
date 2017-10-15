@@ -33,7 +33,6 @@ public class Acharnement2 extends AbstractStrategie {
 		Planete destination = null;
 
 		if (destinationId == null) {
-
 			// Choisi une cible existante
 			for (Integer existingDestinationId : reverseMap.keySet()) {
 				if (reverseMap.get(existingDestinationId).size() < 4) {
@@ -58,11 +57,15 @@ public class Acharnement2 extends AbstractStrategie {
 				}
 			}
 
-			if (destination.getStatus() == PlaneteStatus.Amie || bombeEnApproche) {
+			int nbVaisseau = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, destination);
+
+			if (destination.getStatus() == PlaneteStatus.Amie || bombeEnApproche
+					|| nbVaisseau > destination.getPopulationMax() * 3) {
 				reverseMap.remove(destinationId);
 				map.remove(source.getId());
 				destinationId = null;
 			}
+
 		}
 
 		if (destinationId == null) {
