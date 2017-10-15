@@ -1,5 +1,7 @@
 package fr.ginguene.onepoint.hackathon.action;
 
+import java.util.List;
+
 import fr.ginguene.onepoint.hackathon.Carte;
 import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.Planete;
@@ -19,6 +21,24 @@ public class MegabombeStrategie extends AbstractStrategie {
 
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
+
+		if (isOptimizingScore) {
+			List<Planete> planetes = carte.getPlanetesOrderByDistance(source);
+			Planete destination = planetes.get(planetes.size() - 1);
+
+			if (source.getPopulation() > source.getPopulationMax() / 2) {
+				int nbVaisseau = source.getPopulationMax() / 2;
+
+				EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
+				source.remPopulation(nbVaisseau);
+				response.addOrdre(ordre);
+				carte.addFlotte(ordre.getFlotte());
+				return true;
+			} else {
+				return false;
+			}
+
+		}
 
 		if (source.getPopulationMax() < 80) {
 			return false;
