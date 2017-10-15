@@ -13,10 +13,8 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class Acharnement2 extends AbstractStrategie {
 
-	private int destinationId = -1;
-
-	private HashMap<Integer, Integer> map = new HashMap();
-	private HashMap<Integer, List<Integer>> reverseMap = new HashMap();
+	private HashMap<Integer, Integer> map = new HashMap<>();
+	private HashMap<Integer, List<Integer>> reverseMap = new HashMap<>();
 
 	public Acharnement2(boolean isDebug) {
 		super(isDebug);
@@ -31,6 +29,20 @@ public class Acharnement2 extends AbstractStrategie {
 
 		Integer destinationId = map.get(source.getId());
 		Planete destination = null;
+
+		// Nettoyer les listes
+		for (Integer existingDestinationId : reverseMap.keySet()) {
+
+			ArrayList<Integer> copy = new ArrayList<>(reverseMap.get(existingDestinationId));
+
+			for (Integer aPlaneteId : copy) {
+				Planete aPlanete = carte.getPlanete(aPlaneteId);
+				if (aPlanete.getStatus() != PlaneteStatus.Amie) {
+					reverseMap.get(existingDestinationId).remove(new Integer(aPlanete.getId()));
+					map.remove(new Integer(aPlanete.getId()));
+				}
+			}
+		}
 
 		if (destinationId == null) {
 			// Choisi une cible existante
