@@ -22,12 +22,11 @@ public class PreparationBombeStrategie extends AbstractStrategie {
 			return false;
 		}
 
-		int nbEnnemie = carte.getNbEnnemie(source, 7);
-		int nbNeutre = carte.getNbVoisine(source, PlaneteStatus.Neutre, 7);
+		int nbEnnemie = carte.getNbEnnemie(source, 8);
+		int nbNeutre = carte.getNbVoisine(source, PlaneteStatus.Neutre, 8);
 
 		if ((nbEnnemie + nbNeutre) == 0 && source.getPopulation() < source.getPopulationMax()) {
 			return true;
-
 		}
 
 		return false;

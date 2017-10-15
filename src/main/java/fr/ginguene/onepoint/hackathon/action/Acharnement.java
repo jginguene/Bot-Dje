@@ -1,6 +1,7 @@
 package fr.ginguene.onepoint.hackathon.action;
 
 import fr.ginguene.onepoint.hackathon.Carte;
+import fr.ginguene.onepoint.hackathon.Flotte;
 import fr.ginguene.onepoint.hackathon.Planete;
 import fr.ginguene.onepoint.hackathon.PlaneteStatus;
 import fr.ginguene.onepoint.hackathon.Response;
@@ -26,7 +27,13 @@ public class Acharnement extends AbstractStrategie {
 		if (destinationId > 0) {
 			destination = carte.getPlanete(destinationId);
 
-			if (destination.getStatus() == PlaneteStatus.Amie) {
+			boolean bombeEnApproche = false;
+			for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, destination)) {
+				if (flotte.getVaisseaux() >= destination.getPopulationMax()) {
+					bombeEnApproche = true;
+				}
+			}
+			if (destination.getStatus() == PlaneteStatus.Amie || bombeEnApproche) {
 				destination = null;
 				destinationId = -1;
 			}
