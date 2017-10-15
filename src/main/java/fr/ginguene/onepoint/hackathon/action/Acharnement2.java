@@ -103,11 +103,9 @@ public class Acharnement2 extends AbstractStrategie {
 	private Planete chooseTarget(Planete source, Carte carte) {
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
-			if (aPlanete.getTauxCroissance() > 1 && aPlanete.getStatus() != PlaneteStatus.Amie
-					&& !reverseMap.containsKey(aPlanete.getId())) {
+			if (!reverseMap.containsKey(aPlanete.getId())) {
 				return aPlanete;
 			}
-
 		}
 		// On choisit la planete ennemie la plus proche
 		return carte.getEnnemiLaPlusProche(source);
