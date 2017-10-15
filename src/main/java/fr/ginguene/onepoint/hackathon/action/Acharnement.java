@@ -37,7 +37,7 @@ public class Acharnement extends AbstractStrategie {
 			destinationId = destination.getId();
 		}
 
-		int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 10;
+		int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20) - 10;
 
 		if (nbVaisseau > 3) {
 			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
