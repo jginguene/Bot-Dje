@@ -27,7 +27,6 @@ public class Carte {
 	private Map<PlaneteStatus, List<Flotte>> mapFlotte = new HashMap<PlaneteStatus, List<Flotte>>();
 
 	public static void clear() {
-		System.out.println("clear");
 		MAP_TRAJET = new HashMap<>();
 		MAP_DISTANCE = new HashMap<>();
 		DEFAULT_RATIO = -1;
@@ -108,7 +107,6 @@ public class Carte {
 	}
 
 	public void addPlanete(Planete planete) {
-		// System.out.println("Ajout planete:" + planete.getId());
 		this.planetes.add(planete);
 
 		if (!mapPlanete.containsKey(planete.getStatus())) {
@@ -246,8 +244,6 @@ public class Carte {
 	}
 
 	public int getNbVaisseauInFlotte(PlaneteStatus flotteStatus, Planete destination, int nbTour) {
-
-		System.out.println("**>" + getFlottes(flotteStatus, destination));
 
 		int res = 0;
 		for (Flotte flotte : getFlottes(flotteStatus, destination)) {

@@ -33,6 +33,7 @@ public class Acharnement extends AbstractStrategie {
 					bombeEnApproche = true;
 				}
 			}
+
 			if (destination.getStatus() == PlaneteStatus.Amie || bombeEnApproche) {
 				destination = null;
 				destinationId = -1;
@@ -57,6 +58,13 @@ public class Acharnement extends AbstractStrategie {
 	}
 
 	private Planete chooseTarget(Planete source, Carte carte) {
+
+		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+			if (aPlanete.getPopulationMax() > 40 && aPlanete.getTauxCroissance() > 1) {
+				return aPlanete;
+			}
+
+		}
 
 		// On choisit la planete ennemie la plus proche
 		return carte.getEnnemiLaPlusProche(source);
