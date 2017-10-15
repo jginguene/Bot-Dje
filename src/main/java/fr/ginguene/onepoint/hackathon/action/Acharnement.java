@@ -36,7 +36,7 @@ public class Acharnement extends AbstractStrategie {
 
 			// Choisi une cible existante
 			for (Integer existingDestinationId : reverseMap.keySet()) {
-				if (reverseMap.get(existingDestinationId).size() < 3) {
+				if (reverseMap.get(existingDestinationId).size() < 4) {
 					destinationId = existingDestinationId;
 					map.put(source.getId(), existingDestinationId);
 					reverseMap.get(existingDestinationId).add(source.getId());
