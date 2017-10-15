@@ -22,10 +22,6 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 
 		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source);
 
-		if (nbVaisseauEnnemie > source.getPopulation()) {
-			return false;
-		}
-
 		Planete ennemie = carte.getEnnemiLaPlusProche(source);
 
 		for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, ennemie)) {
@@ -42,11 +38,11 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 			return false;
 		}
 
-		int coutAttaque = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance;
+		int coutAttaque = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance + nbVaisseauEnnemie;
 
 		if (coutAttaque < source.getPopulation() + 10) {
 
-			int nbVaisseau = coutAttaque;
+			int nbVaisseau = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance;
 			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, ennemie, nbVaisseau);
 			source.remPopulation(nbVaisseau);
 			response.addOrdre(ordre);

@@ -23,7 +23,7 @@ public class Bot5 implements IBot {
 			new DefenseTerraformation(), new TerraformationStrategie(true), new MegabombeStrategie(),
 			// new PreparationBombeStrategie(),
 			new ProtectionStrategie(), new AttaquePlaneteNeutreStrategie(true),
-			// new Acharnement()
+
 			new AttaquePlaneteEnnemieRapprochee(), new Acharnement()
 
 	};
