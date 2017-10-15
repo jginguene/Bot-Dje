@@ -34,7 +34,7 @@ public class TerraformationStrategie extends AbstractStrategie {
 			}
 		}
 
-		if (nbTerr > 3) {
+		if (nbTerr > 2) {
 			return false;
 		}
 
