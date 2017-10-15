@@ -21,8 +21,6 @@ public class Acharnement extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		System.out.println("acharnement " + source + " -> destinationId:" + destinationId);
-
 		Planete destination = null;
 
 		if (destinationId > 0) {
@@ -36,16 +34,10 @@ public class Acharnement extends AbstractStrategie {
 
 		if (destination == null) {
 			destination = chooseTarget(source, carte);
-			System.out.println("new  destinationId:" + destination.getId());
 			destinationId = destination.getId();
 		}
 
 		int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) - 1;
-
-		System.out.println("nbVaisseau:" + nbVaisseau);
-		System.out.println(" carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source) :"
-				+ carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source));
-		System.out.println(" source.getPopulation() :" + source.getPopulation());
 
 		if (nbVaisseau > 3) {
 			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
