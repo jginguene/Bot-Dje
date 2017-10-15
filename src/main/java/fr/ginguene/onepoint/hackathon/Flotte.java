@@ -24,13 +24,6 @@ public class Flotte {
 		this.toursRestants = Integer.parseInt(attributes[6]);
 		this.carte = carte;
 
-		System.out.println("proprietaire:" + proprietaire);
-		System.out.println("vaisseaux:" + vaisseaux);
-		System.out.println("sourceId:" + sourceId);
-		System.out.println("destinationId:" + destinationId);
-		System.out.println("proprietaire:" + proprietaire);
-		System.out.println("proprietaire:" + proprietaire);
-
 	}
 
 	public Flotte(Carte carte) {
@@ -100,5 +93,10 @@ public class Flotte {
 	public PlaneteStatus getDestinationStatus() {
 		return this.getDestination().getStatus();
 
+	}
+
+	public String toString() {
+		return "[pro:" + this.proprietaire + "; source:" + sourceId + "; dest:" + destinationId + ";vaiss:"
+				+ this.vaisseaux + ";restant:" + this.toursRestants + "]";
 	}
 }

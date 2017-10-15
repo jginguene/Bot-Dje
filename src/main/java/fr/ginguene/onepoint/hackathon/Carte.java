@@ -246,6 +246,9 @@ public class Carte {
 	}
 
 	public int getNbVaisseauInFlotte(PlaneteStatus flotteStatus, Planete destination, int nbTour) {
+
+		System.out.println("**>" + getFlottes(flotteStatus, destination));
+
 		int res = 0;
 		for (Flotte flotte : getFlottes(flotteStatus, destination)) {
 			if (flotte.getToursRestants() <= nbTour) {
