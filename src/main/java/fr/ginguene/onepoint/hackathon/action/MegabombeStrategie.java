@@ -40,7 +40,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 					int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, source, 20);
 
 					if (source.getPopulation() > aPlanete.getPopulationMax() + nbVaisseauEnnemie + 10) {
-						int nbVaisseau = aPlanete.getPopulationMax();
+						int nbVaisseau = aPlanete.getPopulationMax() + 1;
 
 						EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 						source.remPopulation(nbVaisseau);
