@@ -22,33 +22,38 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 
 		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
 
-		Planete ennemie = carte.getEnnemiLaPlusProche(source);
+		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
+			if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
 
-		for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, ennemie)) {
-			if (flotte.getVaisseaux() > ennemie.getPopulationMax()) {
-				return false;
+				Planete ennemie = aPlanete;
+
+				for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, ennemie)) {
+					if (flotte.getVaisseaux() > ennemie.getPopulationMax()) {
+						return false;
+					}
+					if (flotte.getSource().equals(source)) {
+						return false;
+					}
+				}
+
+				int distance = carte.getTrajetNbTour(source, ennemie);
+				if (distance > 20) {
+					return false;
+				}
+
+				int coutAttaque = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance + nbVaisseauEnnemie;
+
+				if (coutAttaque < source.getPopulation() + 1) {
+
+					int nbVaisseau = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance;
+					EnvoiFlotte ordre = new EnvoiFlotte(carte, source, ennemie, nbVaisseau);
+					source.remPopulation(nbVaisseau);
+					response.addOrdre(ordre);
+					carte.addFlotte(ordre.getFlotte());
+					return true;
+
+				}
 			}
-			if (flotte.getSource().equals(source)) {
-				return false;
-			}
-		}
-
-		int distance = carte.getTrajetNbTour(source, ennemie);
-		if (distance > 20) {
-			return false;
-		}
-
-		int coutAttaque = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance + nbVaisseauEnnemie;
-
-		if (coutAttaque < source.getPopulation() + 1) {
-
-			int nbVaisseau = ennemie.getPopulation() + ennemie.getTauxCroissance() * distance;
-			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, ennemie, nbVaisseau);
-			source.remPopulation(nbVaisseau);
-			response.addOrdre(ordre);
-			carte.addFlotte(ordre.getFlotte());
-			return true;
-
 		}
 
 		return false;
