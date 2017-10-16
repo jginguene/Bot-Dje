@@ -30,8 +30,6 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
 			if (aPlanete.getStatus() == PlaneteStatus.Neutre) {
 
-				int mesEnnemies = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
-
 				Planete ennemiLaPlusProche = carte.getPlaneteLaPlusProche(aPlanete, PlaneteStatus.Ennemie);
 				float distanceEnnemi = carte.getDistance(ennemiLaPlusProche, aPlanete);
 				float distanceSource = carte.getDistance(source, aPlanete);
@@ -42,7 +40,7 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 				int aCout = aPlanete.getPopulation() - nbVaisseauxAmi - nbVaisseauxEnnemi + 2
 						+ carte.getTrajetNbTour(source, aPlanete) * 2 - aPlanete.getTauxCroissance() * 10;
 
-				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1 - mesEnnemies;
+				int aNbPop = aPlanete.getPopulation() - nbVaisseauxAmi + nbVaisseauxEnnemi + 1;
 
 				if ((destination == null || aCout < minCout) && distanceSource < distanceEnnemi && aNbPop > 0) {
 					destination = aPlanete;
@@ -55,8 +53,10 @@ public class AttaquePlaneteNeutreStrategie extends AbstractStrategie {
 		if (destination != null) {
 			System.out.println("nbPop: " + nbPop + "; source.getPopulation():" + source.getPopulation());
 
+			int mesEnnemies = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
+
 			nbPop = Math.max(4, nbPop);
-			int nbVaisseau = Math.min(nbPop, source.getPopulation() - 1);
+			int nbVaisseau = Math.min(nbPop, source.getPopulation() - 1 - mesEnnemies);
 
 			EnvoiFlotte ordre = new EnvoiFlotte(carte, source, destination, nbVaisseau);
 			source.remPopulation(nbVaisseau);

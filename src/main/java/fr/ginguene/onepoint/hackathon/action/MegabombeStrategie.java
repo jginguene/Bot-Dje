@@ -83,6 +83,7 @@ public class MegabombeStrategie extends AbstractStrategie {
 				}
 			}
 		}
+
 		return false;
 	}
 
