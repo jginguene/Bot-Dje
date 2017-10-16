@@ -48,7 +48,9 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 					}
 				}
 
-				if (!bombeEnApproche) {
+				int NbVaisseauLances = carte.getNbVaisseauInFlotte(PlaneteStatus.Amie, aPlanete, 15);
+
+				if (!bombeEnApproche && NbVaisseauLances < aPlanete.getPopulationMax()) {
 
 					if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
 
