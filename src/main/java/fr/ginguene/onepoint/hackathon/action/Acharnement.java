@@ -9,7 +9,8 @@ import fr.ginguene.onepoint.hackathon.ordre.EnvoiFlotte;
 
 public class Acharnement extends AbstractStrategie {
 
-	private int destinationId = -1;
+	private int destinationId1 = -1;
+	private int destinationId2 = -1;
 
 	public Acharnement(boolean isDebug) {
 		super(isDebug);
@@ -24,8 +25,8 @@ public class Acharnement extends AbstractStrategie {
 
 		Planete destination = null;
 
-		if (destinationId > 0) {
-			destination = carte.getPlanete(destinationId);
+		if (destinationId1 > 0) {
+			destination = carte.getPlanete(destinationId1);
 
 			boolean bombeEnApproche = false;
 			for (Flotte flotte : carte.getFlottes(PlaneteStatus.Amie, destination)) {
@@ -38,13 +39,13 @@ public class Acharnement extends AbstractStrategie {
 			if (destination.getStatus() == PlaneteStatus.Amie || bombeEnApproche
 					|| nbVaisseau > destination.getPopulationMax() * 3) {
 				destination = null;
-				destinationId = -1;
+				destinationId1 = -1;
 			}
 		}
 
 		if (destination == null) {
 			destination = chooseTarget(source, carte);
-			destinationId = destination.getId();
+			destinationId1 = destination.getId();
 		}
 
 		int nbVaisseau = source.getPopulation() - carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20) - 10;
