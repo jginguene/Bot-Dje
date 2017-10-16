@@ -20,6 +20,10 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
+		if (isOptimizingScore) {
+			return false;
+		}
+
 		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
 
 		for (Planete aPlanete : carte.getPlanetesOrderByDistance(source)) {
