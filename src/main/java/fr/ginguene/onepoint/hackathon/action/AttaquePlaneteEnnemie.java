@@ -32,10 +32,7 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 
 		int nbEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
 
-		int nbVaisseauRestant = 5;
-		if (nbEnnemie > 0) {
-			nbVaisseauRestant += nbEnnemie;
-		}
+		int nbVaisseauRestant = 20 + nbEnnemie;
 
 		if (source.getPopulation() < nbVaisseauRestant) {
 			return false;
