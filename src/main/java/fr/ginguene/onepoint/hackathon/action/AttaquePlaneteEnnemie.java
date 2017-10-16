@@ -30,11 +30,11 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 			return false;
 		}
 
-		int nbEnnemie = carte.getNbEnnemie(source, 4);
+		int nbEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 10);
 
-		int minNbVaisseauRestant = 1 + 20 * nbEnnemie;
+		int nbVaisseauRestant = 1 + nbEnnemie - source.getTauxCroissance() * 10;
 
-		if (source.getPopulation() < minNbVaisseauRestant) {
+		if (source.getPopulation() < nbVaisseauRestant) {
 			return false;
 		}
 
@@ -52,8 +52,7 @@ public class AttaquePlaneteEnnemie extends AbstractStrategie {
 
 					if (aPlanete.getStatus() == PlaneteStatus.Ennemie) {
 
-						int nbVaisseau = source.getPopulation() - minNbVaisseauRestant
-								- carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 15);
+						int nbVaisseau = source.getPopulation() - nbVaisseauRestant;
 
 						EnvoiFlotte ordre = new EnvoiFlotte(carte, source, aPlanete, nbVaisseau);
 						source.remPopulation(nbVaisseau);

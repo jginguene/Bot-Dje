@@ -333,7 +333,7 @@ public class Carte {
 		Planete ret = null;
 
 		for (Planete aPlanete : this.planetes) {
-			if (aPlanete.getProprietaire() != Constantes.AMI) {
+			if (aPlanete.getStatus() != PlaneteStatus.Amie) {
 				float aDistance = this.getDistance(planete, aPlanete);
 				if (ret == null || aDistance < distance) {
 					ret = aPlanete;
