@@ -34,7 +34,7 @@ public class AttaquePlaneteEnnemieRapprochee extends AbstractStrategie {
 		}
 
 		int distance = carte.getTrajetNbTour(source, ennemie);
-		if (distance > 10) {
+		if (distance > 20) {
 			return false;
 		}
 
