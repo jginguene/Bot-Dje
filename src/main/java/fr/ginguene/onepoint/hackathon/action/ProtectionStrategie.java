@@ -10,13 +10,13 @@ public class ProtectionStrategie extends AbstractStrategie {
 	@Override
 	public boolean execute(Response response, Planete source, Carte carte, boolean isOptimizingScore) {
 
-		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 20);
+		int nbVaisseauEnnemie = carte.getNbVaisseauInFlotte(PlaneteStatus.Ennemie, source, 30);
 
 		if (nbVaisseauEnnemie == 0) {
 			return false;
 		}
 
-		return (source.getPopulation() < nbVaisseauEnnemie + 10);
+		return (source.getPopulation() - source.getTauxCroissance() * 30 < nbVaisseauEnnemie + 10);
 	}
 
 }
