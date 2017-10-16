@@ -16,7 +16,7 @@ public class ProtectionStrategie extends AbstractStrategie {
 			return false;
 		}
 
-		return (source.getPopulation() - source.getTauxCroissance() * 20 < nbVaisseauEnnemie + 10);
+		return (source.getPopulation() + source.getTauxCroissance() * 5 < nbVaisseauEnnemie + 10);
 	}
 
 }
